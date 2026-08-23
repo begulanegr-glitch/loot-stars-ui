@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Loot Stars</title>
+    <title>LootGift</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --bg-color: #121214;
             --card-bg: #161c18;
             --text-color: #ffffff;
-            --accent-green: #2ecc71;
-            --green-glow: rgba(46, 204, 113, 0.35);
+            --accent-green: #71e654; /* Подстроил под цвет твоего нового логотипа */
+            --green-glow: rgba(113, 230, 84, 0.35);
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -21,13 +21,18 @@
             padding: 16px;
             padding-bottom: 40px;
         }
-        h1 { 
-            text-align: center; 
-            font-size: 24px; 
-            margin-bottom: 24px; 
-            color: var(--accent-green); 
-            text-shadow: 0 0 15px var(--green-glow);
+        
+        /* Стили для твоего нового логотипа в шапке */
+        .header-logo {
+            text-align: center;
+            margin-bottom: 24px;
         }
+        .header-logo img {
+            max-width: 200px;
+            height: auto;
+            filter: drop-shadow(0 0 15px var(--green-glow));
+        }
+
         h2 { 
             font-size: 16px; 
             margin-top: 32px; 
@@ -44,122 +49,36 @@
             margin-top: 16px;
         }
         
-        /* Премиальная карточка «Базовый узел» в зеленом стиле */
+        /* Стили для твоей картинки премиум-кейса */
         .case-card-special {
-            background: linear-gradient(145deg, #19241c, #101612);
-            border: 2px solid var(--accent-green);
-            box-shadow: 0 0 20px var(--green-glow), inset 0 0 15px rgba(46, 204, 113, 0.1);
+            background: linear-gradient(145deg, #1f192b, #120e1a); /* Подстроил под фиолетовый фон кейса */
+            border: 2px solid #5a3e8c;
+            box-shadow: 0 0 20px rgba(90, 62, 140, 0.4);
             border-radius: 16px;
             padding: 14px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
             transition: transform 0.1s;
         }
         .case-card-special:active { 
             transform: scale(0.95); 
         }
-
-        /* Брендированная плашка LOOTGIFT */
-        .brand-badge {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            color: #0b1a10;
-            font-size: 10px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            padding: 3px 8px;
-            border-radius: 6px;
-            display: inline-block;
-            margin-bottom: 8px;
-            box-shadow: 0 2px 8px rgba(46, 204, 113, 0.4);
-        }
-
-        /* Секция отрисовки кастомного кейса с помощью SVG и иконок */
-        .case-graphic-box {
-            position: relative;
-            height: 90px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-        }
-        
-        /* Торчащие предметы из кейса */
-        .floating-item-left {
-            position: absolute;
-            top: 2px;
-            left: 22%;
-            font-size: 24px;
-            z-index: 1;
-            filter: drop-shadow(0 0 6px rgba(46, 204, 113, 0.6));
-            animation: floatSlow 3s ease-in-out infinite;
-        }
-        .floating-item-right {
-            position: absolute;
-            top: 6px;
-            right: 22%;
-            font-size: 24px;
-            z-index: 1;
-            filter: drop-shadow(0 0 6px rgba(46, 204, 113, 0.6));
-            animation: floatSlow 2.5s ease-in-out infinite alternate;
-        }
-        @keyframes floatSlow {
-            0% { transform: translateY(0px) rotate(-3deg); }
-            50% { transform: translateY(-5px) rotate(3deg); }
-            100% { transform: translateY(0px) rotate(-3deg); }
-        }
-
-        /* Сам тактический черный ящик (векторная стилизация) */
-        .tactical-case {
-            width: 75px;
-            height: 48px;
-            background: #0d120f;
-            border: 2px solid #233829;
+        .premium-case-img {
+            width: 100%;
             border-radius: 8px;
-            position: relative;
-            z-index: 2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.7), inset 0 2px 4px rgba(255,255,255,0.05);
-        }
-        /* Ручка кейса */
-        .tactical-case::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            width: 24px;
-            height: 8px;
-            border: 2px solid #324d3a;
-            border-bottom: none;
-            border-radius: 4px 4px 0 0;
-            background: #141f17;
-        }
-        /* Замки на кейсе */
-        .case-latches {
-            position: absolute;
-            bottom: 6px;
-            width: 50px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .latch {
-            width: 8px;
-            height: 5px;
-            background: #2ecc71;
-            border-radius: 2px;
-            box-shadow: 0 0 5px #2ecc71;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
         .case-name { 
-            font-size: 14px; 
-            font-weight: 700; 
+            font-size: 16px; 
+            font-weight: 800; 
             margin-bottom: 4px; 
+            color: #d4bfff;
         }
         .case-price { 
-            font-size: 12px; 
-            color: #7ab890; 
+            font-size: 14px; 
+            color: var(--accent-green); 
+            font-weight: bold;
             margin-bottom: 12px; 
         }
 
@@ -172,26 +91,13 @@
             text-align: center;
             transition: transform 0.1s;
         }
-        .case-card:active { 
-            transform: scale(0.95); 
-        }
-        .case-icon { 
-            font-size: 36px; 
-            margin-bottom: 8px; 
-        }
-        .case-name-std { 
-            font-size: 14px; 
-            font-weight: 600; 
-            margin-bottom: 4px; 
-        }
-        .case-price-std { 
-            font-size: 12px; 
-            color: #7ab890; 
-            margin-bottom: 12px; 
-        }
+        .case-card:active { transform: scale(0.95); }
+        .case-icon { font-size: 36px; margin-bottom: 8px; }
+        .case-name-std { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .case-price-std { font-size: 12px; color: #7ab890; margin-bottom: 12px; }
         
         .btn {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            background: linear-gradient(135deg, #71e654, #4db335);
             color: #0b1a10;
             border: none;
             padding: 10px 16px;
@@ -199,16 +105,24 @@
             font-weight: 800;
             width: 100%;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+            box-shadow: 0 4px 12px rgba(113, 230, 84, 0.3);
             text-transform: uppercase;
             font-size: 12px;
             letter-spacing: 0.5px;
+        }
+        .btn-premium {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+            box-shadow: 0 4px 12px rgba(155, 89, 182, 0.4);
         }
     </style>
 </head>
 <body>
 
-    <h1>✨ LooTGift</h1>
+    <div class="header-logo">
+        <img src="logo-text.jpg" alt="LootGift Logo">
+    </div>
+    
     <div id="app"></div>
 
     <script>
@@ -217,38 +131,21 @@
 
         const categories = [
             {
-                title: "Обычные модули",
+                title: "Эксклюзивные кейсы",
                 cases: [
                     { 
-                        name: "Базовый узел", 
-                        price: 25, 
-                        special: true, 
-                        items: ["🦅", "🧸"] 
-                    },
+                        name: "Эпический Дар", 
+                        price: 250, 
+                        special: true 
+                    }
+                ]
+            },
+            {
+                title: "Обычные модули",
+                cases: [
                     { name: "Сектор 7", price: 50, icon: "📦" },
                     { name: "Медный реле", price: 50, icon: "⚙️" },
-                    { name: "Системный блок", price: 100, icon: "🖥" },
-                    { name: "Оранжевый поток", price: 250, icon: "🔥" },
-                    { name: "Тяжелый архив", price: 500, icon: "🗄" },
-                    { name: "Ядро Титана", price: 1000, icon: "☄️" },
-                    { name: "Зенит", price: 2500, icon: "🌌" }
-                ]
-            },
-            {
-                title: "Фарм-кейсы",
-                cases: [
-                    { name: "Груда лома", price: 1, icon: "🔩" },
-                    { name: "Техно-свалка", price: 5, icon: "🗑" },
-                    { name: "Реакторный отсек", price: 10, icon: "☢️" }
-                ]
-            },
-            {
-                title: "Риск 50/50",
-                cases: [
-                    { name: "Бинарный код", price: 50, icon: "⚖️" },
-                    { name: "Критический вольт", price: 200, icon: "⚡" },
-                    { name: "Перегрузка", price: 500, icon: "💥" },
-                    { name: "Сингулярность", price: 1000, icon: "🕳" }
+                    { name: "Системный блок", price: 100, icon: "🖥" }
                 ]
             }
         ];
@@ -269,20 +166,10 @@
                 if (c.special) {
                     card.className = 'case-card-special';
                     card.innerHTML = `
-                        <div class="brand-badge">LooTGift</div>
-                        <div class="case-graphic-box">
-                            <div class="floating-item-left">${c.items[0]}</div>
-                            <div class="floating-item-right">${c.items[1]}</div>
-                            <div class="tactical-case">
-                                <div class="case-latches">
-                                    <div class="latch"></div>
-                                    <div class="latch"></div>
-                                </div>
-                            </div>
-                        </div>
+                        <img src="case1.jpg" class="premium-case-img" alt="Кейс">
                         <div class="case-name">${c.name}</div>
                         <div class="case-price">${c.price} Stars</div>
-                        <button class="btn" onclick="openCase('${c.name}')">Открыть</button>
+                        <button class="btn btn-premium" onclick="openCase('${c.name}')">Открыть</button>
                     `;
                 } else {
                     card.className = 'case-card';
@@ -300,8 +187,8 @@
         });
 
         function openCase(name) {
-            tg.HapticFeedback.impactOccurred('medium');
-            tg.showAlert('Вы открываете кейс: ' + name);
+            tg.HapticFeedback.impactOccurred('heavy');
+            tg.showAlert('Загрузка анимации для: ' + name);
         }
     </script>
 </body>
