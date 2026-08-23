@@ -7,12 +7,13 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #0b0914;
-            --card-bg: #151124;
+            /* Точный цвет фона с твоей картинки кейса! */
+            --bg-color: #383b4b; 
+            --card-bg: #2d2f3d; /* Чуть темнее для обычных кейсов, чтобы выделялись */
             --text-color: #ffffff;
             --accent-green: #71e654;
             --green-glow: rgba(113, 230, 84, 0.35);
-            --border-color: #2a1f42;
+            --border-color: #4a4d60;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -21,10 +22,10 @@
             margin: 0;
             padding: 16px;
             padding-bottom: 40px;
-            overflow: hidden; /* Блокируем прокрутку во время экрана загрузки */
+            overflow: hidden; /* Блокируем прокрутку на экране загрузки */
         }
 
-        /* --- ЭКРАН ЗАГРУЗКИ LOOTGIFT --- */
+        /* --- ЭКРАН ЗАГРУЗКИ --- */
         #loading-screen {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -33,38 +34,20 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-            overflow: hidden;
-            background-color: #000;
-        }
-        /* Размытый фон, чтобы края логотипа 100% слились */
-        .loading-bg {
-            position: absolute;
-            top: -50px; left: -50px; right: -50px; bottom: -50px;
-            background-image: url('logo-text.jpg.jfif');
-            background-size: cover;
-            background-position: center;
-            filter: blur(40px);
-            z-index: 1;
-        }
-        .loading-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.5); /* Легкое затемнение фона */
-            z-index: 2;
+            background-color: var(--bg-color);
+            transition: opacity 0.6s ease, visibility 0.6s ease;
         }
         .loading-content {
-            position: relative;
-            z-index: 3;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         .loading-content img {
-            max-width: 250px;
+            max-width: 220px;
             border-radius: 20px;
             animation: pulseLogo 2s infinite alternate;
+            mix-blend-mode: lighten; /* Убирает черный фон у JPEG логотипа */
         }
         .loading-text {
             margin-top: 24px;
@@ -76,8 +59,8 @@
             text-shadow: 0 0 10px var(--green-glow);
         }
         @keyframes pulseLogo {
-            0% { transform: scale(0.95); box-shadow: 0 0 20px rgba(113, 230, 84, 0.1); }
-            100% { transform: scale(1.05); box-shadow: 0 0 50px rgba(113, 230, 84, 0.4); }
+            0% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(113, 230, 84, 0.2)); }
+            100% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(113, 230, 84, 0.6)); }
         }
 
         /* --- ОСНОВНАЯ ИГРА --- */
@@ -93,7 +76,7 @@
             padding-bottom: 8px; 
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #a78bfa; 
+            color: #d4bfff; 
         }
         .grid-container {
             display: grid;
@@ -102,49 +85,32 @@
             margin-top: 16px;
         }
         
-        /* --- ПРЕМИУМ КЕЙС С ИДЕАЛЬНЫМ ФОНОМ --- */
+        /* --- ПРЕМИУМ КЕЙС --- */
         .case-card-special {
-            position: relative;
+            background-color: var(--bg-color); /* Идеальное слияние с картинкой */
             border: 2px solid #5a3e8c;
             border-radius: 16px;
+            padding: 0 0 16px 0; /* Убрали отступы сверху, чтобы картинка касалась краев */
             text-align: center;
             transition: transform 0.1s;
-            overflow: hidden;
+            overflow: hidden; /* Обрезает углы картинки под радиус рамки */
             box-shadow: 0 0 20px rgba(90, 62, 140, 0.4);
         }
         .case-card-special:active { transform: scale(0.95); }
 
-        /* Тот самый трюк: фон кейса - это сама картинка кейса, только сильно размытая */
-        .case-special-bg {
-            position: absolute;
-            top: -20px; left: -20px; right: -20px; bottom: -20px;
-            background-image: url('case1.jpg.jfif');
-            background-size: cover;
-            background-position: center;
-            filter: blur(25px);
-            z-index: 1;
-        }
-        .case-special-content {
-            position: relative;
-            z-index: 2;
-            padding: 0 0 14px 0;
-            display: flex;
-            flex-direction: column;
-            background: rgba(0,0,0,0.25); /* Легкая тонировка под текст */
-        }
         .premium-case-img {
             width: 100%;
             display: block;
-            border-radius: 14px 14px 0 0;
+            margin-bottom: 12px;
         }
         .case-info-box {
-            padding: 12px 14px 0 14px;
+            padding: 0 14px;
         }
         .case-name { 
             font-size: 16px; 
             font-weight: 800; 
             margin-bottom: 4px; 
-            color: #d4bfff;
+            color: #ffffff;
         }
         .case-price { 
             font-size: 14px; 
@@ -168,6 +134,7 @@
         .case-name-std { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #e2d3fd; }
         .case-price-std { font-size: 12px; color: var(--accent-green); margin-bottom: 12px; font-weight: bold; }
         
+        /* --- КНОПКИ --- */
         .btn {
             background: linear-gradient(135deg, #71e654, #4db335);
             color: #0b1a10;
@@ -193,8 +160,6 @@
 
     <!-- ЭКРАН ЗАГРУЗКИ LOOTGIFT -->
     <div id="loading-screen">
-        <div class="loading-bg"></div>
-        <div class="loading-overlay"></div>
         <div class="loading-content">
             <img src="logo-text.jpg.jfif" alt="LootGift Logo">
             <div class="loading-text">Добро пожаловать</div>
@@ -210,7 +175,7 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Логика экрана загрузки (установлено на 4 секунды)
+        // Экран загрузки на 4 секунды
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const loadingScreen = document.getElementById('loading-screen');
@@ -220,7 +185,7 @@
                 loadingScreen.style.visibility = 'hidden';
                 
                 appContent.style.opacity = '1';
-                document.body.style.overflow = 'auto'; // Включаем прокрутку обратно
+                document.body.style.overflow = 'auto'; // Возвращаем прокрутку
             }, 4000); 
         });
 
@@ -251,15 +216,6 @@
                     { name: "Техно-свалка", price: 5, icon: "🗑" },
                     { name: "Реакторный отсек", price: 10, icon: "☢️" }
                 ]
-            },
-            {
-                title: "Риск 50/50",
-                cases: [
-                    { name: "Бинарный код", price: 50, icon: "⚖️" },
-                    { name: "Критический вольт", price: 200, icon: "⚡" },
-                    { name: "Перегрузка", price: 500, icon: "💥" },
-                    { name: "Сингулярность", price: 1000, icon: "🕳" }
-                ]
             }
         ];
 
@@ -279,14 +235,11 @@
                 if (c.special) {
                     card.className = 'case-card-special';
                     card.innerHTML = `
-                        <div class="case-special-bg"></div>
-                        <div class="case-special-content">
-                            <img src="case1.jpg.jfif" class="premium-case-img" alt="Кейс LootGift">
-                            <div class="case-info-box">
-                                <div class="case-name">${c.name}</div>
-                                <div class="case-price">${c.price} Stars</div>
-                                <button class="btn btn-premium" onclick="openCase('${c.name}')">Открыть</button>
-                            </div>
+                        <img src="case1.jpg.jfif" class="premium-case-img" alt="Кейс LootGift">
+                        <div class="case-info-box">
+                            <div class="case-name">${c.name}</div>
+                            <div class="case-price">${c.price} Stars</div>
+                            <button class="btn btn-premium" onclick="openCase('${c.name}')">Открыть</button>
                         </div>
                     `;
                 } else {
