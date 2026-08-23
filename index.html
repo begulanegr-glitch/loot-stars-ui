@@ -10,7 +10,7 @@
             --bg-color: #121214;
             --card-bg: #161c18;
             --text-color: #ffffff;
-            --accent-green: #71e654; /* Подстроил под цвет твоего нового логотипа */
+            --accent-green: #71e654;
             --green-glow: rgba(113, 230, 84, 0.35);
         }
         body {
@@ -51,7 +51,7 @@
         
         /* Стили для твоей картинки премиум-кейса */
         .case-card-special {
-            background: linear-gradient(145deg, #1f192b, #120e1a); /* Подстроил под фиолетовый фон кейса */
+            background: linear-gradient(145deg, #1f192b, #120e1a);
             border: 2px solid #5a3e8c;
             box-shadow: 0 0 20px rgba(90, 62, 140, 0.4);
             border-radius: 16px;
@@ -120,7 +120,7 @@
 <body>
 
     <div class="header-logo">
-        <img src="logo-text.jpg" alt="LootGift Logo">
+        <img src="logo-text.jpg.jfif" alt="LootGift Logo">
     </div>
     
     <div id="app"></div>
@@ -166,7 +166,7 @@
                 if (c.special) {
                     card.className = 'case-card-special';
                     card.innerHTML = `
-                        <img src="case1.jpg" class="premium-case-img" alt="Кейс">
+                        <img src="case1.jpg.jfif" class="premium-case-img" alt="Кейс">
                         <div class="case-name">${c.name}</div>
                         <div class="case-price">${c.price} Stars</div>
                         <button class="btn btn-premium" onclick="openCase('${c.name}')">Открыть</button>
