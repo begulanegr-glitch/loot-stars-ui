@@ -7,9 +7,8 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            /* ЕДИНЫЙ ЦВЕТ ФОНА */
-            --bg-color: #2b2e3e; /* Точный темно-сизый цвет с твоего фото */
-            --card-bg: #1e202d; /* Чуть темнее для обычных кейсов */
+            --bg-color: #2b2d3c; 
+            --card-bg: #20222f; 
             --text-color: #ffffff;
             --accent-green: #71e654;
             --green-glow: rgba(113, 230, 84, 0.4);
@@ -22,162 +21,153 @@
             margin: 0;
             padding: 16px;
             padding-bottom: 40px;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
-        /* --- ЭКРАН ЗАГРУЗКИ --- */
+        /* ЭКРАН ЗАГРУЗКИ */
         #loading-screen {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: #050508; /* Тот самый почти черный фон */
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 9999; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            background-color: #050508;
             transition: opacity 0.6s ease, visibility 0.6s ease;
         }
-        .loading-content {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .loading-content img {
-            max-width: 220px;
-            border-radius: 20px;
-            animation: pulseLogo 2s infinite alternate ease-in-out;
-            mix-blend-mode: lighten;
-        }
         .loading-text {
-            margin-top: 24px;
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--accent-green);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px var(--green-glow);
+            margin-top: 24px; font-size: 18px; font-weight: bold;
+            color: var(--accent-green); text-transform: uppercase;
+            letter-spacing: 2px; text-shadow: 0 0 10px var(--green-glow);
+            animation: pulseText 1.5s infinite alternate ease-in-out;
         }
-        @keyframes pulseLogo {
-            0% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(113, 230, 84, 0.1)); }
-            100% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(113, 230, 84, 0.5)); }
-        }
+        @keyframes pulseText { 0% { opacity: 0.6; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1.05); } }
 
-        /* --- ОСНОВНАЯ ИГРА --- */
-        #app-content {
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-
-        h2 { 
-            font-size: 16px; 
-            margin-top: 24px; 
-            border-bottom: 1px solid var(--border-color); 
-            padding-bottom: 8px; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #d4bfff; 
-        }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 16px;
-            margin-top: 16px;
-        }
+        /* ОСНОВНОЕ МЕНЮ */
+        #app-content { transition: opacity 0.5s ease; }
+        h2 { font-size: 16px; margin-top: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; color: #d4bfff; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 16px; }
         
-        /* --- ПРЕМИУМ КЕЙС --- */
-        .case-card-special {
-            background-color: var(--bg-color); /* Фон карточки = фон приложения */
-            border: 2px solid #5a3e8c;
-            border-radius: 16px;
-            padding: 0; 
-            text-align: center;
-            transition: transform 0.1s;
-            overflow: hidden; 
-            box-shadow: 0 0 20px rgba(90, 62, 140, 0.4);
-            display: flex;
-            flex-direction: column;
-        }
+        .case-card-special { background-color: var(--bg-color); border: 2px solid #5a3e8c; border-radius: 16px; padding: 0; text-align: center; transition: transform 0.1s; overflow: hidden; box-shadow: 0 0 20px rgba(90, 62, 140, 0.4); display: flex; flex-direction: column; }
         .case-card-special:active { transform: scale(0.95); }
+        .premium-case-img { width: 100%; display: block; -webkit-mask-image: linear-gradient(to bottom, black 95%, transparent 100%); mask-image: linear-gradient(to bottom, black 95%, transparent 100%); }
+        .case-info-box { background-color: transparent; padding: 0px 14px 16px 14px; position: relative; z-index: 2; margin-top: -5px; }
+        .case-name { font-size: 16px; font-weight: 800; margin-bottom: 4px; color: #ffffff; }
+        .case-price { font-size: 14px; color: var(--accent-green); font-weight: bold; margin-bottom: 12px; }
 
-        .premium-case-img {
-            width: 100%;
-            display: block;
-            /* Плавное растворение самого нижнего края картинки, чтобы не было рубца */
-            -webkit-mask-image: linear-gradient(to bottom, black 95%, transparent 100%);
-            mask-image: linear-gradient(to bottom, black 95%, transparent 100%);
-        }
-        
-        .case-info-box {
-            background-color: transparent; /* Блок текста полностью прозрачный */
-            padding: 0px 14px 16px 14px;
-            position: relative;
-            z-index: 2;
-            margin-top: -5px; 
-        }
-        .case-name { 
-            font-size: 16px; 
-            font-weight: 800; 
-            margin-bottom: 4px; 
-            color: #ffffff;
-        }
-        .case-price { 
-            font-size: 14px; 
-            color: var(--accent-green); 
-            font-weight: bold;
-            margin-bottom: 12px; 
-        }
-
-        /* --- ОБЫЧНЫЕ КЕЙСЫ --- */
-        .case-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 16px;
-            text-align: center;
-            transition: transform 0.1s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        .case-card:active { transform: scale(0.95); }
+        .case-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 16px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .case-icon { font-size: 36px; margin-bottom: 8px; }
         .case-name-std { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #e2d3fd; }
         .case-price-std { font-size: 12px; color: var(--accent-green); margin-bottom: 12px; font-weight: bold; }
         
-        /* --- КНОПКИ --- */
-        .btn {
-            background: linear-gradient(135deg, #71e654, #4db335);
-            color: #0b1a10;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 10px;
-            font-weight: 800;
-            width: 100%;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(113, 230, 84, 0.2);
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 0.5px;
+        .btn { background: linear-gradient(135deg, #71e654, #4db335); color: #0b1a10; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 800; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 12px; }
+        .btn-premium { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; }
+
+        /* ========================================= */
+        /* ЭКРАН РУЛЕТКИ (ТВОЙ СКЕТЧ)                */
+        /* ========================================= */
+        #roulette-screen {
+            display: none; flex-direction: column; align-items: center; padding-top: 20px;
+            opacity: 0; transition: opacity 0.5s ease;
         }
-        .btn-premium {
-            background: linear-gradient(135deg, #9b59b6, #8e44ad);
-            color: white;
-            box-shadow: 0 4px 12px rgba(155, 89, 182, 0.4);
+        .back-btn { align-self: flex-start; background: #3e4257; padding: 8px 16px; border-radius: 8px; color: white; border: none; margin-bottom: 20px; cursor: pointer; }
+        
+        /* Окно рулетки */
+        .roulette-container {
+            width: 100%; max-width: 350px; height: 120px; background: #1a1b26;
+            border: 2px solid #5a3e8c; border-radius: 12px; position: relative;
+            overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); margin-bottom: 20px;
         }
+        /* Полоса прокрутки */
+        .roulette-strip {
+            display: flex; height: 100%; position: absolute; left: 0; top: 0;
+            transition: transform 5s cubic-bezier(0.15, 0.85, 0.1, 1); /* Физика торможения */
+        }
+        .roulette-item {
+            width: 100px; height: 100px; margin: 10px; background: #2b2d3c;
+            border-radius: 10px; display: flex; justify-content: center; align-items: center;
+            font-size: 50px; flex-shrink: 0; border: 1px solid #3e4257;
+        }
+        /* Центральная линия */
+        .center-line {
+            position: absolute; top: 0; bottom: 0; left: 50%; width: 2px;
+            background: #71e654; transform: translateX(-50%); z-index: 10;
+            box-shadow: 0 0 10px #71e654;
+        }
+
+        /* Кнопка КРУТИТЬ */
+        .spin-btn {
+            background: #71e654; color: #000; font-size: 24px; font-weight: 900;
+            padding: 15px 40px; border-radius: 12px; border: none; box-shadow: 0 6px 0 #4db335;
+            cursor: pointer; text-transform: uppercase; width: 100%; max-width: 350px; margin-bottom: 15px;
+        }
+        .spin-btn:active { transform: translateY(6px); box-shadow: 0 0 0 #4db335; }
+        .spin-btn:disabled { background: #555; box-shadow: 0 6px 0 #333; color: #888; cursor: not-allowed; }
+
+        /* Кнопки количества */
+        .qty-row { display: flex; gap: 8px; margin-bottom: 15px; }
+        .qty-btn { background: #20222f; border: 1px solid white; color: white; border-radius: 6px; padding: 8px 12px; font-weight: bold; cursor: pointer; }
+        
+        /* Промокод */
+        .promo-btn { background: #333; color: white; width: 100%; max-width: 350px; padding: 12px; border: none; border-radius: 8px; font-size: 16px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold;}
+
+        /* Сетка содержимого кейса */
+        .loot-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+            width: 100%; max-width: 350px;
+        }
+        .loot-box { background: #1a1b26; border: 1px solid #3e4257; border-radius: 8px; height: 70px; display: flex; justify-content: center; align-items: center; font-size: 32px; position: relative;}
+        /* Рамочки редкости (как на твоем скетче в углах) */
+        .loot-box::after { content: ''; position: absolute; top: 4px; right: 4px; width: 10px; height: 10px; border-radius: 2px;}
+        .rarity-trash::after { background: #888; }
+        .rarity-common::after { background: #5a3e8c; } /* Фиолетовый */
+        .rarity-rare::after { background: #e6a822; } /* Оранжевый */
+        .rarity-legendary::after { background: #ff0044; box-shadow: 0 0 5px #ff0044;} 
+
     </style>
 </head>
 <body>
 
-    <!-- ЭКРАН ЗАГРУЗКИ LOOTGIFT -->
+    <!-- ЭКРАН ЗАГРУЗКИ -->
     <div id="loading-screen">
-        <div class="loading-content">
-            <img src="logo-text.jpg.jfif" alt="LootGift Logo">
-            <div class="loading-text">Добро пожаловать</div>
-        </div>
+        <div class="loading-text">Добро пожаловать</div>
     </div>
 
-    <!-- ОСНОВНАЯ ИГРА -->
+    <!-- ОСНОВНОЕ МЕНЮ -->
     <div id="app-content">
         <div id="app"></div>
+    </div>
+
+    <!-- ЭКРАН РУЛЕТКИ (ТВОЙ ДИЗАЙН) -->
+    <div id="roulette-screen">
+        <button class="back-btn" onclick="closeRoulette()">← Назад</button>
+        
+        <div class="roulette-container">
+            <div class="center-line"></div>
+            <div class="roulette-strip" id="roulette-strip">
+                <!-- Сюда JS добавит эмодзи -->
+            </div>
+        </div>
+
+        <button class="spin-btn" id="spin-btn" onclick="spinRoulette()">Крутить!</button>
+        
+        <div class="qty-row">
+            <button class="qty-btn">1</button>
+            <button class="qty-btn">2</button>
+            <button class="qty-btn">3</button>
+            <button class="qty-btn">5</button>
+            <button class="qty-btn">7</button>
+        </div>
+
+        <button class="promo-btn">ПРОМОКОД</button>
+
+        <div class="loot-grid">
+            <div class="loot-box rarity-legendary">💎</div>
+            <div class="loot-box rarity-rare">🦅</div>
+            <div class="loot-box rarity-rare">🧸</div>
+            <div class="loot-box rarity-common">🔮</div>
+            <div class="loot-box rarity-common">📱</div>
+            <div class="loot-box rarity-trash">🔋</div>
+            <div class="loot-box rarity-trash">🗑</div>
+            <div class="loot-box rarity-trash">🧦</div>
+        </div>
     </div>
 
     <script>
@@ -186,58 +176,132 @@
 
         window.addEventListener('load', () => {
             setTimeout(() => {
-                const loadingScreen = document.getElementById('loading-screen');
-                const appContent = document.getElementById('app-content');
-                
-                loadingScreen.style.opacity = '0';
-                loadingScreen.style.visibility = 'hidden';
-                
-                appContent.style.opacity = '1';
+                document.getElementById('loading-screen').style.opacity = '0';
+                document.getElementById('loading-screen').style.visibility = 'hidden';
+                document.getElementById('app-content').style.opacity = '1';
                 document.body.style.overflow = 'auto'; 
-            }, 4000); 
+            }, 2500); // Снизил загрузку до 2.5 сек для тестов
         });
 
+        // -------------------------
+        // МАТЕМАТИКА И ВЕРОЯТНОСТИ
+        // -------------------------
+        const items = [
+            { icon: "🧦", value: 10, prob: 0.50 },    // 50% Мусор
+            { icon: "🔋", value: 30, prob: 0.25 },    // 25% Обычный
+            { icon: "📱", value: 70, prob: 0.15 },    // 15% Необычный
+            { icon: "🔮", value: 200, prob: 0.08 },   // 8% Редкий
+            { icon: "🧸", value: 500, prob: 0.018 },  // 1.8% Эпик
+            { icon: "💎", value: 5000, prob: 0.002 }  // 0.2% ЛЕГА
+        ];
+
+        let spinsCount = 0; // Счетчик круток игрока
+
+        function getRandomItem() {
+            spinsCount++;
+            let rand = Math.random();
+            
+            // МЕХАНИКА "БАЙТА": первые 2 крутки даем завышенный шанс на окуп
+            if (spinsCount <= 2 && rand > 0.4) {
+                return items[3]; // Даем Редкий (200)
+            }
+
+            // Обычная жесткая математика рулетки
+            let cumulative = 0;
+            for (let i = 0; i < items.length; i++) {
+                cumulative += items[i].prob;
+                if (rand <= cumulative) return items[i];
+            }
+            return items[0]; // Резервный вариант
+        }
+
+        // -------------------------
+        // ИНТЕРФЕЙС И АНИМАЦИИ
+        // -------------------------
+        function openCaseScreen(caseName) {
+            document.getElementById('app-content').style.display = 'none';
+            const rScreen = document.getElementById('roulette-screen');
+            rScreen.style.display = 'flex';
+            setTimeout(() => rScreen.style.opacity = '1', 50);
+            
+            // Сброс полосы
+            document.getElementById('roulette-strip').style.transition = 'none';
+            document.getElementById('roulette-strip').style.transform = 'translateX(0)';
+            document.getElementById('roulette-strip').innerHTML = '';
+        }
+
+        function closeRoulette() {
+            const rScreen = document.getElementById('roulette-screen');
+            rScreen.style.opacity = '0';
+            setTimeout(() => {
+                rScreen.style.display = 'none';
+                document.getElementById('app-content').style.display = 'block';
+            }, 500);
+        }
+
+        function spinRoulette() {
+            const btn = document.getElementById('spin-btn');
+            if(btn.disabled) return;
+            btn.disabled = true;
+            tg.HapticFeedback.impactOccurred('medium');
+
+            const strip = document.getElementById('roulette-strip');
+            strip.style.transition = 'none';
+            strip.style.transform = 'translateX(0)';
+            strip.innerHTML = '';
+
+            const winnerItem = getRandomItem();
+            const totalItems = 50; // Генерируем 50 элементов в линию
+            const winnerIndex = 40; // Выигрышный предмет будет 40-м по счету
+
+            // Генерируем случайную линию визуального мусора
+            for (let i = 0; i < totalItems; i++) {
+                let div = document.createElement('div');
+                div.className = 'roulette-item';
+                
+                if (i === winnerIndex) {
+                    div.innerText = winnerItem.icon; // Наш выигрыш
+                } else {
+                    // Случайный визуал
+                    let r = Math.random();
+                    let icon = items[0].icon;
+                    if(r > 0.5) icon = items[1].icon;
+                    if(r > 0.8) icon = items[2].icon;
+                    if(r > 0.95) icon = items[4].icon;
+                    div.innerText = icon;
+                }
+                strip.appendChild(div);
+            }
+
+            // Рассчитываем точный пиксельный сдвиг
+            // Ширина элемента (100px) + margin (20px) = 120px. 
+            // Половина окна рулетки = 175px (чтобы встало ровно по центру)
+            setTimeout(() => {
+                strip.style.transition = 'transform 5s cubic-bezier(0.15, 0.85, 0.1, 1)'; // Плавное торможение
+                // Немного рандомизируем остановку (от -30px до +30px), чтобы не всегда ровно по центру
+                const randomOffset = Math.floor(Math.random() * 60) - 30; 
+                const stopPosition = -(winnerIndex * 120) + 175 - 60 + randomOffset;
+                
+                strip.style.transform = `translateX(${stopPosition}px)`;
+            }, 50);
+
+            // Завершение прокрутки
+            setTimeout(() => {
+                btn.disabled = false;
+                tg.HapticFeedback.notificationOccurred('success');
+                tg.showAlert(`Выпало: ${winnerItem.icon}\nСтоимость: ${winnerItem.value} Stars`);
+            }, 5200);
+        }
+
+        // Рендер главного меню
         const categories = [
             {
                 title: "Эксклюзивные кейсы",
-                cases: [
-                    { name: "Эпический Дар", price: 250, special: true }
-                ]
-            },
-            {
-                title: "Обычные модули",
-                cases: [
-                    { name: "Базовый узел", price: 10, icon: "📦" },
-                    { name: "Сектор 7", price: 25, icon: "📦" },
-                    { name: "Медный реле", price: 50, icon: "⚙️" },
-                    { name: "Системный блок", price: 100, icon: "🖥" },
-                    { name: "Оранжевый поток", price: 250, icon: "🔥" },
-                    { name: "Тяжелый архив", price: 500, icon: "🗄" },
-                    { name: "Ядро Титана", price: 1000, icon: "☄️" },
-                    { name: "Зенит", price: 2500, icon: "🌌" }
-                ]
-            },
-            {
-                title: "Фарм-кейсы",
-                cases: [
-                    { name: "Груда лома", price: 1, icon: "🔩" },
-                    { name: "Техно-свалка", price: 5, icon: "🗑" },
-                    { name: "Реакторный отсек", price: 10, icon: "☢️" }
-                ]
-            },
-            {
-                title: "Риск 50/50",
-                cases: [
-                    { name: "Бинарный код", price: 50, icon: "⚖️" },
-                    { name: "Критический вольт", price: 200, icon: "⚡" },
-                    { name: "Перегрузка", price: 500, icon: "💥" },
-                    { name: "Сингулярность", price: 1000, icon: "🕳" }
-                ]
+                cases: [{ name: "Эпический Дар", price: 250, special: true }]
             }
         ];
 
         const appDiv = document.getElementById('app');
-
         categories.forEach(category => {
             const title = document.createElement('h2');
             title.innerText = category.title;
@@ -248,36 +312,19 @@
 
             category.cases.forEach(c => {
                 const card = document.createElement('div');
-                
-                if (c.special) {
-                    card.className = 'case-card-special';
-                    card.innerHTML = `
-                        <img src="case1.jpg.jfif" class="premium-case-img" alt="Кейс LootGift">
-                        <div class="case-info-box">
-                            <div class="case-name">${c.name}</div>
-                            <div class="case-price">${c.price} Stars</div>
-                            <button class="btn btn-premium" onclick="openCase('${c.name}')">Открыть</button>
-                        </div>
-                    `;
-                } else {
-                    card.className = 'case-card';
-                    card.innerHTML = `
-                        <div class="case-icon">${c.icon}</div>
-                        <div class="case-name-std">${c.name}</div>
-                        <div class="case-price-std">${c.price} Stars</div>
-                        <button class="btn" onclick="openCase('${c.name}')">Купить</button>
-                    `;
-                }
+                card.className = 'case-card-special';
+                card.innerHTML = `
+                    <div style="padding:16px;">(Здесь картинка)</div>
+                    <div class="case-info-box">
+                        <div class="case-name">${c.name}</div>
+                        <div class="case-price">БЕСПЛАТНО</div>
+                        <button class="btn btn-premium" onclick="openCaseScreen('${c.name}')">ОТКРЫТЬ (ТЕСТ)</button>
+                    </div>
+                `;
                 grid.appendChild(card);
             });
-
             appDiv.appendChild(grid);
         });
-
-        function openCase(name) {
-            tg.HapticFeedback.impactOccurred('heavy');
-            tg.showAlert('Вы открываете: ' + name);
-        }
     </script>
 </body>
 </html>
