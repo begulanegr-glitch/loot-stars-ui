@@ -7,13 +7,13 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            /* Точный цвет фона с твоей картинки кейса! */
-            --bg-color: #383b4b; 
-            --card-bg: #2d2f3d; /* Чуть темнее для обычных кейсов, чтобы выделялись */
+            /* Точный цвет фона с твоей сгенерированной картинки */
+            --bg-color: #2c2f3f; 
+            --card-bg: #222433; /* Чуть темнее для контраста остальных кейсов */
             --text-color: #ffffff;
             --accent-green: #71e654;
-            --green-glow: rgba(113, 230, 84, 0.35);
-            --border-color: #4a4d60;
+            --green-glow: rgba(113, 230, 84, 0.4);
+            --border-color: #3e4257;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -22,7 +22,7 @@
             margin: 0;
             padding: 16px;
             padding-bottom: 40px;
-            overflow: hidden; /* Блокируем прокрутку на экране загрузки */
+            overflow: hidden; /* Блокируем прокрутку во время экрана загрузки */
         }
 
         /* --- ЭКРАН ЗАГРУЗКИ --- */
@@ -31,36 +31,23 @@
             top: 0; left: 0; right: 0; bottom: 0;
             z-index: 9999;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             background-color: var(--bg-color);
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-        .loading-content {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .loading-content img {
-            max-width: 220px;
-            border-radius: 20px;
-            animation: pulseLogo 2s infinite alternate;
-            mix-blend-mode: lighten; /* Убирает черный фон у JPEG логотипа */
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
         .loading-text {
-            margin-top: 24px;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 22px;
+            font-weight: 900;
             color: var(--accent-green);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px var(--green-glow);
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px var(--green-glow);
+            animation: pulseText 1.5s infinite alternate ease-in-out;
         }
-        @keyframes pulseLogo {
-            0% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(113, 230, 84, 0.2)); }
-            100% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(113, 230, 84, 0.6)); }
+        @keyframes pulseText {
+            0% { opacity: 0.6; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1.05); }
         }
 
         /* --- ОСНОВНАЯ ИГРА --- */
@@ -87,27 +74,31 @@
         
         /* --- ПРЕМИУМ КЕЙС --- */
         .case-card-special {
-            background-color: var(--bg-color); /* Идеальное слияние с картинкой */
-            border: 2px solid #5a3e8c;
+            background-color: var(--bg-color); /* Идеальное слияние с фоном приложения */
+            border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 0 0 16px 0; /* Убрали отступы сверху, чтобы картинка касалась краев */
+            padding: 0 0 16px 0; 
             text-align: center;
             transition: transform 0.1s;
-            overflow: hidden; /* Обрезает углы картинки под радиус рамки */
-            box-shadow: 0 0 20px rgba(90, 62, 140, 0.4);
+            overflow: hidden; 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
         .case-card-special:active { transform: scale(0.95); }
 
         .premium-case-img {
             width: 100%;
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+            /* Микро-градиент только на самом нижнем пикселе картинки, чтобы убрать артефакты JPG */
+            -webkit-mask-image: linear-gradient(to bottom, black 96%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 96%, transparent 100%);
         }
+        
         .case-info-box {
             padding: 0 14px;
         }
         .case-name { 
-            font-size: 16px; 
+            font-size: 18px; 
             font-weight: 800; 
             margin-bottom: 4px; 
             color: #ffffff;
@@ -158,12 +149,9 @@
 </head>
 <body>
 
-    <!-- ЭКРАН ЗАГРУЗКИ LOOTGIFT -->
+    <!-- ЭКРАН ЗАГРУЗКИ -->
     <div id="loading-screen">
-        <div class="loading-content">
-            <img src="logo-text.jpg.jfif" alt="LootGift Logo">
-            <div class="loading-text">Добро пожаловать</div>
-        </div>
+        <div class="loading-text">Добро пожаловать</div>
     </div>
 
     <!-- ОСНОВНАЯ ИГРА -->
