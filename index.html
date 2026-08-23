@@ -24,7 +24,7 @@
             overflow-x: hidden;
         }
 
-        /* --- ЭКРАН ЗАГРУЗКИ --- */
+        /* --- ЭКРАН ЗАГРУЗКИ (С ЛОГОТИПОМ) --- */
         #loading-screen {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             z-index: 9999; display: flex; flex-direction: column;
@@ -32,12 +32,25 @@
             background-color: #050508;
             transition: opacity 0.6s ease, visibility 0.6s ease;
         }
+        .loading-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .loading-content img {
+            max-width: 220px;
+            border-radius: 20px;
+            animation: pulseLogo 2s infinite alternate ease-in-out;
+            mix-blend-mode: lighten;
+        }
         .loading-text {
             margin-top: 24px; font-size: 18px; font-weight: bold;
             color: var(--accent-green); text-transform: uppercase;
             letter-spacing: 2px; text-shadow: 0 0 10px var(--green-glow);
             animation: pulseText 1.5s infinite alternate ease-in-out;
         }
+        @keyframes pulseLogo { 0% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(113, 230, 84, 0.1)); } 100% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(113, 230, 84, 0.5)); } }
         @keyframes pulseText { 0% { opacity: 0.6; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1.05); } }
 
         /* --- ОСНОВНАЯ ИГРА --- */
@@ -67,20 +80,22 @@
             display: none; flex-direction: column; align-items: center; padding-top: 20px;
             opacity: 0; transition: opacity 0.5s ease;
         }
-        .back-btn { align-self: flex-start; background: #3e4257; padding: 8px 16px; border-radius: 8px; color: white; border: none; margin-bottom: 20px; cursor: pointer; }
+        .back-btn { align-self: flex-start; background: #3e4257; padding: 8px 16px; border-radius: 8px; color: white; border: none; margin-bottom: 20px; cursor: pointer; font-weight: bold; }
         
-        .roulette-container {
-            width: 100%; max-width: 350px; height: 120px; background: #1a1b26;
-            border: 2px solid #5a3e8c; border-radius: 12px; position: relative;
-            overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); margin-bottom: 20px;
+        /* Динамический контейнер для множества рулеток */
+        .roulette-wrapper {
+            width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;
         }
         
+        /* Отдельная полоса рулетки */
+        .roulette-row {
+            width: 100%; height: 120px; background: #1a1b26; border: 2px solid #5a3e8c; 
+            border-radius: 12px; position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
         .roulette-strip {
             display: flex; height: 100%; position: absolute; left: 0; top: 0;
-            transition: transform 5s cubic-bezier(0.15, 0.85, 0.1, 1);
         }
         
-        /* ИСПРАВЛЕНИЕ #1: Фиксируем ширину элементов для идеальной точности рулетки */
         .roulette-item {
             box-sizing: border-box; width: 100px; height: 100px; margin: 10px; 
             background: var(--bg-color); border-radius: 10px; display: flex; 
@@ -102,7 +117,6 @@
         .spin-btn:active { transform: translateY(6px); box-shadow: 0 0 0 #4db335; }
         .spin-btn:disabled { background: #555; box-shadow: 0 6px 0 #333; color: #888; cursor: not-allowed; }
 
-        /* ИСПРАВЛЕНИЕ #3: Кнопки выбора количества */
         .qty-row { display: flex; gap: 8px; margin-bottom: 15px; }
         .qty-btn { 
             background: var(--card-bg); border: 1px solid var(--border-color); color: white; 
@@ -110,7 +124,6 @@
         }
         .qty-btn.active { background: var(--accent-green); color: #000; border-color: var(--accent-green); }
         
-        /* ИСПРАВЛЕНИЕ #2: Поле ввода для промокода */
         .promo-input { 
             background: var(--card-bg); color: white; width: 100%; max-width: 350px; 
             padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; 
@@ -121,10 +134,7 @@
         .promo-input::placeholder { color: #666; }
         .promo-input:focus { border-color: var(--accent-green); box-shadow: 0 0 10px rgba(113, 230, 84, 0.2); }
 
-        .loot-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-            width: 100%; max-width: 350px;
-        }
+        .loot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 350px; }
         .loot-box { background: #1a1b26; border: 1px solid #3e4257; border-radius: 8px; height: 70px; display: flex; justify-content: center; align-items: center; font-size: 32px; position: relative;}
         .loot-box::after { content: ''; position: absolute; top: 4px; right: 4px; width: 10px; height: 10px; border-radius: 2px;}
         .rarity-trash::after { background: #888; }
@@ -137,7 +147,10 @@
 <body>
 
     <div id="loading-screen">
-        <div class="loading-text">Добро пожаловать</div>
+        <div class="loading-content">
+            <img src="logo-text.jpg.jfif" alt="LootGift Logo">
+            <div class="loading-text">Добро пожаловать</div>
+        </div>
     </div>
 
     <div id="app-content">
@@ -147,10 +160,8 @@
     <div id="roulette-screen">
         <button class="back-btn" onclick="closeRoulette()">← Назад</button>
         
-        <div class="roulette-container" id="roulette-container">
-            <div class="center-line"></div>
-            <div class="roulette-strip" id="roulette-strip"></div>
-        </div>
+        <!-- Обертка для множества рулеток -->
+        <div class="roulette-wrapper" id="roulette-wrapper"></div>
 
         <button class="spin-btn" id="spin-btn" onclick="spinRoulette()">Крутить!</button>
         
@@ -159,7 +170,6 @@
             <button class="qty-btn" onclick="selectQty(this, 2)">2</button>
             <button class="qty-btn" onclick="selectQty(this, 3)">3</button>
             <button class="qty-btn" onclick="selectQty(this, 5)">5</button>
-            <button class="qty-btn" onclick="selectQty(this, 7)">7</button>
         </div>
 
         <input type="text" class="promo-input" placeholder="ПРОМОКОД">
@@ -180,7 +190,7 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        let currentQty = 1; // По умолчанию крутим 1 кейс
+        let currentQty = 1; 
 
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -192,22 +202,21 @@
         });
 
         const items = [
-            { icon: "🧦", value: 10, prob: 0.50 },
-            { icon: "🔋", value: 30, prob: 0.25 },
-            { icon: "📱", value: 70, prob: 0.15 },
-            { icon: "🔮", value: 200, prob: 0.08 },
-            { icon: "🧸", value: 500, prob: 0.018 },
-            { icon: "💎", value: 5000, prob: 0.002 }
+            { icon: "🧦", value: 10, prob: 0.50 },    // Мусор
+            { icon: "🔋", value: 30, prob: 0.25 },    // Обычный
+            { icon: "📱", value: 70, prob: 0.15 },    // Необычный
+            { icon: "🔮", value: 200, prob: 0.08 },   // Редкий
+            { icon: "🧸", value: 500, prob: 0.018 },  // Эпик
+            { icon: "💎", value: 5000, prob: 0.002 }  // ЛЕГА
         ];
 
         let spinsCount = 0; 
 
+        // Настоящая математика дропа
         function getRandomItem() {
             spinsCount++;
             let rand = Math.random();
-            if (spinsCount <= 2 && rand > 0.4) {
-                return items[3]; 
-            }
+            if (spinsCount <= 2 && rand > 0.4) return items[3]; // Байт новичка
             let cumulative = 0;
             for (let i = 0; i < items.length; i++) {
                 cumulative += items[i].prob;
@@ -216,15 +225,26 @@
             return items[0]; 
         }
 
+        // Отрисовка нужного кол-ва контейнеров ДО прокрута
+        function renderRouletteRows() {
+            const wrapper = document.getElementById('roulette-wrapper');
+            wrapper.innerHTML = '';
+            for(let i = 0; i < currentQty; i++) {
+                wrapper.innerHTML += `
+                    <div class="roulette-row">
+                        <div class="center-line"></div>
+                        <div class="roulette-strip" id="strip-${i}"></div>
+                    </div>
+                `;
+            }
+        }
+
         function openCaseScreen(caseName) {
             document.getElementById('app-content').style.display = 'none';
             const rScreen = document.getElementById('roulette-screen');
             rScreen.style.display = 'flex';
             setTimeout(() => rScreen.style.opacity = '1', 50);
-            
-            document.getElementById('roulette-strip').style.transition = 'none';
-            document.getElementById('roulette-strip').style.transform = 'translateX(0)';
-            document.getElementById('roulette-strip').innerHTML = '';
+            renderRouletteRows();
         }
 
         function closeRoulette() {
@@ -236,11 +256,11 @@
             }, 500);
         }
 
-        // Логика выбора количества кейсов
         function selectQty(btn, qty) {
             document.querySelectorAll('.qty-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentQty = qty;
+            renderRouletteRows();
         }
 
         function spinRoulette() {
@@ -249,56 +269,59 @@
             btn.disabled = true;
             tg.HapticFeedback.impactOccurred('medium');
 
-            const strip = document.getElementById('roulette-strip');
-            strip.style.transition = 'none';
-            strip.style.transform = 'translateX(0)';
-            strip.innerHTML = '';
-
-            // Генерируем массив дропов на основе выбранного количества (currentQty)
             let drops = [];
             let totalValue = 0;
-            for(let i = 0; i < currentQty; i++) {
-                let item = getRandomItem();
-                drops.push(item);
-                totalValue += item.value;
-            }
 
-            // Для визуала рулетки берем последний предмет в массиве
-            const visualWinner = drops[drops.length - 1];
             const totalItems = 50; 
             const winnerIndex = 40; 
+            const wrapper = document.getElementById('roulette-wrapper');
+            
+            // Крутим каждую рулетку
+            for(let rowIdx = 0; rowIdx < currentQty; rowIdx++) {
+                let actualItem = getRandomItem();
+                drops.push(actualItem);
+                totalValue += actualItem.value;
 
-            for (let i = 0; i < totalItems; i++) {
-                let div = document.createElement('div');
-                div.className = 'roulette-item';
-                
-                if (i === winnerIndex) {
-                    div.innerText = visualWinner.icon; 
-                } else {
-                    let r = Math.random();
-                    let icon = items[0].icon;
-                    if(r > 0.5) icon = items[1].icon;
-                    if(r > 0.8) icon = items[2].icon;
-                    if(r > 0.95) icon = items[4].icon;
-                    div.innerText = icon;
+                let strip = document.getElementById(`strip-${rowIdx}`);
+                strip.style.transition = 'none';
+                strip.style.transform = 'translateX(0)';
+                strip.innerHTML = '';
+
+                // Генерация полосы (ФЕЙКОВЫЕ "ВКУСНЫЕ" ВЕРОЯТНОСТИ ДЛЯ ВИЗУАЛА)
+                for (let i = 0; i < totalItems; i++) {
+                    let div = document.createElement('div');
+                    div.className = 'roulette-item';
+                    
+                    if (i === winnerIndex) {
+                        div.innerText = actualItem.icon; 
+                    } else {
+                        let r = Math.random();
+                        let icon;
+                        if (r < 0.10) icon = items[0].icon;      // Мусор визуально всего 10%
+                        else if (r < 0.30) icon = items[1].icon; // Обычный 20%
+                        else if (r < 0.60) icon = items[2].icon; // Необычный 30%
+                        else if (r < 0.82) icon = items[3].icon; // Редкий 22% (ЗАВЫШЕНО!)
+                        else if (r < 0.97) icon = items[4].icon; // Эпик 15% (ЗАВЫШЕНО!)
+                        else icon = items[5].icon;               // Лега 3% (ЗАВЫШЕНО!)
+                        
+                        div.innerText = icon;
+                    }
+                    strip.appendChild(div);
                 }
-                strip.appendChild(div);
+
+                // У каждой рулетки своя задержка остановки (5с, 5.2с, 5.4с...)
+                let duration = 5 + (rowIdx * 0.2); 
+                setTimeout(() => {
+                    strip.style.transition = `transform ${duration}s cubic-bezier(0.15, 0.85, 0.1, 1)`;
+                    const containerWidth = wrapper.offsetWidth;
+                    const randomOffset = Math.floor(Math.random() * 80) - 40;
+                    const stopPosition = (containerWidth / 2) - (winnerIndex * 120 + 60) + randomOffset;
+                    strip.style.transform = `translateX(${stopPosition}px)`;
+                }, 50);
             }
 
-            // Математика ИДЕАЛЬНОЙ остановки:
-            // 100px (ширина) + 20px (margin) = 120px на элемент.
-            const containerWidth = document.getElementById('roulette-container').offsetWidth;
-            setTimeout(() => {
-                strip.style.transition = 'transform 5s cubic-bezier(0.15, 0.85, 0.1, 1)';
-                
-                const randomOffset = Math.floor(Math.random() * 80) - 40; // Безопасное смещение внутри элемента
-                // Формула: половина экрана МИНУС (центр выигрышного элемента)
-                const stopPosition = (containerWidth / 2) - (winnerIndex * 120 + 60) + randomOffset;
-                
-                strip.style.transform = `translateX(${stopPosition}px)`;
-            }, 50);
-
-            // Вывод результатов
+            // Ждем остановки последней рулетки
+            let maxDelay = 5200 + ((currentQty - 1) * 200);
             setTimeout(() => {
                 btn.disabled = false;
                 tg.HapticFeedback.notificationOccurred('success');
@@ -307,15 +330,45 @@
                     tg.showAlert(`Выпало: ${drops[0].icon}\nСтоимость: ${drops[0].value} Stars`);
                 } else {
                     let dropIcons = drops.map(d => d.icon).join(', ');
-                    tg.showAlert(`Вы открыли ${currentQty} кейсов!\n\nДобыча: ${dropIcons}\nОбщая стоимость: ${totalValue} Stars`);
+                    tg.showAlert(`Вы открыли ${currentQty} кейсов!\nДобыча: ${dropIcons}\nОбщая стоимость: ${totalValue} Stars`);
                 }
-            }, 5200);
+            }, maxDelay);
         }
 
         const categories = [
             {
                 title: "Эксклюзивные кейсы",
                 cases: [{ name: "Эпический Дар", price: 250, special: true }]
+            },
+            {
+                title: "Обычные модули",
+                cases: [
+                    { name: "Базовый узел", price: 10, icon: "📦" },
+                    { name: "Сектор 7", price: 25, icon: "📦" },
+                    { name: "Медный реле", price: 50, icon: "⚙️" },
+                    { name: "Системный блок", price: 100, icon: "🖥" },
+                    { name: "Оранжевый поток", price: 250, icon: "🔥" },
+                    { name: "Тяжелый архив", price: 500, icon: "🗄" },
+                    { name: "Ядро Титана", price: 1000, icon: "☄️" },
+                    { name: "Зенит", price: 2500, icon: "🌌" }
+                ]
+            },
+            {
+                title: "Фарм-кейсы",
+                cases: [
+                    { name: "Груда лома", price: 1, icon: "🔩" },
+                    { name: "Техно-свалка", price: 5, icon: "🗑" },
+                    { name: "Реакторный отсек", price: 10, icon: "☢️" }
+                ]
+            },
+            {
+                title: "Риск 50/50",
+                cases: [
+                    { name: "Бинарный код", price: 50, icon: "⚖️" },
+                    { name: "Критический вольт", price: 200, icon: "⚡" },
+                    { name: "Перегрузка", price: 500, icon: "💥" },
+                    { name: "Сингулярность", price: 1000, icon: "🕳" }
+                ]
             }
         ];
 
@@ -330,15 +383,25 @@
 
             category.cases.forEach(c => {
                 const card = document.createElement('div');
-                card.className = 'case-card-special';
-                card.innerHTML = `
-                    <img src="case1.jpg.jfif" class="premium-case-img" alt="Кейс LootGift">
-                    <div class="case-info-box">
-                        <div class="case-name">${c.name}</div>
-                        <div class="case-price">БЕСПЛАТНО</div>
-                        <button class="btn btn-premium" onclick="openCaseScreen('${c.name}')">ОТКРЫТЬ</button>
-                    </div>
-                `;
+                if (c.special) {
+                    card.className = 'case-card-special';
+                    card.innerHTML = `
+                        <img src="case1.jpg.jfif" class="premium-case-img" alt="Кейс LootGift">
+                        <div class="case-info-box">
+                            <div class="case-name">${c.name}</div>
+                            <div class="case-price">БЕСПЛАТНО</div>
+                            <button class="btn btn-premium" onclick="openCaseScreen('${c.name}')">ОТКРЫТЬ</button>
+                        </div>
+                    `;
+                } else {
+                    card.className = 'case-card';
+                    card.innerHTML = `
+                        <div class="case-icon">${c.icon}</div>
+                        <div class="case-name-std">${c.name}</div>
+                        <div class="case-price-std">БЕСПЛАТНО</div>
+                        <button class="btn" onclick="openCaseScreen('${c.name}')">ОТКРЫТЬ</button>
+                    `;
+                }
                 grid.appendChild(card);
             });
             appDiv.appendChild(grid);
