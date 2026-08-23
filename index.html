@@ -7,15 +7,14 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            /* Темный, чистый фон для всего приложения */
-            --bg-color: #0d0d12; 
-            --card-bg: #1a1a24; 
-            /* Цвет нижней части картинки кейса для идеального слияния внутри карточки */
-            --special-bg: #282a3a; 
+            /* Тот самый глубокий цвет с твоего скриншота для ВСЕГО приложения */
+            --bg-color: #2b2d3c; 
+            /* Фон обычных кейсов чуть темнее, чтобы они не сливались в кашу */
+            --card-bg: #20222f; 
             --text-color: #ffffff;
             --accent-green: #71e654;
             --green-glow: rgba(113, 230, 84, 0.4);
-            --border-color: #2a2a35;
+            --border-color: #3e4257;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -27,7 +26,7 @@
             overflow: hidden; /* Блокируем прокрутку во время экрана загрузки */
         }
 
-        /* --- ЭКРАН ЗАГРУЗКИ --- */
+        /* --- ЭКРАН ЗАГРУЗКИ (ОСТАВЛЕН БЕЗ ИЗМЕНЕНИЙ) --- */
         #loading-screen {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -36,7 +35,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-color: #050508; /* Практически черный фон, как ты просил */
+            background-color: #050508; /* Тот самый почти черный фон */
             transition: opacity 0.6s ease, visibility 0.6s ease;
         }
         .loading-content {
@@ -49,7 +48,7 @@
             max-width: 220px;
             border-radius: 20px;
             animation: pulseLogo 2s infinite alternate ease-in-out;
-            mix-blend-mode: lighten; /* Идеально растворяет черный фон картинки */
+            mix-blend-mode: lighten;
         }
         .loading-text {
             margin-top: 24px;
@@ -89,7 +88,7 @@
         
         /* --- ПРЕМИУМ КЕЙС --- */
         .case-card-special {
-            background-color: var(--special-bg);
+            background-color: var(--bg-color); /* Фон карточки = фон приложения = фон картинки */
             border: 2px solid #5a3e8c;
             border-radius: 16px;
             padding: 0; 
@@ -108,10 +107,9 @@
         }
         
         .case-info-box {
-            background-color: var(--special-bg);
+            background-color: var(--bg-color);
             padding: 10px 14px 16px 14px;
-            /* ХИТРЫЙ ТРЮК: Наезжаем на 3 пикселя вверх на картинку, чтобы 100% скрыть любую полоску/рамку */
-            margin-top: -3px; 
+            margin-top: -3px; /* Защита от микро-полосок */
             position: relative;
             z-index: 2;
         }
