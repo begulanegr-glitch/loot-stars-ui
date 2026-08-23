@@ -7,13 +7,13 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            /* Единая палитра под новый логотип и кейс */
-            --bg-color: #0b0914; /* Глубокий темный фон */
-            --card-bg: #151124; /* Фиолетово-серый фон для обычных кейсов */
+            /* Цвета подогнаны под фоны твоих сгенерированных картинок для идеального слияния */
+            --bg-color: #12131c; 
+            --card-bg: #1c1d2b; 
             --text-color: #ffffff;
-            --accent-green: #71e654; /* Неоновый зеленый из логотипа */
+            --accent-green: #71e654; 
             --green-glow: rgba(113, 230, 84, 0.35);
-            --border-color: #2a1f42; /* Темно-фиолетовые рамки */
+            --border-color: #2a2542; 
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -24,18 +24,18 @@
             padding-bottom: 40px;
         }
         
-        /* Шапка с логотипом LootGift */
         .header-logo {
             text-align: center;
             margin-bottom: 24px;
         }
         .header-logo img {
-            max-width: 200px;
+            max-width: 220px;
             height: auto;
+            /* Трюк 1: Растворяет темный квадратный фон JPEG картинки */
+            mix-blend-mode: lighten; 
             filter: drop-shadow(0 0 15px var(--green-glow));
         }
 
-        /* Заголовки категорий */
         h2 { 
             font-size: 16px; 
             margin-top: 32px; 
@@ -43,7 +43,7 @@
             padding-bottom: 8px; 
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #a78bfa; /* Мягкий фиолетовый текст */
+            color: #a78bfa; 
         }
         .grid-container {
             display: grid;
@@ -52,9 +52,9 @@
             margin-top: 16px;
         }
         
-        /* Стили для премиум-кейса */
         .case-card-special {
-            background: linear-gradient(145deg, #1f192b, #120e1a);
+            /* Фон карточки подобран под фон картинки с кейсом */
+            background: linear-gradient(145deg, #262536, #1a1926);
             border: 2px solid #5a3e8c;
             box-shadow: 0 0 20px rgba(90, 62, 140, 0.4);
             border-radius: 16px;
@@ -63,12 +63,15 @@
             transition: transform 0.1s;
         }
         .case-card-special:active { transform: scale(0.95); }
+        
         .premium-case-img {
             width: 100%;
-            border-radius: 8px;
             margin-bottom: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            /* Трюк 2: Плавное размытие краев картинки (виньетка), чтобы спрятать резкие рамки */
+            -webkit-mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
+            mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
         }
+
         .case-name { 
             font-size: 16px; 
             font-weight: 800; 
@@ -82,7 +85,6 @@
             margin-bottom: 12px; 
         }
 
-        /* Стили для обычных карточек (теперь в тон приложению) */
         .case-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -97,7 +99,6 @@
         .case-name-std { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #e2d3fd; }
         .case-price-std { font-size: 12px; color: var(--accent-green); margin-bottom: 12px; font-weight: bold; }
         
-        /* Кнопки */
         .btn {
             background: linear-gradient(135deg, #71e654, #4db335);
             color: #0b1a10;
@@ -122,7 +123,6 @@
 <body>
 
     <div class="header-logo">
-        <!-- Картинка загрузится благодаря исправленному расширению -->
         <img src="logo-text.jpg.jfif" alt="LootGift Logo">
     </div>
     
@@ -132,7 +132,6 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Полный список всех твоих кейсов восстановлен!
         const categories = [
             {
                 title: "Эксклюзивные кейсы",
