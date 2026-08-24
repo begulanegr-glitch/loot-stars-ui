@@ -32,9 +32,9 @@
         }
         .balance-star { width: 18px; height: 18px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
 
-        /* Анимация вылетающих цифр */
+        /* Анимация вылетающих цифр теперь СЛЕВА */
         .floating-text {
-            position: absolute; right: -40px; top: 5px; font-size: 14px; font-weight: 900;
+            position: absolute; left: -50px; top: 6px; font-size: 16px; font-weight: 900;
             opacity: 1; pointer-events: none; transition: transform 0.8s ease-out, opacity 0.8s ease-out;
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
@@ -159,10 +159,9 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // МАГИЯ СОХРАНЕНИЯ БАЛАНСА! (localStorage)
         let userBalance = localStorage.getItem('lootgift_balance');
         if (userBalance === null) {
-            userBalance = 1000; // Стартовый баланс для новичка
+            userBalance = 1000; 
         } else {
             userBalance = parseInt(userBalance);
         }
@@ -171,14 +170,45 @@
             document.getElementById('tg-username').innerText = tg.initDataUnsafe.user.first_name;
         }
 
-        // Вывод баланса и сохранение
-        function updateBalanceDisplay() {
-            document.getElementById('balance-display').innerText = userBalance;
-            localStorage.setItem('lootgift_balance', userBalance); // Сохраняем навсегда
-        }
-        updateBalanceDisplay(); // Отрисовываем баланс при загрузке
+        // --- НОВАЯ ФУНКЦИЯ: БЕГУЩИЕ ЦИФРЫ БАЛАНСА ---
+        function updateBalanceDisplay(targetBalance, animate = false) {
+            const display = document.getElementById('balance-display');
+            const startBalance = parseInt(display.innerText) || userBalance;
+            
+            localStorage.setItem('lootgift_balance', targetBalance); 
+            
+            if (!animate || startBalance === targetBalance) {
+                display.innerText = targetBalance;
+                return;
+            }
 
-        // Функция плавающих цифр
+            const duration = 500; // Ровно 0.5 секунды
+            const startTime = performance.now();
+
+            function animateScroll(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const currentVal = Math.floor(startBalance + (targetBalance - startBalance) * progress);
+                display.innerText = currentVal;
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateScroll);
+                } else {
+                    display.innerText = targetBalance; 
+                }
+            }
+            requestAnimationFrame(animateScroll);
+            
+            const box = document.getElementById('balance-box');
+            box.style.transform = 'scale(1.1)';
+            setTimeout(() => box.style.transform = 'scale(1)', 200);
+        }
+
+        // Инициализация баланса при старте
+        updateBalanceDisplay(userBalance, false);
+
+        // Анимация вылетающих цифр слева
         function showBalanceAnimation(amount) {
             const box = document.getElementById('balance-box');
             const floatText = document.createElement('div');
@@ -186,21 +216,19 @@
             
             if (amount < 0) {
                 floatText.innerText = amount;
-                floatText.style.color = '#ff2a5f'; // Красный для списания
+                floatText.style.color = '#ff2a5f'; 
             } else {
                 floatText.innerText = `+${amount}`;
-                floatText.style.color = '#71e654'; // Зеленый для плюса
+                floatText.style.color = '#71e654'; 
             }
             
             box.appendChild(floatText);
 
-            // Запускаем анимацию полета вверх
             setTimeout(() => {
                 floatText.style.transform = 'translateY(-20px)';
                 floatText.style.opacity = '0';
             }, 50);
 
-            // Удаляем элемент после анимации
             setTimeout(() => {
                 floatText.remove();
             }, 850);
@@ -312,7 +340,6 @@
                 `;
             }
             
-            // Обновляем текст на кнопке (с картинкой звезды)
             document.getElementById('spin-cost').innerText = (activeCasePrice * currentQty);
         }
 
@@ -359,9 +386,9 @@
                 return;
             }
 
-            // ТРАТА БАЛАНСА И АНИМАЦИЯ
+            // ТРАТА БАЛАНСА И АНИМАЦИЯ БЕГУЩИХ ЦИФР
             userBalance -= totalCost;
-            updateBalanceDisplay();
+            updateBalanceDisplay(userBalance, true); // Передаем true для анимации
             showBalanceAnimation(-totalCost);
 
             const btn = document.getElementById('spin-btn');
@@ -421,9 +448,9 @@
             setTimeout(() => {
                 btn.disabled = false;
                 
-                // ВЫИГРЫШ БАЛАНСА И АНИМАЦИЯ
+                // ВЫИГРЫШ БАЛАНСА И АНИМАЦИЯ БЕГУЩИХ ЦИФР
                 userBalance += totalValue;
-                updateBalanceDisplay();
+                updateBalanceDisplay(userBalance, true); // Передаем true для анимации
                 showBalanceAnimation(totalValue);
 
                 tg.HapticFeedback.notificationOccurred('success');
@@ -440,7 +467,6 @@
             }, maxDelay);
         }
 
-        // РЕНДЕР КЕЙСОВ
         const categories = [
             {
                 title: "Эксклюзивные кейсы",
