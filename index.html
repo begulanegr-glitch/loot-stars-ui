@@ -496,20 +496,34 @@
             }, maxDelay);
         }
 
-        // РЕНДЕР КЕЙСОВ: Золотая Казна перенесена в Стандартные Модули
+        // РЕНДЕР КЕЙСОВ И ВОЗВРАЩЕНИЕ КАТЕГОРИЙ 50/50 и ФАРМ
         const categories = [
             {
                 title: "Премиум Модули",
                 cases: [
-                    { id: 'epicCase', name: "Эпический Дар", price: 100, image: "case1.jpg.jfif", special: true }
+                    { id: 'epicCase', name: "Эпический Дар", price: 100, image: "case1.jpg.jfif", special: true },
+                    { id: 'goldCase', name: "Золотая Казна", price: 50, image: "case4.png", special: true }
                 ]
             },
             {
                 title: "Стандартные Модули",
                 cases: [
-                    { id: 'goldCase', name: "Золотая Казна", price: 50, image: "case4.jpg", special: false },
                     { id: 'neonCase', name: "Неоновый Тайник", price: 25, image: "case3.png", special: false },
-                    { id: 'summerCase', name: "Пляжный Вайб", price: 10, image: "case2.jpg", special: false }
+                    { id: 'summerCase', name: "Пляжный Вайб", price: 10, image: "case2.png", special: false }
+                ]
+            },
+            {
+                title: "Фарм кейсы",
+                cases: [
+                    { id: 'farmSmall', name: "Мелкий Фарм", price: 15, icon: "📦", special: false },
+                    { id: 'farmBig', name: "Крупный Фарм", price: 40, icon: "🧰", special: false }
+                ]
+            },
+            {
+                title: "50 / 50",
+                cases: [
+                    { id: 'fiftyCoin', name: "Орёл и Решка", price: 20, icon: "🪙", special: false },
+                    { id: 'fiftyRisk', name: "Ва-банк", price: 100, icon: "⚖️", special: false }
                 ]
             }
         ];
