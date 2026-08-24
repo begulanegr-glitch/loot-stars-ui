@@ -157,7 +157,7 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // БАЛАНС И ЕГО СОХРАНЕНИЕ
+        // БАЛАНС
         let userBalance = localStorage.getItem('lootgift_balance');
         if (userBalance === null) {
             userBalance = 1000; 
@@ -251,7 +251,7 @@
             'trash': { name: 'БАЗОВЫЙ', color: '#9ca3af' }      
         };
 
-        // БАЗА ДАННЫХ ДЛЯ 3-Х КЕЙСОВ
+        // БАЗА ДАННЫХ КЕЙСОВ
         const casesData = {
             epicCase: [
                 { icon: 'bear.png', name: 'Мишка', value: 15, prob: 0.35, rarity: 'trash' },
@@ -282,28 +282,40 @@
                 { icon: 'bouquet.png', name: 'Букет', value: 600, prob: 0.0005, rarity: 'legendary' }
             ],
             sector7: [
-                { icon: 'stars50.png', name: '5 Stars', value: 5, prob: 0.3925, rarity: 'trash' },
-                { icon: 'stars50.png', name: '10 Stars', value: 10, prob: 0.24, rarity: 'trash' },
-                { icon: 'heart.png', name: 'Сердце', value: 15, prob: 0.15, rarity: 'trash' },
-                { icon: 'stars50.png', name: '25 Stars', value: 25, prob: 0.08, rarity: 'common' },
-                { icon: 'rose.png', name: 'Роза', value: 25, prob: 0.08, rarity: 'common' },
-                { icon: 'rocket.png', name: 'Ракета', value: 50, prob: 0.035, rarity: 'common' },
+                { icon: 'stars50.png', name: '5 Stars', value: 5, prob: 0.45, rarity: 'trash' },
+                { icon: 'stars50.png', name: '10 Stars', value: 10, prob: 0.25, rarity: 'trash' },
+                { icon: 'heart.png', name: 'Сердце', value: 15, prob: 0.12, rarity: 'trash' },
+                { icon: 'stars50.png', name: '25 Stars', value: 25, prob: 0.06, rarity: 'common' },
+                { icon: 'rose.png', name: 'Роза', value: 25, prob: 0.06, rarity: 'common' },
+                { icon: 'rocket.png', name: 'Ракета', value: 50, prob: 0.03, rarity: 'common' },
                 { icon: 'trophy.png', name: 'Кубок', value: 100, prob: 0.015, rarity: 'rare' },
-                { icon: 'sock.png', name: 'Носок', value: 375, prob: 0.003, rarity: 'rare' },
-                { icon: 'tamagotchi.png', name: 'Тамагочи', value: 495, prob: 0.002, rarity: 'legendary' },
-                { icon: 'gluhwein.png', name: 'Глинтвейн', value: 519, prob: 0.0012, rarity: 'legendary' },
-                { icon: 'surfboard.png', name: 'Серф', value: 711, prob: 0.0008, rarity: 'legendary' },
-                { icon: 'candle.png', name: 'Свеча', value: 951, prob: 0.0005, rarity: 'legendary' }
+                { icon: 'sock.png', name: 'Носок', value: 375, prob: 0.002, rarity: 'rare' },
+                { icon: 'tamagotchi.png', name: 'Тамагочи', value: 495, prob: 0.001, rarity: 'legendary' },
+                { icon: 'gluhwein.png', name: 'Глинтвейн', value: 519, prob: 0.001, rarity: 'legendary' },
+                { icon: 'surfboard.png', name: 'Серф', value: 711, prob: 0.0006, rarity: 'legendary' },
+                { icon: 'candle.png', name: 'Свеча', value: 951, prob: 0.0004, rarity: 'legendary' }
             ]
         };
 
-        let spinsCount = 0; 
+        // ЗАЩИЩЕННЫЙ БАЙТ (РАБОТАЕТ ТОЛЬКО ПЕРВЫЕ 2 КРУТКИ НАВСЕГДА)
+        let spinsCount = localStorage.getItem('lootgift_spins');
+        if (spinsCount === null) {
+            spinsCount = 0;
+        } else {
+            spinsCount = parseInt(spinsCount);
+        }
 
         function getRandomItem(caseId) {
             spinsCount++;
+            localStorage.setItem('lootgift_spins', spinsCount);
+
             let items = casesData[caseId];
             let rand = Math.random();
-            if (spinsCount <= 2 && rand > 0.4) return items[7]; 
+            
+            if (spinsCount <= 2 && rand > 0.4) {
+                return items[7]; 
+            }
+            
             let cumulative = 0;
             for (let i = 0; i < items.length; i++) {
                 cumulative += items[i].prob;
