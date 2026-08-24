@@ -496,7 +496,7 @@
             }, maxDelay);
         }
 
-        // ПОЛНЫЙ РЕНДЕР ВСЕХ КАТЕГОРИЙ (ПРЕМИУМ, СТАНДАРТНЫЕ, ФАРМ И 50/50)
+        // РЕНДЕР ВСЕХ 16 КЕЙСОВ 
         const categories = [
             {
                 title: "Премиум Модули",
@@ -507,23 +507,36 @@
             {
                 title: "Стандартные Модули",
                 cases: [
-                    { id: 'goldCase', name: "Золотая Казна", price: 50, image: "case4.jpg", special: false },
+                    { id: 'goldCase', name: "Золотая Казна", price: 50, image: "case4.png", special: false },
                     { id: 'neonCase', name: "Неоновый Тайник", price: 25, image: "case3.png", special: false },
-                    { id: 'summerCase', name: "Пляжный Вайб", price: 10, image: "case2.jpg", special: false }
+                    { id: 'summerCase', name: "Пляжный Вайб", price: 10, image: "case2.png", special: false },
+                    { id: 'baseNode', name: "Базовый узел", price: 5, icon: "⚙️", special: false }
                 ]
             },
             {
                 title: "Фарм кейсы",
                 cases: [
+                    { id: 'farmMini', name: "Мини Фарм", price: 5, icon: "🛍️", special: false },
                     { id: 'farmSmall', name: "Мелкий Фарм", price: 15, icon: "📦", special: false },
-                    { id: 'farmBig', name: "Крупный Фарм", price: 40, icon: "🧰", special: false }
+                    { id: 'farmMedium', name: "Средний Фарм", price: 25, icon: "🎒", special: false },
+                    { id: 'farmBig', name: "Крупный Фарм", price: 40, icon: "🧰", special: false },
+                    { id: 'farmMega', name: "Мега Фарм", price: 100, icon: "💎", special: false }
                 ]
             },
             {
                 title: "50 / 50",
                 cases: [
+                    { id: 'fiftyMini', name: "Монетка", price: 10, icon: "🥉", special: false },
                     { id: 'fiftyCoin', name: "Орёл и Решка", price: 20, icon: "🪙", special: false },
+                    { id: 'fiftyMid', name: "Риск", price: 50, icon: "🎲", special: false },
                     { id: 'fiftyRisk', name: "Ва-банк", price: 100, icon: "⚖️", special: false }
+                ]
+            },
+            {
+                title: "Особые",
+                cases: [
+                    { id: 'secretBox', name: "Тайный груз", price: 75, icon: "🗃️", special: false },
+                    { id: 'surpriseBox', name: "Сюрприз", price: 30, icon: "🎁", special: false }
                 ]
             }
         ];
@@ -558,7 +571,7 @@
                     card.innerHTML = `
                         ${iconHtml}
                         <div class="case-name-std">${c.name}</div>
-                        <div class="case-price-std">${c.price} <img src="star.png" alt="star"></div>
+                        <div class="case-price-std">${c.price} <img src="star.png" alt="star" style="width:12px; height:12px; vertical-align:middle;"></div>
                         <button class="btn" onclick="openCaseScreen('${c.id}', ${c.price})">ОТКРЫТЬ</button>
                     `;
                 }
