@@ -275,6 +275,20 @@
                 { icon: 'stars300.png', name: '1000 Stars', value: 1000, prob: 0.002, rarity: 'legendary' },
                 { icon: 'stars300.png', name: '2500 Stars', value: 2500, prob: 0.001, rarity: 'legendary' }
             ],
+            vintageCase: [
+                { icon: 'stars50.png', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png', name: '1 Star', value: 1, prob: 0.174, rarity: 'trash' }, 
+                { icon: 'book.png', name: 'Книга', value: 580, prob: 0.027, rarity: 'common' },
+                { icon: 'basket.png', name: 'Корзинка', value: 620, prob: 0.02, rarity: 'common' },
+                { icon: 'cake.png', name: 'Торт', value: 646, prob: 0.015, rarity: 'rare' },
+                { icon: 'saber.png', name: 'Меч', value: 711, prob: 0.008, rarity: 'rare' },
+                { icon: 'cigar.png', name: 'Сигара', value: 1500, prob: 0.005, rarity: 'legendary' },
+                { icon: 'glasses.png', name: 'Очки', value: 10564, prob: 0.001, rarity: 'legendary' }
+            ],
             neonCase: [
                 { icon: 'stars50.png', name: '5 Stars', value: 5, prob: 0.45, rarity: 'trash' },
                 { icon: 'stars50.png', name: '10 Stars', value: 10, prob: 0.25, rarity: 'trash' },
@@ -335,8 +349,18 @@
         function renderLootGrid(caseId) {
             const grid = document.getElementById('loot-grid');
             grid.innerHTML = '';
-            const reversedItems = [...casesData[caseId]].reverse();
-            reversedItems.forEach(item => {
+            
+            // Чтобы сетка лута отображала только 1 иконку звезды (без дублей), отфильтруем их для визуала
+            const uniqueItems = [];
+            const seenNames = new Set();
+            [...casesData[caseId]].reverse().forEach(item => {
+                if (!seenNames.has(item.name)) {
+                    seenNames.add(item.name);
+                    uniqueItems.push(item);
+                }
+            });
+
+            uniqueItems.forEach(item => {
                 const rInfo = rarityNames[item.rarity];
                 grid.innerHTML += `
                     <div class="loot-box rarity-${item.rarity}">
@@ -496,7 +520,7 @@
             }, maxDelay);
         }
 
-        // РЕНДЕР ВСЕХ 16 КЕЙСОВ 
+        // РЕНДЕР ВСЕХ КЕЙСОВ И КАТЕГОРИЙ
         const categories = [
             {
                 title: "Премиум Модули",
@@ -507,6 +531,7 @@
             {
                 title: "Стандартные Модули",
                 cases: [
+                    { id: 'vintageCase', name: "Винтажный Бокс", price: 100, image: "case5.png", special: false },
                     { id: 'goldCase', name: "Золотая Казна", price: 50, image: "case4.png", special: false },
                     { id: 'neonCase', name: "Неоновый Тайник", price: 25, image: "case3.png", special: false },
                     { id: 'summerCase', name: "Пляжный Вайб", price: 10, image: "case2.png", special: false },
@@ -530,13 +555,6 @@
                     { id: 'fiftyCoin', name: "Орёл и Решка", price: 20, icon: "🪙", special: false },
                     { id: 'fiftyMid', name: "Риск", price: 50, icon: "🎲", special: false },
                     { id: 'fiftyRisk', name: "Ва-банк", price: 100, icon: "⚖️", special: false }
-                ]
-            },
-            {
-                title: "Особые",
-                cases: [
-                    { id: 'secretBox', name: "Тайный груз", price: 75, icon: "🗃️", special: false },
-                    { id: 'surpriseBox', name: "Сюрприз", price: 30, icon: "🎁", special: false }
                 ]
             }
         ];
