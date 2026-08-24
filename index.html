@@ -89,14 +89,8 @@
         .qty-row { display: flex; gap: 8px; margin-bottom: 15px; }
         .qty-btn { background: var(--card-bg); border: 1px solid var(--border-color); color: white; border-radius: 6px; padding: 10px 16px; font-weight: bold; cursor: pointer; transition: 0.2s; flex: 1; text-align: center; }
         .qty-btn.active { background: var(--accent-green); color: #000; border-color: var(--accent-green); }
-        
-        .promo-container { display: flex; gap: 8px; width: 100%; max-width: 350px; margin-bottom: 20px; }
-        .promo-input { background: var(--card-bg); color: white; width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 16px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; text-align: center; box-sizing: border-box; outline: none; transition: 0.2s; }
-        .promo-input:focus { border-color: var(--accent-green); box-shadow: 0 0 10px rgba(113, 230, 84, 0.2); }
-        .promo-btn { background: var(--border-color); color: white; border: none; padding: 0 20px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .promo-btn:hover { background: var(--accent-green); color: black; }
 
-        /* --- СЕТКА ЛУТА С БЛЮРОМ И РЕДКОСТЬЮ --- */
+        /* --- СЕТКА ЛУТА --- */
         .loot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 350px; }
         .loot-box { background: #1a1b26; border: 1px solid #3e4257; border-radius: 8px; height: 85px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: pointer; }
         .loot-box img { width: 45%; height: 45%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); transition: 0.3s; margin-top: 4px; }
@@ -150,11 +144,6 @@
             <button class="qty-btn" onclick="selectQty(this, 3)">3</button>
             <button class="qty-btn" onclick="selectQty(this, 4)">4</button>
             <button class="qty-btn" onclick="selectQty(this, 5)">5</button>
-        </div>
-
-        <div class="promo-container">
-            <input type="text" id="promo-input-field" class="promo-input" placeholder="ПРОМОКОД">
-            <button class="promo-btn" onclick="applyPromo()">ОК</button>
         </div>
 
         <div class="loot-grid" id="loot-grid"></div>
@@ -236,29 +225,6 @@
             }, 850);
         }
 
-        // СИСТЕМА ПРОМОКОДОВ
-        function applyPromo() {
-            const input = document.getElementById('promo-input-field');
-            const val = input.value.trim().toUpperCase();
-            
-            if (val === 'PROMO') {
-                if (localStorage.getItem('lootgift_promo_used') === 'true') {
-                    tg.showAlert('Этот промокод уже был использован!');
-                } else {
-                    userBalance += 1000000;
-                    localStorage.setItem('lootgift_promo_used', 'true');
-                    updateBalanceDisplay(userBalance, true);
-                    showBalanceAnimation(1000000);
-                    tg.HapticFeedback.notificationOccurred('success');
-                    tg.showAlert('🔥 Промокод активирован! Вы получили 1 000 000 ⭐! Открывайте любые кейсы!');
-                    input.value = '';
-                }
-            } else {
-                tg.HapticFeedback.notificationOccurred('error');
-                tg.showAlert('Неверный или неактивный промокод!');
-            }
-        }
-
         let currentQty = 1; 
         let currentItemSize = 100;
         let activeCaseId = null;
@@ -294,6 +260,20 @@
                 { icon: 'button.png', name: 'Кнопка', value: 700, prob: 0.008, rarity: 'rare' },
                 { icon: 'sphere.png', name: 'Сфера', value: 1305, prob: 0.002, rarity: 'legendary' },
                 { icon: 'eagle.png', name: 'Орёл', value: 2655, prob: 0.001, rarity: 'legendary' }
+            ],
+            shadowCase: [
+                { icon: 'stars50.png', name: '1 Star', value: 1, prob: 0.0349, rarity: 'trash' },
+                { icon: 'stars50.png', name: '10 Stars', value: 10, prob: 0.05, rarity: 'trash' },
+                { icon: 'stars50.png', name: '25 Stars', value: 25, prob: 0.10, rarity: 'trash' },
+                { icon: 'stars50.png', name: '50 Stars', value: 50, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars150.png', name: '100 Stars', value: 100, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars150.png', name: '250 Stars', value: 250, prob: 0.20, rarity: 'rare' },
+                { icon: 'stars300.png', name: '500 Stars', value: 500, prob: 0.15, rarity: 'rare' },
+                { icon: 'stars300.png', name: '1000 Stars', value: 1000, prob: 0.10, rarity: 'common' },
+                { icon: 'stars300.png', name: '2500 Stars', value: 2500, prob: 0.04, rarity: 'common' },
+                { icon: 'stars300.png', name: '5000 Stars', value: 5000, prob: 0.02, rarity: 'common' },
+                { icon: 'stars300.png', name: '10000 Stars', value: 10000, prob: 0.005, rarity: 'legendary' },
+                { icon: 'pepe.png', name: 'Пепе', value: 677097, prob: 0.0001, rarity: 'legendary' } 
             ],
             goldCase: [
                 { icon: 'stars50.png', name: '5 Stars', value: 5, prob: 0.25, rarity: 'trash' },
@@ -353,7 +333,6 @@
             ]
         };
 
-        // ЗАЩИЩЕННЫЙ БАЙТ
         let spinsCount = localStorage.getItem('lootgift_spins');
         if (spinsCount === null) {
             spinsCount = 0;
@@ -361,9 +340,12 @@
             spinsCount = parseInt(spinsCount);
         }
 
+        // --- ДОБАВЛЕНА ПРОВЕРКА НА 1.5 МЛН ЗВЕЗД ДЛЯ ЗАЩИТЫ ---
         function getRandomItem(caseId) {
             spinsCount++;
             localStorage.setItem('lootgift_spins', spinsCount);
+            
+            let totalWon = parseInt(localStorage.getItem('lootgift_total_won') || '0');
 
             let items = casesData[caseId];
             let rand = Math.random();
@@ -375,7 +357,17 @@
             let cumulative = 0;
             for (let i = 0; i < items.length; i++) {
                 cumulative += items[i].prob;
-                if (rand <= cumulative) return items[i];
+                if (rand <= cumulative) {
+                    let selected = items[i];
+                    
+                    // Блокировка выпадения Пепе, если игрок еще не выиграл 1.5кк за все время!
+                    if (selected.name === 'Пепе' && totalWon < 1500000) {
+                        let fallback = items.find(i => i.name === '10000 Stars') || items[0];
+                        return fallback; 
+                    }
+                    
+                    return selected;
+                }
             }
             return items[0]; 
         }
@@ -538,6 +530,11 @@
                 userBalance += totalValue;
                 updateBalanceDisplay(userBalance, true);
                 showBalanceAnimation(totalValue);
+                
+                // СОХРАНЯЕМ ОБЩУЮ СУММУ ВЫИГРЫШЕЙ
+                let totalWon = parseInt(localStorage.getItem('lootgift_total_won') || '0');
+                totalWon += totalValue;
+                localStorage.setItem('lootgift_total_won', totalWon);
 
                 tg.HapticFeedback.notificationOccurred('success');
                 
@@ -553,7 +550,6 @@
             }, maxDelay);
         }
 
-        // РЕНДЕР КЕЙСОВ - БАЗОВЫЙ УЗЕЛ УДАЛЕН, ЗАГЛУШКИ НА МЕСТЕ
         const categories = [
             {
                 title: "Премиум Модули",
@@ -564,6 +560,7 @@
             {
                 title: "Стандартные Модули",
                 cases: [
+                    { id: 'shadowCase', name: "Теневой Синдикат", price: 1000, image: "case6.jpg", special: false },
                     { id: 'vintageCase', name: "Винтажный Бокс", price: 100, image: "case5.png", special: false },
                     { id: 'goldCase', name: "Золотая Казна", price: 50, image: "case4.png", special: false },
                     { id: 'neonCase', name: "Неоновый Тайник", price: 25, image: "case3.png", special: false },
