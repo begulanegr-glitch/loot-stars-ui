@@ -90,9 +90,6 @@
         .qty-btn { background: var(--card-bg); border: 1px solid var(--border-color); color: white; border-radius: 6px; padding: 10px 16px; font-weight: bold; cursor: pointer; transition: 0.2s; flex: 1; text-align: center; }
         .qty-btn.active { background: var(--accent-green); color: #000; border-color: var(--accent-green); }
         
-        .promo-input { background: var(--card-bg); color: white; width: 100%; max-width: 350px; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 16px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; text-align: center; box-sizing: border-box; outline: none; transition: 0.2s; }
-        .promo-input:focus { border-color: var(--accent-green); box-shadow: 0 0 10px rgba(113, 230, 84, 0.2); }
-
         /* --- СЕТКА ЛУТА С БЛЮРОМ И РЕДКОСТЬЮ --- */
         .loot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 350px; }
         .loot-box { background: #1a1b26; border: 1px solid #3e4257; border-radius: 8px; height: 85px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: pointer; }
@@ -149,7 +146,6 @@
             <button class="qty-btn" onclick="selectQty(this, 5)">5</button>
         </div>
 
-        <input type="text" class="promo-input" placeholder="ПРОМОКОД">
         <div class="loot-grid" id="loot-grid"></div>
     </div>
 
@@ -157,7 +153,6 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // БАЛАНС
         let userBalance = localStorage.getItem('lootgift_balance');
         if (userBalance === null) {
             userBalance = 1000; 
@@ -251,7 +246,6 @@
             'trash': { name: 'БАЗОВЫЙ', color: '#9ca3af' }      
         };
 
-        // БАЗА ДАННЫХ КЕЙСОВ
         const casesData = {
             epicCase: [
                 { icon: 'bear.png', name: 'Мишка', value: 15, prob: 0.35, rarity: 'trash' },
@@ -267,6 +261,34 @@
                 { icon: 'sphere.png', name: 'Сфера', value: 1305, prob: 0.002, rarity: 'legendary' },
                 { icon: 'eagle.png', name: 'Орёл', value: 2655, prob: 0.001, rarity: 'legendary' }
             ],
+            goldCase: [
+                { icon: 'stars50.png', name: '5 Stars', value: 5, prob: 0.25, rarity: 'trash' },
+                { icon: 'stars50.png', name: '10 Stars', value: 10, prob: 0.25, rarity: 'trash' },
+                { icon: 'stars50.png', name: '15 Stars', value: 15, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png', name: '25 Stars', value: 25, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png', name: '50 Stars', value: 50, prob: 0.10, rarity: 'common' },
+                { icon: 'stars150.png', name: '75 Stars', value: 75, prob: 0.045, rarity: 'rare' },
+                { icon: 'stars150.png', name: '100 Stars', value: 100, prob: 0.03, rarity: 'rare' },
+                { icon: 'stars150.png', name: '150 Stars', value: 150, prob: 0.012, rarity: 'common' },
+                { icon: 'stars300.png', name: '300 Stars', value: 300, prob: 0.007, rarity: 'common' },
+                { icon: 'stars300.png', name: '500 Stars', value: 500, prob: 0.003, rarity: 'rare' },
+                { icon: 'stars300.png', name: '1000 Stars', value: 1000, prob: 0.002, rarity: 'legendary' },
+                { icon: 'stars300.png', name: '2500 Stars', value: 2500, prob: 0.001, rarity: 'legendary' }
+            ],
+            neonCase: [
+                { icon: 'stars50.png', name: '5 Stars', value: 5, prob: 0.45, rarity: 'trash' },
+                { icon: 'stars50.png', name: '10 Stars', value: 10, prob: 0.25, rarity: 'trash' },
+                { icon: 'heart.png', name: 'Сердце', value: 15, prob: 0.12, rarity: 'trash' },
+                { icon: 'stars50.png', name: '25 Stars', value: 25, prob: 0.06, rarity: 'common' },
+                { icon: 'rose.png', name: 'Роза', value: 25, prob: 0.06, rarity: 'common' },
+                { icon: 'rocket.png', name: 'Ракета', value: 50, prob: 0.03, rarity: 'common' },
+                { icon: 'trophy.png', name: 'Кубок', value: 100, prob: 0.015, rarity: 'rare' },
+                { icon: 'sock.png', name: 'Носок', value: 375, prob: 0.002, rarity: 'rare' },
+                { icon: 'tamagotchi.png', name: 'Тамагочи', value: 495, prob: 0.001, rarity: 'legendary' },
+                { icon: 'gluhwein.png', name: 'Глинтвейн', value: 519, prob: 0.001, rarity: 'legendary' },
+                { icon: 'surfboard.png', name: 'Серф', value: 711, prob: 0.0006, rarity: 'legendary' },
+                { icon: 'candle.png', name: 'Свеча', value: 951, prob: 0.0004, rarity: 'legendary' }
+            ],
             summerCase: [
                 { icon: 'stars50.png', name: '1 Star', value: 1, prob: 0.3605, rarity: 'trash' },
                 { icon: 'stars50.png', name: '2 Stars', value: 2, prob: 0.25, rarity: 'trash' },
@@ -280,24 +302,10 @@
                 { icon: 'flamingo.png', name: 'Фламинго', value: 370, prob: 0.0025, rarity: 'rare' },
                 { icon: 'lollipop.png', name: 'Леденец', value: 450, prob: 0.0015, rarity: 'legendary' },
                 { icon: 'bouquet.png', name: 'Букет', value: 600, prob: 0.0005, rarity: 'legendary' }
-            ],
-            sector7: [
-                { icon: 'stars50.png', name: '5 Stars', value: 5, prob: 0.45, rarity: 'trash' },
-                { icon: 'stars50.png', name: '10 Stars', value: 10, prob: 0.25, rarity: 'trash' },
-                { icon: 'heart.png', name: 'Сердце', value: 15, prob: 0.12, rarity: 'trash' },
-                { icon: 'stars50.png', name: '25 Stars', value: 25, prob: 0.06, rarity: 'common' },
-                { icon: 'rose.png', name: 'Роза', value: 25, prob: 0.06, rarity: 'common' },
-                { icon: 'rocket.png', name: 'Ракета', value: 50, prob: 0.03, rarity: 'common' },
-                { icon: 'trophy.png', name: 'Кубок', value: 100, prob: 0.015, rarity: 'rare' },
-                { icon: 'sock.png', name: 'Носок', value: 375, prob: 0.002, rarity: 'rare' },
-                { icon: 'tamagotchi.png', name: 'Тамагочи', value: 495, prob: 0.001, rarity: 'legendary' },
-                { icon: 'gluhwein.png', name: 'Глинтвейн', value: 519, prob: 0.001, rarity: 'legendary' },
-                { icon: 'surfboard.png', name: 'Серф', value: 711, prob: 0.0006, rarity: 'legendary' },
-                { icon: 'candle.png', name: 'Свеча', value: 951, prob: 0.0004, rarity: 'legendary' }
             ]
         };
 
-        // ЗАЩИЩЕННЫЙ БАЙТ (РАБОТАЕТ ТОЛЬКО ПЕРВЫЕ 2 КРУТКИ НАВСЕГДА)
+        // ЗАЩИЩЕННЫЙ БАЙТ
         let spinsCount = localStorage.getItem('lootgift_spins');
         if (spinsCount === null) {
             spinsCount = 0;
@@ -488,20 +496,20 @@
             }, maxDelay);
         }
 
-        // РЕНДЕР КЕЙСОВ
+        // РЕНДЕР КЕЙСОВ: Золотая Казна перенесена в Стандартные Модули
         const categories = [
             {
-                title: "Эксклюзивные кейсы",
+                title: "Премиум Модули",
                 cases: [
                     { id: 'epicCase', name: "Эпический Дар", price: 100, image: "case1.jpg.jfif", special: true }
                 ]
             },
             {
-                title: "Обычные модули",
+                title: "Стандартные Модули",
                 cases: [
-                    { id: 'summerCase', name: "Базовый узел", price: 10, image: "case2.png", special: false },
-                    { id: 'sector7', name: "Сектор 7", price: 25, image: "case3.png", special: false },
-                    { id: 'rele', name: "Медный реле", price: 50, icon: "⚙️", special: false }
+                    { id: 'goldCase', name: "Золотая Казна", price: 50, image: "case4.jpg", special: false },
+                    { id: 'neonCase', name: "Неоновый Тайник", price: 25, image: "case3.png", special: false },
+                    { id: 'summerCase', name: "Пляжный Вайб", price: 10, image: "case2.jpg", special: false }
                 ]
             }
         ];
