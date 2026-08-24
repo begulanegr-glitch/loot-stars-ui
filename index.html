@@ -23,7 +23,21 @@
         /* --- ВЕРХНЯЯ ПАНЕЛЬ БАЛАНСА --- */
         .top-bar { position: fixed; top: 0; left: 0; right: 0; background-color: #1a1b26; border-bottom: 2px solid var(--border-color); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .user-info { display: flex; align-items: center; gap: 10px; font-weight: bold; }
-        .balance-box { background: rgba(113, 230, 84, 0.1); border: 1px solid var(--accent-green); padding: 6px 12px; border-radius: 8px; color: var(--accent-green); font-weight: 900; font-size: 16px; display: flex; align-items: center; gap: 5px; box-shadow: 0 0 10px var(--green-glow); transition: 0.3s; }
+        
+        .balance-box { 
+            position: relative; /* Для анимации вылетающих цифр */
+            background: rgba(113, 230, 84, 0.1); border: 1px solid var(--accent-green); padding: 6px 12px; 
+            border-radius: 8px; color: var(--accent-green); font-weight: 900; font-size: 16px; 
+            display: flex; align-items: center; gap: 6px; box-shadow: 0 0 10px var(--green-glow); transition: 0.3s; 
+        }
+        .balance-star { width: 18px; height: 18px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+
+        /* Анимация вылетающих цифр */
+        .floating-text {
+            position: absolute; right: -40px; top: 5px; font-size: 14px; font-weight: 900;
+            opacity: 1; pointer-events: none; transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
 
         /* --- ЭКРАН ЗАГРУЗКИ --- */
         #loading-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #050508; transition: opacity 0.6s ease, visibility 0.6s ease; }
@@ -43,13 +57,15 @@
         .premium-case-img { width: 100%; display: block; -webkit-mask-image: linear-gradient(to bottom, black 95%, transparent 100%); mask-image: linear-gradient(to bottom, black 95%, transparent 100%); }
         .case-info-box { background-color: transparent; padding: 0px 14px 16px 14px; position: relative; z-index: 2; margin-top: -5px; }
         .case-name { font-size: 16px; font-weight: 800; margin-bottom: 4px; color: #ffffff; }
-        .case-price { font-size: 14px; color: var(--accent-green); font-weight: bold; margin-bottom: 12px; }
+        .case-price { font-size: 14px; color: var(--accent-green); font-weight: bold; margin-bottom: 12px; display: flex; justify-content: center; align-items: center; gap: 4px; }
+        .case-price img { width: 14px; height: 14px; }
 
         .case-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 16px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; flex-direction: column; align-items: center;}
         .case-card:active { transform: scale(0.95); }
         .case-icon { font-size: 36px; margin-bottom: 8px; }
         .case-name-std { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #e2d3fd; }
-        .case-price-std { font-size: 12px; color: var(--accent-green); margin-bottom: 12px; font-weight: bold; }
+        .case-price-std { font-size: 12px; color: var(--accent-green); margin-bottom: 12px; font-weight: bold; display: flex; justify-content: center; align-items: center; gap: 4px; }
+        .case-price-std img { width: 12px; height: 12px; }
         
         .btn { background: linear-gradient(135deg, #71e654, #4db335); color: #0b1a10; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 800; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 12px; }
         .btn-premium { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; }
@@ -68,7 +84,7 @@
         
         .center-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #71e654; transform: translateX(-50%); z-index: 10; box-shadow: 0 0 10px #71e654; }
 
-        .spin-btn { background: #71e654; color: #000; font-size: 24px; font-weight: 900; padding: 15px 40px; border-radius: 12px; border: none; box-shadow: 0 6px 0 #4db335; cursor: pointer; text-transform: uppercase; width: 100%; max-width: 350px; margin-bottom: 15px; transition: 0.2s; }
+        .spin-btn { display: flex; justify-content: center; align-items: center; gap: 8px; background: #71e654; color: #000; font-size: 20px; font-weight: 900; padding: 15px 20px; border-radius: 12px; border: none; box-shadow: 0 6px 0 #4db335; cursor: pointer; text-transform: uppercase; width: 100%; max-width: 350px; margin-bottom: 15px; transition: 0.2s; }
         .spin-btn:active { transform: translateY(6px); box-shadow: 0 0 0 #4db335; }
         .spin-btn:disabled { background: #555; box-shadow: 0 6px 0 #333; color: #888; cursor: not-allowed; transform: translateY(6px); }
 
@@ -85,17 +101,14 @@
         .loot-box img { width: 45%; height: 45%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); transition: 0.3s; margin-top: 4px; }
         .loot-name { font-size: 10px; font-weight: 800; color: #fff; margin-top: 4px; text-align: center; transition: 0.3s; z-index: 1; text-shadow: 0 1px 2px #000; }
         
-        /* Квадратик редкости в углу */
         .loot-box::after { content: ''; position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; border-radius: 2px; transition: 0.3s; z-index: 2; }
         .rarity-trash::after { background: #9ca3af; }
         .rarity-common::after { background: #8b5cf6; } 
         .rarity-rare::after { background: #ffb13b; } 
         .rarity-legendary::after { background: #ff2a5f; box-shadow: 0 0 5px #ff2a5f; } 
 
-        /* Всплывающий текст редкости (изначально скрыт) */
         .rarity-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; transition: 0.3s; font-weight: 900; font-size: 11px; letter-spacing: 0.5px; text-shadow: 0 1px 3px rgba(0,0,0,0.9); z-index: 10; pointer-events: none; text-align: center; width: 100%; }
         
-        /* Эффект при наведении (Hover) */
         .loot-box:hover img, .loot-box:hover .loot-name { filter: blur(4px); opacity: 0.2; }
         .loot-box:hover .rarity-text { opacity: 1; }
         .loot-box:hover::after { opacity: 0; }
@@ -108,7 +121,7 @@
             <span id="tg-username">Игрок</span>
         </div>
         <div class="balance-box" id="balance-box">
-            ⭐ <span id="balance-display">1000</span>
+            <img src="star.png" class="balance-star" alt="star"> <span id="balance-display">1000</span>
         </div>
     </div>
 
@@ -126,7 +139,9 @@
     <div id="roulette-screen">
         <button class="back-btn" onclick="closeRoulette()">← Назад</button>
         <div class="roulette-wrapper" id="roulette-wrapper"></div>
-        <button class="spin-btn" id="spin-btn" onclick="spinRoulette()">Крутить!</button>
+        <button class="spin-btn" id="spin-btn" onclick="spinRoulette()">
+            КРУТИТЬ ЗА <span id="spin-cost">100</span> <img src="star.png" style="width:24px; height:24px;" alt="star">
+        </button>
         
         <div class="qty-row">
             <button class="qty-btn active" onclick="selectQty(this, 1)">1</button>
@@ -144,18 +159,51 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        let userBalance = 1000;
+        // МАГИЯ СОХРАНЕНИЯ БАЛАНСА! (localStorage)
+        let userBalance = localStorage.getItem('lootgift_balance');
+        if (userBalance === null) {
+            userBalance = 1000; // Стартовый баланс для новичка
+        } else {
+            userBalance = parseInt(userBalance);
+        }
         
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             document.getElementById('tg-username').innerText = tg.initDataUnsafe.user.first_name;
         }
 
+        // Вывод баланса и сохранение
         function updateBalanceDisplay() {
             document.getElementById('balance-display').innerText = userBalance;
-            // Легкая анимация пополнения
+            localStorage.setItem('lootgift_balance', userBalance); // Сохраняем навсегда
+        }
+        updateBalanceDisplay(); // Отрисовываем баланс при загрузке
+
+        // Функция плавающих цифр
+        function showBalanceAnimation(amount) {
             const box = document.getElementById('balance-box');
-            box.style.transform = 'scale(1.1)';
-            setTimeout(() => box.style.transform = 'scale(1)', 200);
+            const floatText = document.createElement('div');
+            floatText.className = 'floating-text';
+            
+            if (amount < 0) {
+                floatText.innerText = amount;
+                floatText.style.color = '#ff2a5f'; // Красный для списания
+            } else {
+                floatText.innerText = `+${amount}`;
+                floatText.style.color = '#71e654'; // Зеленый для плюса
+            }
+            
+            box.appendChild(floatText);
+
+            // Запускаем анимацию полета вверх
+            setTimeout(() => {
+                floatText.style.transform = 'translateY(-20px)';
+                floatText.style.opacity = '0';
+            }, 50);
+
+            // Удаляем элемент после анимации
+            setTimeout(() => {
+                floatText.remove();
+            }, 850);
         }
 
         let currentQty = 1; 
@@ -172,12 +220,11 @@
             }, 2500); 
         });
 
-        // Цвета и названия редкостей для Hover-эффекта
         const rarityNames = {
-            'legendary': { name: 'ЛЕГЕНДАРНЫЙ', color: '#ff2a5f' }, // Красный
-            'rare': { name: 'РЕДКИЙ', color: '#ffb13b' },       // Желтый
-            'common': { name: 'ОБЫЧНЫЙ', color: '#8b5cf6' },    // Фиолетовый
-            'trash': { name: 'БАЗОВЫЙ', color: '#9ca3af' }      // Серый
+            'legendary': { name: 'ЛЕГЕНДАРНЫЙ', color: '#ff2a5f' }, 
+            'rare': { name: 'РЕДКИЙ', color: '#ffb13b' },       
+            'common': { name: 'ОБЫЧНЫЙ', color: '#8b5cf6' },    
+            'trash': { name: 'БАЗОВЫЙ', color: '#9ca3af' }      
         };
 
         const casesData = {
@@ -196,11 +243,11 @@
                 { icon: 'eagle.png', name: 'Орёл', value: 2655, prob: 0.001, rarity: 'legendary' }
             ],
             summerCase: [
-                { icon: 'stars50.png', name: '1 Star', value: 1, prob: 0.3605, rarity: 'trash' },
-                { icon: 'stars50.png', name: '2 Stars', value: 2, prob: 0.25, rarity: 'trash' },
-                { icon: 'stars50.png', name: '3 Stars', value: 3, prob: 0.15, rarity: 'trash' },
-                { icon: 'stars50.png', name: '5 Stars', value: 5, prob: 0.10, rarity: 'trash' },
-                { icon: 'stars50.png', name: '10 Stars', value: 10, prob: 0.05, rarity: 'common' },
+                { icon: 'stars1.png', name: '1 Star', value: 1, prob: 0.3605, rarity: 'trash' },
+                { icon: 'stars2.png', name: '2 Stars', value: 2, prob: 0.25, rarity: 'trash' },
+                { icon: 'stars3.png', name: '3 Stars', value: 3, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars5.png', name: '5 Stars', value: 5, prob: 0.10, rarity: 'trash' },
+                { icon: 'stars10.png', name: '10 Stars', value: 10, prob: 0.05, rarity: 'common' },
                 { icon: 'heart.png', name: 'Сердце', value: 15, prob: 0.05, rarity: 'common' },
                 { icon: 'rose.png', name: 'Роза', value: 25, prob: 0.02, rarity: 'common' },
                 { icon: 'tulips.png', name: 'Тюльпаны', value: 50, prob: 0.01, rarity: 'common' },
@@ -265,8 +312,8 @@
                 `;
             }
             
-            const spinBtn = document.getElementById('spin-btn');
-            spinBtn.innerText = `КРУТИТЬ ЗА ${activeCasePrice * currentQty} ⭐`;
+            // Обновляем текст на кнопке (с картинкой звезды)
+            document.getElementById('spin-cost').innerText = (activeCasePrice * currentQty);
         }
 
         function openCaseScreen(caseId, price) {
@@ -312,8 +359,10 @@
                 return;
             }
 
+            // ТРАТА БАЛАНСА И АНИМАЦИЯ
             userBalance -= totalCost;
             updateBalanceDisplay();
+            showBalanceAnimation(-totalCost);
 
             const btn = document.getElementById('spin-btn');
             btn.disabled = true;
@@ -371,11 +420,14 @@
             let maxDelay = 5200 + ((currentQty - 1) * 200);
             setTimeout(() => {
                 btn.disabled = false;
+                
+                // ВЫИГРЫШ БАЛАНСА И АНИМАЦИЯ
                 userBalance += totalValue;
                 updateBalanceDisplay();
+                showBalanceAnimation(totalValue);
+
                 tg.HapticFeedback.notificationOccurred('success');
                 
-                // Подробный вывод добычи
                 let dropCounts = {};
                 drops.forEach(d => { dropCounts[d.name] = (dropCounts[d.name] || 0) + 1; });
                 let dropStr = Object.keys(dropCounts).map(name => `${name} (x${dropCounts[name]})`).join(', ');
@@ -388,7 +440,7 @@
             }, maxDelay);
         }
 
-        // РЕНДЕР КЕЙСОВ: Базовый узел вернулся в Обычные модули со старым дизайном!
+        // РЕНДЕР КЕЙСОВ
         const categories = [
             {
                 title: "Эксклюзивные кейсы",
@@ -423,13 +475,12 @@
                         <img src="${c.image}" class="premium-case-img" alt="${c.name}">
                         <div class="case-info-box">
                             <div class="case-name">${c.name}</div>
-                            <div class="case-price">${c.price} Stars</div>
+                            <div class="case-price">${c.price} <img src="star.png" alt="star"></div>
                             <button class="btn btn-premium" onclick="openCaseScreen('${c.id}', ${c.price})">ОТКРЫТЬ</button>
                         </div>
                     `;
                 } else {
                     card.className = 'case-card';
-                    // Если есть картинка (как у Базового узла), показываем её, иначе - эмодзи
                     let iconHtml = c.image 
                         ? `<img src="${c.image}" style="width:75px; height:75px; object-fit:contain; margin-bottom:8px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));">`
                         : `<div class="case-icon">${c.icon}</div>`;
@@ -437,7 +488,7 @@
                     card.innerHTML = `
                         ${iconHtml}
                         <div class="case-name-std">${c.name}</div>
-                        <div class="case-price-std">${c.price} Stars</div>
+                        <div class="case-price-std">${c.price} <img src="star.png" alt="star"></div>
                         <button class="btn" onclick="openCaseScreen('${c.id}', ${c.price})">ОТКРЫТЬ</button>
                     `;
                 }
