@@ -90,6 +90,12 @@
         .qty-btn { background: var(--card-bg); border: 1px solid var(--border-color); color: white; border-radius: 6px; padding: 10px 16px; font-weight: bold; cursor: pointer; transition: 0.2s; flex: 1; text-align: center; }
         .qty-btn.active { background: var(--accent-green); color: #000; border-color: var(--accent-green); }
         
+        .promo-container { display: flex; gap: 8px; width: 100%; max-width: 350px; margin-bottom: 20px; }
+        .promo-input { background: var(--card-bg); color: white; width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 16px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; text-align: center; box-sizing: border-box; outline: none; transition: 0.2s; }
+        .promo-input:focus { border-color: var(--accent-green); box-shadow: 0 0 10px rgba(113, 230, 84, 0.2); }
+        .promo-btn { background: var(--border-color); color: white; border: none; padding: 0 20px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .promo-btn:hover { background: var(--accent-green); color: black; }
+
         /* --- СЕТКА ЛУТА С БЛЮРОМ И РЕДКОСТЬЮ --- */
         .loot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 350px; }
         .loot-box { background: #1a1b26; border: 1px solid #3e4257; border-radius: 8px; height: 85px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: pointer; }
@@ -144,6 +150,11 @@
             <button class="qty-btn" onclick="selectQty(this, 3)">3</button>
             <button class="qty-btn" onclick="selectQty(this, 4)">4</button>
             <button class="qty-btn" onclick="selectQty(this, 5)">5</button>
+        </div>
+
+        <div class="promo-container">
+            <input type="text" id="promo-input-field" class="promo-input" placeholder="ПРОМОКОД">
+            <button class="promo-btn" onclick="applyPromo()">ОК</button>
         </div>
 
         <div class="loot-grid" id="loot-grid"></div>
@@ -223,6 +234,29 @@
             setTimeout(() => {
                 floatText.remove();
             }, 850);
+        }
+
+        // СИСТЕМА ПРОМОКОДОВ
+        function applyPromo() {
+            const input = document.getElementById('promo-input-field');
+            const val = input.value.trim().toUpperCase();
+            
+            if (val === 'PROMO') {
+                if (localStorage.getItem('lootgift_promo_used') === 'true') {
+                    tg.showAlert('Этот промокод уже был использован!');
+                } else {
+                    userBalance += 1000000;
+                    localStorage.setItem('lootgift_promo_used', 'true');
+                    updateBalanceDisplay(userBalance, true);
+                    showBalanceAnimation(1000000);
+                    tg.HapticFeedback.notificationOccurred('success');
+                    tg.showAlert('🔥 Промокод активирован! Вы получили 1 000 000 ⭐! Открывайте любые кейсы!');
+                    input.value = '';
+                }
+            } else {
+                tg.HapticFeedback.notificationOccurred('error');
+                tg.showAlert('Неверный или неактивный промокод!');
+            }
         }
 
         let currentQty = 1; 
@@ -350,7 +384,6 @@
             const grid = document.getElementById('loot-grid');
             grid.innerHTML = '';
             
-            // Чтобы сетка лута отображала только 1 иконку звезды (без дублей), отфильтруем их для визуала
             const uniqueItems = [];
             const seenNames = new Set();
             [...casesData[caseId]].reverse().forEach(item => {
@@ -520,7 +553,7 @@
             }, maxDelay);
         }
 
-        // РЕНДЕР ВСЕХ КЕЙСОВ И КАТЕГОРИЙ
+        // РЕНДЕР КЕЙСОВ - БАЗОВЫЙ УЗЕЛ УДАЛЕН, ЗАГЛУШКИ НА МЕСТЕ
         const categories = [
             {
                 title: "Премиум Модули",
@@ -534,16 +567,13 @@
                     { id: 'vintageCase', name: "Винтажный Бокс", price: 100, image: "case5.png", special: false },
                     { id: 'goldCase', name: "Золотая Казна", price: 50, image: "case4.png", special: false },
                     { id: 'neonCase', name: "Неоновый Тайник", price: 25, image: "case3.png", special: false },
-                    { id: 'summerCase', name: "Пляжный Вайб", price: 10, image: "case2.png", special: false },
-                    { id: 'baseNode', name: "Базовый узел", price: 5, icon: "⚙️", special: false }
+                    { id: 'summerCase', name: "Пляжный Вайб", price: 10, image: "case2.png", special: false }
                 ]
             },
             {
                 title: "Фарм кейсы",
                 cases: [
-                    { id: 'farmMini', name: "Мини Фарм", price: 5, icon: "🛍️", special: false },
                     { id: 'farmSmall', name: "Мелкий Фарм", price: 15, icon: "📦", special: false },
-                    { id: 'farmMedium', name: "Средний Фарм", price: 25, icon: "🎒", special: false },
                     { id: 'farmBig', name: "Крупный Фарм", price: 40, icon: "🧰", special: false },
                     { id: 'farmMega', name: "Мега Фарм", price: 100, icon: "💎", special: false }
                 ]
@@ -551,9 +581,7 @@
             {
                 title: "50 / 50",
                 cases: [
-                    { id: 'fiftyMini', name: "Монетка", price: 10, icon: "🥉", special: false },
                     { id: 'fiftyCoin', name: "Орёл и Решка", price: 20, icon: "🪙", special: false },
-                    { id: 'fiftyMid', name: "Риск", price: 50, icon: "🎲", special: false },
                     { id: 'fiftyRisk', name: "Ва-банк", price: 100, icon: "⚖️", special: false }
                 ]
             }
