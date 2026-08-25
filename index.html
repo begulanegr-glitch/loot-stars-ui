@@ -17,7 +17,6 @@
             --row-height: 120px;
             --item-size: 100px;
         }
-        /* Увеличил padding-bottom, чтобы нижняя панель не перекрывала кейсы */
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 16px; padding-bottom: 100px; overflow-x: hidden; padding-top: 75px; }
 
         /* --- ВЕРХНЯЯ ПАНЕЛЬ БАЛАНСА --- */
@@ -42,7 +41,7 @@
             position: fixed; bottom: 0; left: 0; right: 0;
             background-color: #1a1b26; border-top: 2px solid var(--border-color);
             display: flex; justify-content: space-around; align-items: center;
-            padding: 10px 0 25px 0; /* padding-bottom для шторки iPhone */
+            padding: 10px 0 25px 0;
             z-index: 100; box-shadow: 0 -4px 15px rgba(0,0,0,0.3);
         }
 
@@ -52,8 +51,9 @@
         }
 
         .nav-indicator {
-            width: 25%; height: 100%; display: flex; justify-content: center; align-items: center;
-            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); /* Плавное переливание */
+            width: 20%; /* Было 25%, теперь 20% под 5 кнопок */
+            height: 100%; display: flex; justify-content: center; align-items: center;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .nav-indicator-inner {
@@ -73,6 +73,11 @@
         
         .nav-item.active { color: #fff; }
         .nav-item.active svg { fill: var(--accent-green); filter: drop-shadow(0 0 5px var(--green-glow)); }
+
+        /* Кнопка Выхода */
+        .nav-item.exit-btn { color: #ff2a5f; }
+        .nav-item.exit-btn svg { fill: #ff2a5f; }
+        .nav-item.exit-btn:active { transform: scale(0.9); }
 
         /* --- СЕКЦИИ ПРИЛОЖЕНИЯ --- */
         .app-section { display: none; animation: fadeIn 0.4s ease; }
@@ -204,7 +209,6 @@
 <body>
 
     <div class="top-bar">
-        <!-- Кликабельный профиль с аватаркой -->
         <div class="user-info" onclick="openProfileModal()">
             <img id="tg-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2371e654'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>" class="user-avatar" alt="Avatar">
             <span id="tg-username">Игрок</span>
@@ -225,7 +229,6 @@
                 <button class="close-btn" onclick="closeProfileModal()">×</button>
             </div>
             <div class="modal-body">
-                <!-- Вкладка ПРОФИЛЬ -->
                 <div id="modal-tab-profile" class="tab-content active">
                     <div class="stat-box">
                         <span class="stat-label">Дата регистрации:</span>
@@ -245,15 +248,12 @@
                     </div>
                 </div>
                 
-                <!-- Вкладка ИНВЕНТАРЬ -->
                 <div id="modal-tab-inventory" class="tab-content">
                     <div class="inv-header">
                         <span class="inv-count" id="inv-count-display">0 предметов</span>
                         <button class="sell-all-btn" onclick="sellAllInventory()">ПРОДАТЬ ВСЁ</button>
                     </div>
-                    <div class="inventory-grid" id="inventory-grid">
-                        <!-- Предметы инвентаря -->
-                    </div>
+                    <div class="inventory-grid" id="inventory-grid"></div>
                 </div>
             </div>
         </div>
@@ -280,7 +280,6 @@
 
     <!-- ГЛАВНЫЙ ЭКРАН С РАЗДЕЛАМИ -->
     <div id="app-content">
-        <!-- Раздел Бонусы -->
         <div id="section-bonuses" class="app-section">
             <div class="empty-inv" style="padding-top: 50px;">
                 <h3 style="color: var(--accent-green);">🎁 Бонусы</h3>
@@ -288,7 +287,6 @@
             </div>
         </div>
         
-        <!-- Раздел Новости -->
         <div id="section-news" class="app-section">
             <div class="empty-inv" style="padding-top: 50px;">
                 <h3 style="color: var(--accent-green);">📰 Новости</h3>
@@ -296,12 +294,10 @@
             </div>
         </div>
 
-        <!-- Раздел Кейсы (АКТИВНЫЙ ПО УМОЛЧАНИЮ) -->
         <div id="section-cases" class="app-section active">
             <div id="app-cases-grid"></div>
         </div>
 
-        <!-- Раздел Игры -->
         <div id="section-games" class="app-section">
             <div class="empty-inv" style="padding-top: 50px;">
                 <h3 style="color: var(--accent-green);">🎮 Игры</h3>
@@ -353,18 +349,21 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.58 16.09l-1.09-7.66C20.21 6.27 18.4 5 16.14 5h-8.28C5.6 5 3.79 6.27 3.51 8.43l-1.09 7.66C2.2 17.63 3.39 19 4.94 19c.68 0 1.32-.27 1.8-.75L9 16h6l2.25 2.25c.48.48 1.13.75 1.8.75 1.56 0 2.75-1.37 2.53-2.91zM11 11H9v2H8v-2H6v-1h2V8h1v2h2v1zm4-1c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
             <span>Игры</span>
         </button>
+        <!-- НОВАЯ КНОПКА ВЫХОДА -->
+        <button class="nav-item exit-btn" onclick="closeWebApp()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+            <span>Выход</span>
+        </button>
     </nav>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Инициализация данных
         let userBalance = localStorage.getItem('lootgift_balance');
         if (userBalance === null) userBalance = 1000; 
         else userBalance = parseInt(userBalance);
         
-        // СРАЗУ ОБНОВЛЯЕМ БАЛАНС ПРИ ЗАГРУЗКЕ
         document.getElementById('balance-display').innerText = userBalance;
         
         let spinsCount = localStorage.getItem('lootgift_spins');
@@ -375,10 +374,8 @@
         if (totalWon === null) totalWon = 0;
         else totalWon = parseInt(totalWon);
 
-        // Инвентарь
         let inventory = JSON.parse(localStorage.getItem('lootgift_inventory') || '[]');
 
-        // Дата регистрации
         let regDate = localStorage.getItem('lootgift_reg_date');
         if (!regDate) {
             const today = new Date();
@@ -386,7 +383,6 @@
             localStorage.setItem('lootgift_reg_date', regDate);
         }
 
-        // Подгрузка данных юзера из TG
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             document.getElementById('tg-username').innerText = tg.initDataUnsafe.user.first_name;
             if (tg.initDataUnsafe.user.photo_url) {
@@ -394,32 +390,34 @@
             }
         }
 
+        // --- ЛОГИКА ЗАКРЫТИЯ ПРИЛОЖЕНИЯ ---
+        function closeWebApp() {
+            tg.HapticFeedback.impactOccurred('medium');
+            tg.close();
+        }
+
         // --- ЛОГИКА НИЖНЕЙ ПАНЕЛИ НАВИГАЦИИ ---
         function switchNav(index, sectionId) {
             tg.HapticFeedback.impactOccurred('light');
 
-            // Обновляем активный класс на кнопках
-            const navItems = document.querySelectorAll('.nav-item');
+            const navItems = document.querySelectorAll('.nav-item:not(.exit-btn)');
             navItems.forEach((btn, i) => {
                 btn.classList.toggle('active', i === index);
             });
 
-            // Двигаем зеленую подсветку (индикатор)
             const indicator = document.getElementById('nav-indicator');
             indicator.style.transform = `translateX(${index * 100}%)`;
 
-            // Переключаем секции
             document.querySelectorAll('.app-section').forEach(sec => {
                 sec.classList.remove('active');
             });
             document.getElementById(`section-${sectionId}`).classList.add('active');
         }
 
-        // Ставим индикатор на "Кейсы" (индекс 2) при загрузке
+        // Ставим индикатор на "Кейсы" (индекс 2) при загрузке. Так как ширина 20%, 200% сместит его ровно в центр.
         document.getElementById('nav-indicator').style.transform = `translateX(200%)`;
 
 
-        // --- ЛОГИКА ИНВЕНТАРЯ И ПРОФИЛЯ ---
         function saveInventory() {
             localStorage.setItem('lootgift_inventory', JSON.stringify(inventory));
             renderInventory();
@@ -482,7 +480,6 @@
             });
         }
 
-        // --- ДЕЙСТВИЯ С ПРЕДМЕТАМИ ---
         let selectedItemUid = null;
 
         function openItemAction(uid) {
@@ -589,7 +586,6 @@
             }
         }
 
-        // --- БАЛАНС И АНИМАЦИИ ---
         function updateBalanceDisplay(targetBalance, animate = false) {
             const display = document.getElementById('balance-display');
             const startBalance = parseInt(display.innerText) || userBalance;
@@ -887,7 +883,6 @@
             
             buildQtyButtons(isFarmCase);
             
-            // Прячем всё приложение и нижнюю панель при открытии рулетки
             document.getElementById('app-content').style.display = 'none';
             document.querySelector('.bottom-nav').style.display = 'none';
             
@@ -904,7 +899,6 @@
             rScreen.style.opacity = '0';
             setTimeout(() => {
                 rScreen.style.display = 'none';
-                // Возвращаем приложение и навигацию
                 document.getElementById('app-content').style.display = 'block';
                 document.querySelector('.bottom-nav').style.display = 'flex';
                 activeCaseId = null;
@@ -1042,7 +1036,6 @@
             }, maxDelay);
         }
 
-        // РЕНДЕР КЕЙСОВ
         const categoriesDataList = [
             {
                 title: "Премиум Модули",
