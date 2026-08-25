@@ -17,7 +17,8 @@
             --row-height: 120px;
             --item-size: 100px;
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 16px; padding-bottom: 40px; overflow-x: hidden; padding-top: 75px; }
+        /* Увеличил padding-bottom, чтобы нижняя панель не перекрывала кейсы */
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 16px; padding-bottom: 100px; overflow-x: hidden; padding-top: 75px; }
 
         /* --- ВЕРХНЯЯ ПАНЕЛЬ БАЛАНСА --- */
         .top-bar { position: fixed; top: 0; left: 0; right: 0; background-color: #1a1b26; border-bottom: 2px solid var(--border-color); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
@@ -34,12 +35,49 @@
         }
         .balance-star { width: 16px; height: 16px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
 
-        .floating-text {
-            position: absolute; left: -50px; top: 6px; font-size: 16px; font-weight: 900;
-            opacity: 1; pointer-events: none; transition: transform 0.8s ease-out, opacity 0.8s ease-out;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        .floating-text { position: absolute; left: -50px; top: 6px; font-size: 16px; font-weight: 900; opacity: 1; pointer-events: none; transition: transform 0.8s ease-out, opacity 0.8s ease-out; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+
+        /* --- НИЖНЯЯ НАВИГАЦИОННАЯ ПАНЕЛЬ --- */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background-color: #1a1b26; border-top: 2px solid var(--border-color);
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 10px 0 25px 0; /* padding-bottom для шторки iPhone */
+            z-index: 100; box-shadow: 0 -4px 15px rgba(0,0,0,0.3);
         }
 
+        .nav-indicator-wrapper {
+            position: absolute; top: 10px; left: 0; width: 100%; bottom: 25px;
+            pointer-events: none; display: flex; z-index: 1;
+        }
+
+        .nav-indicator {
+            width: 25%; height: 100%; display: flex; justify-content: center; align-items: center;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); /* Плавное переливание */
+        }
+
+        .nav-indicator-inner {
+            width: 85%; height: 100%;
+            background: rgba(113, 230, 84, 0.1); border: 1px solid var(--accent-green);
+            border-radius: 12px; box-shadow: inset 0 0 10px rgba(113, 230, 84, 0.2);
+        }
+
+        .nav-item {
+            flex: 1; background: transparent; border: none; color: #a1a1aa;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            cursor: pointer; position: relative; z-index: 2; transition: 0.3s; padding: 6px 0;
+        }
+        
+        .nav-item svg { width: 24px; height: 24px; fill: currentColor; transition: 0.3s; }
+        .nav-item span { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .nav-item.active { color: #fff; }
+        .nav-item.active svg { fill: var(--accent-green); filter: drop-shadow(0 0 5px var(--green-glow)); }
+
+        /* --- СЕКЦИИ ПРИЛОЖЕНИЯ --- */
+        .app-section { display: none; animation: fadeIn 0.4s ease; }
+        .app-section.active { display: block; }
+        
         /* --- МОДАЛЬНЫЕ ОКНА --- */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 20px; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
@@ -97,13 +135,13 @@
         .btn-sell { background: linear-gradient(135deg, #71e654, #4db335); color: #0b1a10; }
         .btn-sell:disabled { background: #333; color: #666; cursor: not-allowed; }
 
-        /* --- ОСНОВНАЯ ИГРА --- */
+        /* --- ЭКРАН ЗАГРУЗКИ --- */
         #loading-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #050508; transition: opacity 0.6s ease, visibility 0.6s ease; }
         .loading-content { text-align: center; display: flex; flex-direction: column; align-items: center; }
         .loading-content img { max-width: 220px; border-radius: 20px; animation: pulseLogo 2s infinite alternate ease-in-out; mix-blend-mode: lighten; }
         .loading-text { margin-top: 24px; font-size: 18px; font-weight: bold; color: var(--accent-green); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px var(--green-glow); animation: pulseText 1.5s infinite alternate ease-in-out; }
 
-        #app-content { transition: opacity 0.5s ease; }
+        /* --- ОСНОВНАЯ ИГРА --- */
         h2 { font-size: 16px; margin-top: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; color: #d4bfff; }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 16px; }
         
@@ -126,7 +164,7 @@
         .btn-premium { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; }
 
         /* --- ЭКРАН РУЛЕТКИ --- */
-        #roulette-screen { display: none; flex-direction: column; align-items: center; padding-top: 20px; opacity: 0; transition: opacity 0.5s ease; }
+        #roulette-screen { display: none; flex-direction: column; align-items: center; padding-top: 20px; opacity: 0; transition: opacity 0.5s ease; padding-bottom: 100px;}
         .back-btn { align-self: flex-start; background: #3e4257; padding: 8px 16px; border-radius: 8px; color: white; border: none; margin-bottom: 20px; cursor: pointer; font-weight: bold; }
         
         .qty-row { display: flex; gap: 8px; margin-bottom: 15px; width: 100%; max-width: 350px; justify-content: center; }
@@ -166,6 +204,7 @@
 <body>
 
     <div class="top-bar">
+        <!-- Кликабельный профиль с аватаркой -->
         <div class="user-info" onclick="openProfileModal()">
             <img id="tg-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2371e654'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>" class="user-avatar" alt="Avatar">
             <span id="tg-username">Игрок</span>
@@ -213,7 +252,7 @@
                         <button class="sell-all-btn" onclick="sellAllInventory()">ПРОДАТЬ ВСЁ</button>
                     </div>
                     <div class="inventory-grid" id="inventory-grid">
-                        <!-- Предметы инвентаря генерируются тут -->
+                        <!-- Предметы инвентаря -->
                     </div>
                 </div>
             </div>
@@ -239,6 +278,50 @@
         </div>
     </div>
 
+    <!-- ГЛАВНЫЙ ЭКРАН С РАЗДЕЛАМИ -->
+    <div id="app-content">
+        <!-- Раздел Бонусы -->
+        <div id="section-bonuses" class="app-section">
+            <div class="empty-inv" style="padding-top: 50px;">
+                <h3 style="color: var(--accent-green);">🎁 Бонусы</h3>
+                <p>Раздел находится в разработке</p>
+            </div>
+        </div>
+        
+        <!-- Раздел Новости -->
+        <div id="section-news" class="app-section">
+            <div class="empty-inv" style="padding-top: 50px;">
+                <h3 style="color: var(--accent-green);">📰 Новости</h3>
+                <p>Раздел находится в разработке</p>
+            </div>
+        </div>
+
+        <!-- Раздел Кейсы (АКТИВНЫЙ ПО УМОЛЧАНИЮ) -->
+        <div id="section-cases" class="app-section active">
+            <div id="app-cases-grid"></div>
+        </div>
+
+        <!-- Раздел Игры -->
+        <div id="section-games" class="app-section">
+            <div class="empty-inv" style="padding-top: 50px;">
+                <h3 style="color: var(--accent-green);">🎮 Игры</h3>
+                <p>Раздел находится в разработке</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЭКРАН РУЛЕТКИ -->
+    <div id="roulette-screen">
+        <button class="back-btn" onclick="closeRoulette()">← Назад</button>
+        <div class="roulette-wrapper" id="roulette-wrapper"></div>
+        <div class="qty-row" id="qty-row-container"></div>
+        <button class="spin-btn" id="spin-btn" onclick="spinRoulette()">
+            КРУТИТЬ ЗА <span id="spin-cost">100</span> <img src="star.png?v=8" style="width:24px; height:24px;" alt="star">
+        </button>
+        <div class="loot-grid" id="loot-grid"></div>
+    </div>
+
+    <!-- ЭКРАН ЗАГРУЗКИ -->
     <div id="loading-screen">
         <div class="loading-content">
             <img src="logo-text.jpg.jfif" alt="LootGift Logo">
@@ -246,25 +329,31 @@
         </div>
     </div>
 
-    <div id="app-content">
-        <div id="app"></div>
-    </div>
-
-    <div id="roulette-screen">
-        <button class="back-btn" onclick="closeRoulette()">← Назад</button>
-        
-        <div class="roulette-wrapper" id="roulette-wrapper"></div>
-
-        <div class="qty-row" id="qty-row-container">
-            <!-- Кнопки генерируются динамически -->
+    <!-- НИЖНЯЯ НАВИГАЦИОННАЯ ПАНЕЛЬ -->
+    <nav class="bottom-nav">
+        <div class="nav-indicator-wrapper">
+            <div class="nav-indicator" id="nav-indicator">
+                <div class="nav-indicator-inner"></div>
+            </div>
         </div>
-
-        <button class="spin-btn" id="spin-btn" onclick="spinRoulette()">
-            КРУТИТЬ ЗА <span id="spin-cost">100</span> <img src="star.png?v=8" style="width:24px; height:24px;" alt="star">
+        
+        <button class="nav-item" onclick="switchNav(0, 'bonuses')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1h-4v-2h4zM9 4c.55 0 1 .45 1 1v1H6c0-.55.45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>
+            <span>Бонусы</span>
         </button>
-
-        <div class="loot-grid" id="loot-grid"></div>
-    </div>
+        <button class="nav-item" onclick="switchNav(1, 'news')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            <span>Новости</span>
+        </button>
+        <button class="nav-item active" onclick="switchNav(2, 'cases')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16.5C21 16.88 20.79 17.21 20.47 17.38L12.5 21.82C12.19 21.99 11.81 21.99 11.5 21.82L3.53 17.38C3.21 17.21 3 16.88 3 16.5V7.5C3 7.12 3.21 6.79 3.53 6.62L11.5 2.18C11.81 2.01 12.19 2.01 12.5 2.18L20.47 6.62C20.79 6.79 21 7.12 21 7.5V16.5ZM12 4.15L5.6 7.7L12 11.25L18.4 7.7L12 4.15ZM5 15.91L11 19.24V12.58L5 9.25V15.91ZM19 15.91V9.25L13 12.58V19.24L19 15.91Z"/></svg>
+            <span>Кейсы</span>
+        </button>
+        <button class="nav-item" onclick="switchNav(3, 'games')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.58 16.09l-1.09-7.66C20.21 6.27 18.4 5 16.14 5h-8.28C5.6 5 3.79 6.27 3.51 8.43l-1.09 7.66C2.2 17.63 3.39 19 4.94 19c.68 0 1.32-.27 1.8-.75L9 16h6l2.25 2.25c.48.48 1.13.75 1.8.75 1.56 0 2.75-1.37 2.53-2.91zM11 11H9v2H8v-2H6v-1h2V8h1v2h2v1zm4-1c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+            <span>Игры</span>
+        </button>
+    </nav>
 
     <script>
         const tg = window.Telegram.WebApp;
@@ -275,7 +364,7 @@
         if (userBalance === null) userBalance = 1000; 
         else userBalance = parseInt(userBalance);
         
-        // СРАЗУ ОБНОВЛЯЕМ БАЛАНС ПРИ ЗАГРУЗКЕ, ЧТОБЫ НЕ БЫЛО 1000
+        // СРАЗУ ОБНОВЛЯЕМ БАЛАНС ПРИ ЗАГРУЗКЕ
         document.getElementById('balance-display').innerText = userBalance;
         
         let spinsCount = localStorage.getItem('lootgift_spins');
@@ -305,12 +394,37 @@
             }
         }
 
+        // --- ЛОГИКА НИЖНЕЙ ПАНЕЛИ НАВИГАЦИИ ---
+        function switchNav(index, sectionId) {
+            tg.HapticFeedback.impactOccurred('light');
+
+            // Обновляем активный класс на кнопках
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+
+            // Двигаем зеленую подсветку (индикатор)
+            const indicator = document.getElementById('nav-indicator');
+            indicator.style.transform = `translateX(${index * 100}%)`;
+
+            // Переключаем секции
+            document.querySelectorAll('.app-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            document.getElementById(`section-${sectionId}`).classList.add('active');
+        }
+
+        // Ставим индикатор на "Кейсы" (индекс 2) при загрузке
+        document.getElementById('nav-indicator').style.transform = `translateX(200%)`;
+
+
+        // --- ЛОГИКА ИНВЕНТАРЯ И ПРОФИЛЯ ---
         function saveInventory() {
             localStorage.setItem('lootgift_inventory', JSON.stringify(inventory));
             renderInventory();
         }
 
-        // --- ЛОГИКА ПРОФИЛЯ И ИНВЕНТАРЯ ---
         function openProfileModal() {
             tg.HapticFeedback.impactOccurred('light');
             document.getElementById('profile-modal').classList.add('active');
@@ -355,7 +469,6 @@
                 return;
             }
 
-            // Рендер с конца (новые предметы сверху)
             [...inventory].reverse().forEach(item => {
                 const favBadge = item.isFavorite ? '<div class="fav-badge">❤️</div>' : '';
                 grid.innerHTML += `
@@ -369,7 +482,7 @@
             });
         }
 
-        // --- ДЕЙСТВИЯ С ПРЕДМЕТАМИ (ИНВЕНТАРЬ) ---
+        // --- ДЕЙСТВИЯ С ПРЕДМЕТАМИ ---
         let selectedItemUid = null;
 
         function openItemAction(uid) {
@@ -383,7 +496,6 @@
             document.getElementById('action-item-name').innerText = item.name;
             document.getElementById('action-item-price').innerText = item.value;
 
-            // Логика кнопки Вывода
             const btnWithdraw = document.getElementById('action-btn-withdraw');
             if (item.value > 101) {
                 btnWithdraw.disabled = false;
@@ -393,7 +505,6 @@
                 btnWithdraw.innerText = 'Данный подарок нельзя вывести в Telegram';
             }
 
-            // Логика кнопки Избранного
             const btnFav = document.getElementById('action-btn-fav');
             if (item.isFavorite) {
                 btnFav.innerText = 'Убрать из избранного 💔';
@@ -401,13 +512,8 @@
                 btnFav.innerText = 'В избранное ❤️';
             }
 
-            // Логика кнопки Продажи
             const btnSell = document.getElementById('action-btn-sell');
-            if (item.isFavorite) {
-                btnSell.disabled = true;
-            } else {
-                btnSell.disabled = false;
-            }
+            btnSell.disabled = item.isFavorite;
 
             document.getElementById('item-action-modal').classList.add('active');
         }
@@ -433,7 +539,6 @@
                 const item = inventory[itemIndex];
                 if (item.isFavorite) return; 
                 
-                // Нативное окно подтверждения Telegram
                 tg.showConfirm(`Вы уверены, что хотите продать «${item.name}» за ${item.value} ⭐?`, function(confirmed) {
                     if (confirmed) {
                         tg.HapticFeedback.notificationOccurred('success');
@@ -441,7 +546,6 @@
                         updateBalanceDisplay(userBalance, true);
                         showBalanceAnimation(item.value);
                         
-                        // Ищем заново на случай смещения индексов
                         const currentIndex = inventory.findIndex(i => i.uid === selectedItemUid);
                         if (currentIndex > -1) {
                             inventory.splice(currentIndex, 1);
@@ -463,11 +567,10 @@
             let itemsToSell = inventory.filter(item => !item.isFavorite);
 
             if (itemsToSell.length > 0) {
-                // Нативное окно подтверждения Telegram
                 tg.showConfirm(`Вы уверены, что хотите продать ${itemsToSell.length} предметов?`, function(confirmed) {
                     if (confirmed) {
                         let totalSell = itemsToSell.reduce((sum, item) => sum + item.value, 0);
-                        const newInventory = inventory.filter(item => item.isFavorite); // Оставляем только избранное
+                        const newInventory = inventory.filter(item => item.isFavorite);
                         
                         tg.HapticFeedback.notificationOccurred('success');
                         inventory = newInventory;
@@ -550,7 +653,6 @@
             setTimeout(() => {
                 document.getElementById('loading-screen').style.opacity = '0';
                 document.getElementById('loading-screen').style.visibility = 'hidden';
-                document.getElementById('app-content').style.opacity = '1';
                 document.body.style.overflow = 'auto'; 
             }, 2500); 
         });
@@ -785,7 +887,10 @@
             
             buildQtyButtons(isFarmCase);
             
+            // Прячем всё приложение и нижнюю панель при открытии рулетки
             document.getElementById('app-content').style.display = 'none';
+            document.querySelector('.bottom-nav').style.display = 'none';
+            
             const rScreen = document.getElementById('roulette-screen');
             rScreen.style.display = 'flex';
             setTimeout(() => rScreen.style.opacity = '1', 50);
@@ -799,7 +904,9 @@
             rScreen.style.opacity = '0';
             setTimeout(() => {
                 rScreen.style.display = 'none';
+                // Возвращаем приложение и навигацию
                 document.getElementById('app-content').style.display = 'block';
+                document.querySelector('.bottom-nav').style.display = 'flex';
                 activeCaseId = null;
             }, 500);
         }
@@ -935,7 +1042,8 @@
             }, maxDelay);
         }
 
-        const categories = [
+        // РЕНДЕР КЕЙСОВ
+        const categoriesDataList = [
             {
                 title: "Премиум Модули",
                 cases: [
@@ -970,11 +1078,11 @@
             }
         ];
 
-        const appDiv = document.getElementById('app');
-        categories.forEach(category => {
+        const appCasesGrid = document.getElementById('app-cases-grid');
+        categoriesDataList.forEach(category => {
             const title = document.createElement('h2');
             title.innerText = category.title;
-            appDiv.appendChild(title);
+            appCasesGrid.appendChild(title);
 
             const grid = document.createElement('div');
             grid.className = 'grid-container';
@@ -1006,7 +1114,7 @@
                 }
                 grid.appendChild(card);
             });
-            appDiv.appendChild(grid);
+            appCasesGrid.appendChild(grid);
         });
     </script>
 </body>
