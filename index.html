@@ -69,7 +69,8 @@
         /* Инвентарь */
         .inv-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .inv-count { font-weight: bold; color: #a1a1aa; font-size: 14px; }
-        .sell-all-btn { background: linear-gradient(135deg, #ff2a5f, #d21946); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 12px; cursor: pointer; text-transform: uppercase; box-shadow: 0 2px 5px rgba(255, 42, 95, 0.3); }
+        /* ОБНОВЛЕННАЯ КНОПКА "ПРОДАТЬ ВСЁ" (Фиолетовая) */
+        .sell-all-btn { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 12px; cursor: pointer; text-transform: uppercase; box-shadow: 0 2px 5px rgba(155, 89, 182, 0.3); transition: 0.2s; }
         .sell-all-btn:active { transform: scale(0.95); }
 
         .inventory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -92,7 +93,7 @@
         .action-btn:active { transform: scale(0.95); }
         
         .btn-withdraw { background: #3e4257; color: white; }
-        .btn-withdraw:disabled { background: #222533; color: #666; cursor: not-allowed; }
+        .btn-withdraw:disabled { background: #222533; color: #666; cursor: not-allowed; text-transform: none; font-size: 12px; }
         .btn-fav { background: #1a1b26; border: 2px solid #5a3e8c; color: #d4bfff; }
         .btn-sell { background: linear-gradient(135deg, #71e654, #4db335); color: #0b1a10; }
         .btn-sell:disabled { background: #333; color: #666; cursor: not-allowed; }
@@ -381,14 +382,14 @@
             document.getElementById('action-item-name').innerText = item.name;
             document.getElementById('action-item-price').innerText = item.value;
 
-            // Логика кнопки Вывода
+            // Логика кнопки Вывода (Обновленный текст)
             const btnWithdraw = document.getElementById('action-btn-withdraw');
             if (item.value > 101) {
                 btnWithdraw.disabled = false;
                 btnWithdraw.innerText = 'Вывести в Telegram';
             } else {
                 btnWithdraw.disabled = true;
-                btnWithdraw.innerText = 'Вывод от 102 ⭐';
+                btnWithdraw.innerText = 'Данный подарок нельзя вывести в Telegram';
             }
 
             // Логика кнопки Избранного
@@ -832,10 +833,9 @@
                 let actualItem = getRandomItem(activeCaseId);
                 drops.push(actualItem);
                 
-                // РАЗДЕЛЕНИЕ ЛОГИКИ: Звезды в баланс, Предметы в Инвентарь
                 if (actualItem.name.includes('Star') || actualItem.name.includes('Stars')) {
-                    starsWonThisSpin += actualItem.value; // Это чистая валюта
-                } else if (actualItem.value > 0) { // Игнорируем пустышки за 0
+                    starsWonThisSpin += actualItem.value; 
+                } else if (actualItem.value > 0) { 
                     const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2);
                     newItems.push({
                         uid: uniqueId,
@@ -897,7 +897,6 @@
             setTimeout(() => {
                 btn.disabled = false;
                 
-                // Начисляем только выигранные "звезды", предметы летят в инвентарь
                 if (starsWonThisSpin > 0) {
                     userBalance += starsWonThisSpin;
                     updateBalanceDisplay(userBalance, true);
@@ -909,7 +908,6 @@
                     saveInventory();
                 }
 
-                // Обновляем общую стату выигрыша (считаем и стоимость предметов, и звезды для статы)
                 let totalValueWon = drops.reduce((sum, item) => sum + item.value, 0);
                 totalWon += totalValueWon;
                 localStorage.setItem('lootgift_total_won', totalWon);
