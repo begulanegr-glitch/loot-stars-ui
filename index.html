@@ -17,13 +17,17 @@
             --row-height: 120px;
             --item-size: 100px;
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 16px; padding-bottom: 40px; overflow-x: hidden; padding-top: 75px; } /* Чуть увеличил отступ сверху для промокода */
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 16px; padding-bottom: 40px; overflow-x: hidden; padding-top: 75px; }
 
         /* --- ВЕРХНЯЯ ПАНЕЛЬ БАЛАНСА И ПРОМОКОДА --- */
         .top-bar { position: fixed; top: 0; left: 0; right: 0; background-color: #1a1b26; border-bottom: 2px solid var(--border-color); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .user-info { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 14px;}
         
-        .right-bar-group { display: flex; align-items: center; gap: 10px; } /* Группа для баланса и кнопки */
+        /* Кликабельный блок юзера */
+        .user-info { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 14px; cursor: pointer; padding: 4px 8px; border-radius: 8px; transition: 0.2s; background: rgba(255,255,255,0.05); border: 1px solid transparent; }
+        .user-info:active { background: rgba(255,255,255,0.1); border-color: var(--border-color); transform: scale(0.95); }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; background-color: #3e4257; border: 2px solid var(--accent-green); }
+
+        .right-bar-group { display: flex; align-items: center; gap: 10px; }
 
         .balance-box { 
             position: relative; 
@@ -39,13 +43,41 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
 
-        /* Кнопка Промокода */
         .promo-btn {
             background: linear-gradient(135deg, #FFD700, #FFA500); color: #201a01; border: none; padding: 7px 12px;
             border-radius: 8px; font-weight: 800; font-size: 12px; cursor: pointer; text-transform: uppercase;
             box-shadow: 0 2px 5px rgba(255, 215, 0, 0.3); transition: 0.2s;
         }
         .promo-btn:active { transform: scale(0.95); box-shadow: 0 0 0 rgba(255, 215, 0, 0.3); }
+
+        /* --- МОДАЛЬНОЕ ОКНО ПРОФИЛЯ --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 20px; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        
+        .modal-content { background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 16px; width: 100%; max-width: 400px; overflow: hidden; transform: translateY(30px); transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+
+        .modal-header { display: flex; justify-content: space-between; align-items: center; background: #1a1b26; padding: 0; border-bottom: 2px solid var(--border-color); }
+        .modal-tabs { display: flex; flex: 1; }
+        .tab-btn { flex: 1; background: transparent; color: #888; border: none; padding: 15px 0; font-weight: 900; font-size: 14px; text-transform: uppercase; cursor: pointer; transition: 0.2s; border-bottom: 3px solid transparent; }
+        .tab-btn.active { color: var(--accent-green); border-bottom: 3px solid var(--accent-green); background: rgba(113, 230, 84, 0.05); }
+        
+        .close-btn { background: transparent; border: none; color: #fff; font-size: 24px; padding: 0 15px; cursor: pointer; opacity: 0.7; transition: 0.2s; }
+        .close-btn:active { opacity: 1; transform: scale(0.9); }
+
+        .modal-body { padding: 20px; min-height: 250px; }
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Стили статистики */
+        .stat-box { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .stat-label { color: #a1a1aa; font-size: 13px; font-weight: bold; }
+        .stat-value { color: #fff; font-size: 15px; font-weight: 900; display: flex; align-items: center; gap: 6px; }
+        .stat-value img { width: 14px; height: 14px; }
+        
+        .inventory-stub { text-align: center; color: #a1a1aa; padding-top: 40px; }
+        .inventory-stub h3 { color: var(--accent-green); margin-bottom: 10px; }
 
         /* --- ЭКРАН ЗАГРУЗКИ --- */
         #loading-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #050508; transition: opacity 0.6s ease, visibility 0.6s ease; }
@@ -86,6 +118,13 @@
         .qty-btn { background: var(--card-bg); border: 1px solid var(--border-color); color: white; border-radius: 6px; padding: 10px 16px; font-weight: bold; cursor: pointer; transition: 0.2s; flex: 1; text-align: center; }
         .qty-btn.active { background: var(--accent-green); color: #000; border-color: var(--accent-green); }
 
+        .promo-container { display: flex; gap: 8px; margin-bottom: 15px; width: 100%; max-width: 350px; }
+        .promo-input { flex: 1; background: var(--bg-color); border: 2px solid var(--border-color); color: white; border-radius: 8px; padding: 12px 14px; font-weight: bold; font-size: 14px; outline: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); text-transform: uppercase;}
+        .promo-input::placeholder { color: #666; text-transform: none; }
+        .promo-input:focus { border-color: var(--accent-green); }
+        .promo-apply-btn { background: #3e4257; color: white; border: none; border-radius: 8px; padding: 0 16px; font-weight: 900; cursor: pointer; transition: 0.2s; font-size: 14px;}
+        .promo-apply-btn:active { background: #71e654; color: #000; transform: scale(0.95); }
+
         .spin-btn { display: flex; justify-content: center; align-items: center; gap: 8px; background: #71e654; color: #000; font-size: 20px; font-weight: 900; padding: 15px 20px; border-radius: 12px; border: none; box-shadow: 0 6px 0 #4db335; cursor: pointer; text-transform: uppercase; width: 100%; max-width: 350px; margin-bottom: 15px; transition: 0.2s; }
         .spin-btn:active { transform: translateY(6px); box-shadow: 0 0 0 #4db335; }
         .spin-btn:disabled { background: #555; box-shadow: 0 6px 0 #333; color: #888; cursor: not-allowed; transform: translateY(6px); }
@@ -100,7 +139,6 @@
         
         .center-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #71e654; transform: translateX(-50%); z-index: 10; box-shadow: 0 0 10px #71e654; }
 
-        /* --- СЕТКА ЛУТА --- */
         .loot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 350px; margin-bottom: 20px; }
         .loot-box { background: #1a1b26; border: 1px solid #3e4257; border-radius: 8px; height: 85px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: pointer; }
         .loot-box img { width: 45%; height: 45%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); transition: 0.3s; margin-top: 4px; }
@@ -111,9 +149,7 @@
         .rarity-common::after { background: #8b5cf6; } 
         .rarity-rare::after { background: #ffb13b; } 
         .rarity-legendary::after { background: #ff2a5f; box-shadow: 0 0 5px #ff2a5f; } 
-
         .rarity-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; transition: 0.3s; font-weight: 900; font-size: 11px; letter-spacing: 0.5px; text-shadow: 0 1px 3px rgba(0,0,0,0.9); z-index: 10; pointer-events: none; text-align: center; width: 100%; }
-        
         .loot-box:hover img, .loot-box:hover .loot-name { filter: blur(4px); opacity: 0.2; }
         .loot-box:hover .rarity-text { opacity: 1; }
         .loot-box:hover::after { opacity: 0; }
@@ -122,13 +158,57 @@
 <body>
 
     <div class="top-bar">
-        <div class="user-info">
+        <!-- Кликабельный профиль с аватаркой -->
+        <div class="user-info" onclick="openProfileModal()">
+            <img id="tg-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2371e654'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>" class="user-avatar" alt="Avatar">
             <span id="tg-username">Игрок</span>
         </div>
         <div class="right-bar-group">
             <button class="promo-btn" onclick="openPromoInput()">🎁 Промокод</button>
             <div class="balance-box" id="balance-box">
                 <img src="star.png?v=8" class="balance-star" alt="star"> <span id="balance-display">1000</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО ПРОФИЛЯ / ИНВЕНТАРЯ -->
+    <div id="profile-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-tabs">
+                    <button class="tab-btn active" id="tab-btn-profile" onclick="switchModalTab('profile')">Профиль</button>
+                    <button class="tab-btn" id="tab-btn-inventory" onclick="switchModalTab('inventory')">Инвентарь</button>
+                </div>
+                <button class="close-btn" onclick="closeProfileModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- Вкладка ПРОФИЛЬ -->
+                <div id="modal-tab-profile" class="tab-content active">
+                    <div class="stat-box">
+                        <span class="stat-label">Дата регистрации:</span>
+                        <span class="stat-value" id="stat-reg-date">01.01.2024</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Открыто кейсов:</span>
+                        <span class="stat-value" id="stat-cases-opened">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Выиграно в кейсах:</span>
+                        <span class="stat-value" id="stat-total-won">0 <img src="star.png?v=8" alt="star"></span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Звёзд получено (Telegram):</span>
+                        <span class="stat-value" id="stat-tg-stars">0 <img src="star.png?v=8" alt="star"></span>
+                    </div>
+                </div>
+                
+                <!-- Вкладка ИНВЕНТАРЬ -->
+                <div id="modal-tab-inventory" class="tab-content">
+                    <div class="inventory-stub">
+                        <h3>🛠️ В разработке</h3>
+                        <p>Совсем скоро здесь появятся ваши предметы и скины!</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -153,6 +233,11 @@
             <!-- Кнопки генерируются динамически -->
         </div>
 
+        <div class="promo-container" id="promo-container">
+            <input type="text" id="promo-input" class="promo-input" placeholder="Есть секретный код?">
+            <button class="promo-apply-btn" onclick="applyPromo()">OK</button>
+        </div>
+
         <button class="spin-btn" id="spin-btn" onclick="spinRoulette()">
             КРУТИТЬ ЗА <span id="spin-cost">100</span> <img src="star.png?v=8" style="width:24px; height:24px;" alt="star">
         </button>
@@ -164,15 +249,67 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
+        // Инициализация профиля и статистики
         let userBalance = localStorage.getItem('lootgift_balance');
-        if (userBalance === null) {
-            userBalance = 1000; 
-        } else {
-            userBalance = parseInt(userBalance);
-        }
+        if (userBalance === null) userBalance = 1000; 
+        else userBalance = parseInt(userBalance);
         
+        let spinsCount = localStorage.getItem('lootgift_spins');
+        if (spinsCount === null) spinsCount = 0;
+        else spinsCount = parseInt(spinsCount);
+
+        let totalWon = localStorage.getItem('lootgift_total_won');
+        if (totalWon === null) totalWon = 0;
+        else totalWon = parseInt(totalWon);
+
+        // Дата регистрации
+        let regDate = localStorage.getItem('lootgift_reg_date');
+        if (!regDate) {
+            const today = new Date();
+            regDate = today.toLocaleDateString('ru-RU'); // Формат ДД.ММ.ГГГГ
+            localStorage.setItem('lootgift_reg_date', regDate);
+        }
+
+        // Подгрузка данных юзера из TG
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             document.getElementById('tg-username').innerText = tg.initDataUnsafe.user.first_name;
+            if (tg.initDataUnsafe.user.photo_url) {
+                document.getElementById('tg-avatar').src = tg.initDataUnsafe.user.photo_url;
+            }
+        }
+
+        // --- ЛОГИКА ПРОФИЛЯ ---
+        function openProfileModal() {
+            tg.HapticFeedback.impactOccurred('light');
+            document.getElementById('profile-modal').classList.add('active');
+            
+            // Обновляем стату при открытии
+            document.getElementById('stat-reg-date').innerText = regDate;
+            document.getElementById('stat-cases-opened').innerText = spinsCount;
+            document.getElementById('stat-total-won').innerHTML = `${totalWon} <img src="star.png?v=8" alt="star">`;
+            // Заглушка для реальных звезд (можно брать начальный баланс или 0)
+            document.getElementById('stat-tg-stars').innerHTML = `1000 <img src="star.png?v=8" alt="star">`;
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profile-modal').classList.remove('active');
+        }
+
+        function switchModalTab(tabName) {
+            tg.HapticFeedback.impactOccurred('light');
+            
+            document.getElementById('tab-btn-profile').classList.remove('active');
+            document.getElementById('tab-btn-inventory').classList.remove('active');
+            document.getElementById('modal-tab-profile').classList.remove('active');
+            document.getElementById('modal-tab-inventory').classList.remove('active');
+
+            if(tabName === 'profile') {
+                document.getElementById('tab-btn-profile').classList.add('active');
+                document.getElementById('modal-tab-profile').classList.add('active');
+            } else {
+                document.getElementById('tab-btn-inventory').classList.add('active');
+                document.getElementById('modal-tab-inventory').classList.add('active');
+            }
         }
 
         function updateBalanceDisplay(targetBalance, animate = false) {
@@ -236,13 +373,18 @@
             }, 850);
         }
 
-        /* --- ФУНКЦИЯ ПРОМОКОДОВ (Заглушка) --- */
         function openPromoInput() {
             tg.HapticFeedback.impactOccurred('light');
-            // Пока просто показываем алерт, так как бэкенда нет
             tg.showAlert("🎁 Функция ввода промокодов находится в разработке.\n\nСкоро здесь появятся 'нежданчики' для игроков!");
-            
-            // В будущем здесь будет вызов tg.showPopup или кастомное модальное окно с инпутом.
+        }
+
+        function applyPromo() {
+            const inputField = document.getElementById('promo-input');
+            const promoCode = inputField.value.trim();
+            if (!promoCode) return;
+            tg.HapticFeedback.impactOccurred('light');
+            tg.showAlert("Такого промокода не существует, либо у него закончился срок действия");
+            inputField.value = '';
         }
 
         let currentQty = 1; 
@@ -269,7 +411,6 @@
         };
 
         const casesData = {
-            // --- ПРЕМИУМ И СТАНДАРТ ---
             epicCase: [
                 { icon: 'bear.png?v=8', name: 'Мишка', value: 15, prob: 0.35, rarity: 'trash' },
                 { icon: 'rose.png?v=8', name: 'Роза', value: 25, prob: 0.15, rarity: 'trash' },
@@ -355,7 +496,6 @@
                 { icon: 'bouquet.png?v=8', name: 'Букет', value: 600, prob: 0.0005, rarity: 'legendary' }
             ],
 
-            // --- ФАРМ КЕЙСЫ ---
             farm1: [
                 { icon: 'empty.png?v=8', name: 'Пустышка', value: 0, prob: 0.89995, rarity: 'trash' },
                 { icon: 'star.png?v=8', name: '1 Star', value: 1, prob: 0.10, rarity: 'common' },
@@ -372,38 +512,27 @@
                 { icon: 'tg_cap.png?v=8', name: 'Кепка', value: 43169, prob: 0.00005, rarity: 'legendary' }
             ],
 
-            // --- КЕЙСЫ 50 / 50 (Скрытый шанс 20/80 - СУПЕР-НЕРФ) ---
             fifty1: [
-                { icon: 'star.png?v=8', name: 'Пак 1 Star', value: 1, prob: 0.80, rarity: 'common' }, // Был 0.70
-                { icon: 'diamond.png?v=8', name: 'Алмаз', value: 100, prob: 0.20, rarity: 'legendary' } // Был 0.30
+                { icon: 'star.png?v=8', name: 'Пак 1 Star', value: 1, prob: 0.80, rarity: 'common' },
+                { icon: 'diamond.png?v=8', name: 'Алмаз', value: 100, prob: 0.20, rarity: 'legendary' } 
             ],
             fifty2: [
-                { icon: 'stars50.png?v=8', name: 'Пак 4 Stars', value: 4, prob: 0.80, rarity: 'common' }, // Был 0.70
-                { icon: 'cupcake.png?v=8', name: 'Кекс', value: 400, prob: 0.20, rarity: 'legendary' } // Был 0.30
+                { icon: 'stars50.png?v=8', name: 'Пак 4 Stars', value: 4, prob: 0.80, rarity: 'common' }, 
+                { icon: 'cupcake.png?v=8', name: 'Кекс', value: 400, prob: 0.20, rarity: 'legendary' } 
             ],
             fifty3: [
-                { icon: 'stars50.png?v=8', name: 'Пак 20 Stars', value: 20, prob: 0.80, rarity: 'common' }, // Был 0.70
-                { icon: 'fairy_shoes.png?v=8', name: 'Туфельки', value: 2031, prob: 0.20, rarity: 'legendary' } // Был 0.30
+                { icon: 'stars50.png?v=8', name: 'Пак 20 Stars', value: 20, prob: 0.80, rarity: 'common' }, 
+                { icon: 'fairy_shoes.png?v=8', name: 'Туфельки', value: 2031, prob: 0.20, rarity: 'legendary' }
             ]
         };
-
-        let spinsCount = localStorage.getItem('lootgift_spins');
-        if (spinsCount === null) {
-            spinsCount = 0;
-        } else {
-            spinsCount = parseInt(spinsCount);
-        }
 
         function getRandomItem(caseId) {
             spinsCount++;
             localStorage.setItem('lootgift_spins', spinsCount);
             
-            let totalWon = parseInt(localStorage.getItem('lootgift_total_won') || '0');
-
-            let items = casesData[caseId];
             let rand = Math.random();
+            let items = casesData[caseId];
             
-            // Исключаем Фарм и 50/50 из стартового бонуса
             if (spinsCount <= 2 && rand > 0.4 && !caseId.startsWith('farm') && !caseId.startsWith('fifty')) {
                 return items[7]; 
             }
@@ -413,12 +542,9 @@
                 cumulative += items[i].prob;
                 if (rand <= cumulative) {
                     let selected = items[i];
-                    
                     if (selected.name === 'Пепе' && totalWon < 1500000) {
-                        let fallback = items.find(i => i.name === '10000 Stars') || items[0];
-                        return fallback; 
+                        return items.find(i => i.name === '10000 Stars') || items[0];
                     }
-                    
                     return selected;
                 }
             }
@@ -525,6 +651,7 @@
                 rScreen.style.display = 'none';
                 document.getElementById('app-content').style.display = 'block';
                 activeCaseId = null;
+                document.getElementById('promo-input').value = '';
             }, 500);
         }
 
@@ -553,7 +680,7 @@
             tg.HapticFeedback.impactOccurred('medium');
 
             let drops = [];
-            let totalValue = 0;
+            let totalSpinWin = 0;
             const totalItems = 50; 
             const winnerIndex = 40; 
             const wrapper = document.getElementById('roulette-wrapper');
@@ -563,7 +690,7 @@
             for(let rowIdx = 0; rowIdx < currentQty; rowIdx++) {
                 let actualItem = getRandomItem(activeCaseId);
                 drops.push(actualItem);
-                totalValue += actualItem.value;
+                totalSpinWin += actualItem.value;
 
                 let strip = document.getElementById(`strip-${rowIdx}`);
                 strip.style.transition = 'none';
@@ -585,7 +712,6 @@
                             else if (r < 0.98) visualItem = currentItems[1]; 
                             else visualItem = currentItems[2]; 
                         } else if (isFiftyCase) {
-                            // Иллюзия шанса 50 на 50 в рулетке
                             if (r < 0.5) visualItem = currentItems[0]; 
                             else visualItem = currentItems[1]; 
                         } else {
@@ -616,12 +742,11 @@
             setTimeout(() => {
                 btn.disabled = false;
                 
-                userBalance += totalValue;
+                userBalance += totalSpinWin;
                 updateBalanceDisplay(userBalance, true);
-                showBalanceAnimation(totalValue);
+                showBalanceAnimation(totalSpinWin);
                 
-                let totalWon = parseInt(localStorage.getItem('lootgift_total_won') || '0');
-                totalWon += totalValue;
+                totalWon += totalSpinWin;
                 localStorage.setItem('lootgift_total_won', totalWon);
 
                 tg.HapticFeedback.notificationOccurred('success');
@@ -631,9 +756,9 @@
                 let dropStr = Object.keys(dropCounts).map(name => `${name} (x${dropCounts[name]})`).join(', ');
 
                 if (currentQty === 1) {
-                    tg.showAlert(`Выпало: ${drops[0].name}\nВы получили: +${totalValue} ⭐`);
+                    tg.showAlert(`Выпало: ${drops[0].name}\nВы получили: +${totalSpinWin} ⭐`);
                 } else {
-                    tg.showAlert(`Открыто кейсов: ${currentQty}\nДобыча: ${dropStr}\nВы получили: +${totalValue} ⭐`);
+                    tg.showAlert(`Открыто кейсов: ${currentQty}\nДобыча: ${dropStr}\nВы получили: +${totalSpinWin} ⭐`);
                 }
             }, maxDelay);
         }
