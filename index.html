@@ -339,7 +339,7 @@
         
         <div class="theory-top-stats">
             <div class="stat-group">
-                <span>⚔️ <span style="color:#fff;">3</span> АКТИВНЫЕ</span>
+                <span>⚔️ <span style="color:#fff;">0</span> АКТИВНЫЕ</span>
                 <span style="margin-left:10px;">⚔️ <span id="top-stat-battles" style="color:#fff;">0</span> ВСЕГО БИТВ</span>
             </div>
             <div class="stat-group">
@@ -350,27 +350,7 @@
         <button class="create-battle-btn" onclick="openCreateLobby()">Создать Битву</button>
 
         <div id="lobby-list">
-            <div class="battle-card">
-                <div class="b-live-box"><div class="b-hex"></div><div class="b-live-text">Live</div></div>
-                <div class="b-bet"><img src="star.png?v=8"></div>
-                <div class="b-cost">60 ⭐<span>Стоимость</span></div>
-                <div class="b-players">
-                    <div class="b-player-slot slot-blue" style="z-index: 3;">A</div>
-                    <div class="b-player-slot" style="z-index: 2;"><img src="https://telegram.org/img/t_logo.png" style="width:100%; border-radius:50%;"></div>
-                    <div class="b-player-slot slot-empty" style="z-index: 1;">+</div>
-                </div>
-                <div class="b-actions"><button class="b-btn b-btn-join">Принять вызов ⚔️</button><button class="b-btn b-btn-watch">Смотреть 👁️</button></div>
-            </div>
-            <div class="battle-card">
-                <div class="b-live-box"><div class="b-hex"></div><div class="b-live-text">Live</div></div>
-                <div class="b-bet"><img src="star.png?v=8"><img src="star.png?v=8" style="margin-left:-15px;"></div>
-                <div class="b-cost">500 ⭐<span>Стоимость</span></div>
-                <div class="b-players">
-                    <div class="b-player-slot slot-green" style="z-index: 2;">Me</div>
-                    <div class="b-player-slot slot-empty" style="z-index: 1;">+</div>
-                </div>
-                <div class="b-actions"><button class="b-btn b-btn-join">Принять вызов ⚔️</button><button class="b-btn b-btn-watch">Смотреть 👁️</button></div>
-            </div>
+            <div class="empty-inv" style="padding-top: 20px;">Нет активных битв.<br>Создайте свою!</div>
         </div>
     </div>
 
@@ -414,6 +394,17 @@
 
         <button class="btn-confirm-nodes" id="btn-submit-nodes" onclick="resolveGame()" disabled>РАСПРЕДЕЛИТЬ</button>
         <button class="btn" id="btn-leave-nodes" style="margin-top: 15px; width: 100%; max-width: 300px; background: #3e4257; color: white; display: none;" onclick="finishGameAndReturn()">ВЫЙТИ ИЗ ТЕРМИНАЛА</button>
+
+        <!-- БЛОК РУЛЕТКИ ПРИ НИЧЬЕЙ -->
+        <div id="tie-breaker-container" style="display: none; width: 100%; max-width: 400px; margin-top: 20px;">
+            <h3 style="color: #ffb13b; text-align: center; margin-top: 0;">НИЧЬЯ! РУЛЕТКА ЗА БАНК</h3>
+            <div style="width: 100%; height: 80px; background: #1a1b26; border: 2px solid var(--border-color); border-radius: 12px; position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);">
+                <div class="center-line" style="background: #ffb13b; box-shadow: 0 0 10px #ffb13b; width: 2px; position: absolute; left: 50%; transform: translateX(-50%); height: 100%; z-index: 10;"></div>
+                <div id="tie-roulette-strip" style="display: flex; height: 100%; position: absolute; left: 0; top: 0;">
+                    <!-- Аватарки будут тут -->
+                </div>
+            </div>
+        </div>
 
         <div class="game-results" id="game-results-panel">
             <h3 style="margin-top:0; color:#fff; text-align:center; margin-bottom: 15px;">РЕЗУЛЬТАТЫ СИСТЕМЫ</h3>
@@ -505,6 +496,7 @@
             document.getElementById('theory-lobbies-screen').style.display = 'none';
             document.getElementById('lobby-waiting-screen').style.display = 'none';
             document.getElementById('node-game-screen').style.display = 'none';
+            document.getElementById('tie-breaker-container').style.display = 'none';
             
             document.getElementById(`section-${sectionId}`).classList.add('active');
         }
@@ -583,7 +575,6 @@
 
         // 4. Терминал Игры и Ограничитель Энергии
         function startTerminal() {
-            // Прячем настоящие очки до конца раунда
             document.getElementById('pts-A').innerHTML = '<span class="hidden-pts">??? ОЧКОВ</span>';
             document.getElementById('pts-B').innerHTML = '<span class="hidden-pts">??? ОЧКОВ</span>';
             document.getElementById('pts-C').innerHTML = '<span class="hidden-pts">??? ОЧКОВ</span>';
@@ -595,6 +586,7 @@
             document.getElementById('btn-submit-nodes').style.display = 'block';
             document.getElementById('btn-leave-nodes').style.display = 'none';
             document.getElementById('game-results-panel').style.display = 'none';
+            document.getElementById('tie-breaker-container').style.display = 'none';
             document.querySelectorAll('.node-box').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.node-result').forEach(r => r.style.display = 'none');
             
@@ -608,7 +600,6 @@
             let c = parseInt(document.getElementById('input-C').value) || 0;
             let total = a + b + c;
             
-            // Если больше 100, урезаем ставку конкретно в том инпуте, который мы сейчас меняем
             if (total > 100) {
                 let excess = total - 100;
                 let currentVal = parseInt(element.value) || 0;
@@ -642,7 +633,6 @@
             document.getElementById('input-B').disabled = true;
             document.getElementById('input-C').disabled = true;
 
-            // АНИМАЦИЯ ВСКРЫТИЯ ОЧКОВ
             const ptsA = document.getElementById('pts-A');
             const ptsB = document.getElementById('pts-B');
             const ptsC = document.getElementById('pts-C');
@@ -653,7 +643,6 @@
             
             tg.HapticFeedback.impactOccurred('heavy');
 
-            // Ждем 1.5 секунды, пока пройдет анимация, и затем выдаем результаты
             setTimeout(() => {
                 let pA = parseInt(document.getElementById('input-A').value);
                 let pB = parseInt(document.getElementById('input-B').value);
@@ -705,8 +694,9 @@
 
                 let maxScore = -1;
                 allPlayers.forEach(p => { if(p.score > maxScore) maxScore = p.score; });
-                let winnersCount = allPlayers.filter(p => p.score === maxScore).length;
-                let finalWinner = (winnersCount === 1) ? allPlayers.find(p => p.score === maxScore) : null; 
+                
+                // ИЩЕМ НИЧЬЮ
+                let tiedPlayers = allPlayers.filter(p => p.score === maxScore);
 
                 if(winnerA && winnerA.id === 0) { document.getElementById('node-box-A').classList.add('active'); document.getElementById('node-res-A').style.display='block';}
                 if(winnerB && winnerB.id === 0) { document.getElementById('node-box-B').classList.add('active'); document.getElementById('node-res-B').style.display='block';}
@@ -718,33 +708,105 @@
                     resultHtml += `<div class="res-row"><span>${p.name} [${p.e.join(', ')}]</span> <span>${p.score} pts</span></div>`;
                 });
 
-                // ЗАПИСЬ РЕАЛЬНОЙ СТАТИСТИКИ АРЕНЫ
+                if (tiedPlayers.length === 1) {
+                    // ОБЫЧНАЯ ПОБЕДА (НЕТ НИЧЬИ)
+                    let finalWinner = tiedPlayers[0];
+                    arenaBattles++;
+                    localStorage.setItem('lootgift_arena_battles', arenaBattles);
+                    document.getElementById('top-stat-battles').innerText = arenaBattles;
+
+                    if (finalWinner.id === 0) {
+                        userBalance += pot; updateBalanceDisplay(userBalance, true); showBalanceAnimation(pot);
+                        resultHtml += `<div class="res-row" style="color:var(--accent-green)">ВЫ ЗАБРАЛИ БАНК: +${pot} ⭐</div>`;
+                        tg.HapticFeedback.notificationOccurred('success');
+                    } else {
+                        arenaDefeats++;
+                        localStorage.setItem('lootgift_arena_defeats', arenaDefeats);
+                        document.getElementById('top-stat-defeats').innerText = arenaDefeats;
+                        resultHtml += `<div class="res-row" style="color:#ff2a5f">ПОБЕДИЛ ${finalWinner.name.toUpperCase()}</div>`;
+                        tg.HapticFeedback.notificationOccurred('error');
+                    }
+
+                    document.getElementById('results-content').innerHTML = resultHtml;
+                    document.getElementById('game-results-panel').style.display = 'block';
+                    document.getElementById('btn-leave-nodes').style.display = 'block';
+                } else {
+                    // НИЧЬЯ -> ЗАПУСКАЕМ РУЛЕТКУ ТАЙ-БРЕЙКЕР!
+                    document.getElementById('results-content').innerHTML = resultHtml + `<div class="res-row" style="color:#ffb13b; font-size:12px; margin-top:5px;">НИЧЬЯ! ${tiedPlayers.length} ИГРОКОВ В РУЛЕТКЕ</div>`;
+                    document.getElementById('game-results-panel').style.display = 'block';
+                    
+                    startTieBreakerRoulette(tiedPlayers, pot);
+                }
+
+            }, 1200); 
+        }
+
+        function startTieBreakerRoulette(tiedPlayers, pot) {
+            document.getElementById('tie-breaker-container').style.display = 'block';
+            const strip = document.getElementById('tie-roulette-strip');
+            strip.innerHTML = '';
+            strip.style.transition = 'none';
+            strip.style.transform = 'translateX(0)';
+
+            const finalWinAmount = Math.floor(pot * 0.85); // Вычет комиссии 15%
+            const winner = tiedPlayers[Math.floor(Math.random() * tiedPlayers.length)]; // Равные шансы 33.3%
+
+            const totalItems = 40;
+            const winnerIndex = 32;
+            const itemSize = 80; 
+            
+            for (let i = 0; i < totalItems; i++) {
+                let div = document.createElement('div');
+                div.style.cssText = `width: ${itemSize}px; height: 100%; flex-shrink: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; font-weight: bold; font-size: 10px; border-right: 1px solid #333;`;
+                
+                let p = (i === winnerIndex) ? winner : tiedPlayers[Math.floor(Math.random() * tiedPlayers.length)];
+                
+                let avatarSrc = p.id === 0 ? document.getElementById('tg-avatar').src : '';
+                let avatarHtml = p.id === 0 
+                    ? `<img src="${avatarSrc}" style="width: 36px; height: 36px; border-radius: 50%; object-fit:cover;">` 
+                    : `🤖`;
+                    
+                div.innerHTML = `
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #222533; display: flex; justify-content: center; align-items: center; font-size: 20px; border: 2px solid ${p.id===0?'#71e654':'#5a3e8c'}; margin-bottom: 4px;">
+                        ${avatarHtml}
+                    </div>
+                    <span>${p.id === 0 ? 'ВЫ' : p.name}</span>
+                `;
+                strip.appendChild(div);
+            }
+
+            setTimeout(() => {
+                strip.style.transition = 'transform 4s cubic-bezier(0.15, 0.85, 0.1, 1)';
+                const containerWidth = document.getElementById('tie-breaker-container').offsetWidth;
+                const randomOffset = Math.floor(Math.random() * (itemSize * 0.8)) - (itemSize * 0.4);
+                const stopPosition = (containerWidth / 2) - (winnerIndex * itemSize + (itemSize / 2)) + randomOffset;
+                strip.style.transform = `translateX(${stopPosition}px)`;
+            }, 100);
+
+            setTimeout(() => {
                 arenaBattles++;
                 localStorage.setItem('lootgift_arena_battles', arenaBattles);
                 document.getElementById('top-stat-battles').innerText = arenaBattles;
 
-                if (finalWinner && finalWinner.id === 0) {
-                    userBalance += pot; updateBalanceDisplay(userBalance, true); showBalanceAnimation(pot);
-                    resultHtml += `<div class="res-row" style="color:var(--accent-green)">ВЫ ЗАБРАЛИ БАНК: +${pot} ⭐</div>`;
+                let resContent = document.getElementById('results-content').innerHTML;
+
+                if (winner.id === 0) {
+                    userBalance += finalWinAmount; 
+                    updateBalanceDisplay(userBalance, true); 
+                    showBalanceAnimation(finalWinAmount);
+                    resContent += `<div class="res-row" style="color:var(--accent-green); margin-top: 15px;">ВЫ ВЫИГРАЛИ РУЛЕТКУ: +${finalWinAmount} ⭐ <span style="font-size:10px;color:#888;">(ком. 15%)</span></div>`;
                     tg.HapticFeedback.notificationOccurred('success');
-                } else if (finalWinner) {
+                } else {
                     arenaDefeats++;
                     localStorage.setItem('lootgift_arena_defeats', arenaDefeats);
                     document.getElementById('top-stat-defeats').innerText = arenaDefeats;
-                    
-                    resultHtml += `<div class="res-row" style="color:#ff2a5f">ПОБЕДИЛ ${finalWinner.name.toUpperCase()}</div>`;
+                    resContent += `<div class="res-row" style="color:#ff2a5f; margin-top: 15px;">В РУЛЕТКЕ ПОБЕДИЛ ${winner.name.toUpperCase()}</div>`;
                     tg.HapticFeedback.notificationOccurred('error');
-                } else {
-                    userBalance += currentGame.bet; updateBalanceDisplay(userBalance, true); showBalanceAnimation(currentGame.bet);
-                    resultHtml += `<div class="res-row" style="color:#a1a1aa">НИЧЬЯ! ВОЗВРАТ СТАВКИ: +${currentGame.bet} ⭐</div>`;
-                    tg.HapticFeedback.notificationOccurred('warning');
                 }
-
-                document.getElementById('results-content').innerHTML = resultHtml;
-                document.getElementById('game-results-panel').style.display = 'block';
+                
+                document.getElementById('results-content').innerHTML = resContent;
                 document.getElementById('btn-leave-nodes').style.display = 'block';
-
-            }, 1200); // Задержка для анимации цифр
+            }, 4200);
         }
 
         function finishGameAndReturn() {
