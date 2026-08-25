@@ -69,7 +69,6 @@
         /* Инвентарь */
         .inv-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .inv-count { font-weight: bold; color: #a1a1aa; font-size: 14px; }
-        /* ОБНОВЛЕННАЯ КНОПКА "ПРОДАТЬ ВСЁ" (Фиолетовая) */
         .sell-all-btn { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 12px; cursor: pointer; text-transform: uppercase; box-shadow: 0 2px 5px rgba(155, 89, 182, 0.3); transition: 0.2s; }
         .sell-all-btn:active { transform: scale(0.95); }
 
@@ -167,7 +166,6 @@
 <body>
 
     <div class="top-bar">
-        <!-- Кликабельный профиль с аватаркой -->
         <div class="user-info" onclick="openProfileModal()">
             <img id="tg-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2371e654'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>" class="user-avatar" alt="Avatar">
             <span id="tg-username">Игрок</span>
@@ -277,6 +275,9 @@
         if (userBalance === null) userBalance = 1000; 
         else userBalance = parseInt(userBalance);
         
+        // СРАЗУ ОБНОВЛЯЕМ БАЛАНС ПРИ ЗАГРУЗКЕ, ЧТОБЫ НЕ БЫЛО 1000
+        document.getElementById('balance-display').innerText = userBalance;
+        
         let spinsCount = localStorage.getItem('lootgift_spins');
         if (spinsCount === null) spinsCount = 0;
         else spinsCount = parseInt(spinsCount);
@@ -382,7 +383,7 @@
             document.getElementById('action-item-name').innerText = item.name;
             document.getElementById('action-item-price').innerText = item.value;
 
-            // Логика кнопки Вывода (Обновленный текст)
+            // Логика кнопки Вывода
             const btnWithdraw = document.getElementById('action-btn-withdraw');
             if (item.value > 101) {
                 btnWithdraw.disabled = false;
@@ -430,16 +431,25 @@
             const itemIndex = inventory.findIndex(i => i.uid === selectedItemUid);
             if (itemIndex > -1) {
                 const item = inventory[itemIndex];
-                if (item.isFavorite) return; // Защита
+                if (item.isFavorite) return; 
                 
-                tg.HapticFeedback.notificationOccurred('success');
-                userBalance += item.value;
-                updateBalanceDisplay(userBalance, true);
-                showBalanceAnimation(item.value);
-                
-                inventory.splice(itemIndex, 1); // Удаляем 1 предмет
-                saveInventory();
-                closeItemActionModal();
+                // Нативное окно подтверждения Telegram
+                tg.showConfirm(`Вы уверены, что хотите продать «${item.name}» за ${item.value} ⭐?`, function(confirmed) {
+                    if (confirmed) {
+                        tg.HapticFeedback.notificationOccurred('success');
+                        userBalance += item.value;
+                        updateBalanceDisplay(userBalance, true);
+                        showBalanceAnimation(item.value);
+                        
+                        // Ищем заново на случай смещения индексов
+                        const currentIndex = inventory.findIndex(i => i.uid === selectedItemUid);
+                        if (currentIndex > -1) {
+                            inventory.splice(currentIndex, 1);
+                            saveInventory();
+                        }
+                        closeItemActionModal();
+                    }
+                });
             }
         }
 
@@ -450,27 +460,26 @@
         }
 
         function sellAllInventory() {
-            let totalSell = 0;
-            const newInventory = [];
+            let itemsToSell = inventory.filter(item => !item.isFavorite);
 
-            inventory.forEach(item => {
-                if (!item.isFavorite) {
-                    totalSell += item.value;
-                } else {
-                    newInventory.push(item); // Оставляем только избранное
-                }
-            });
-
-            if (totalSell > 0) {
-                tg.HapticFeedback.notificationOccurred('success');
-                inventory = newInventory;
-                
-                userBalance += totalSell;
-                updateBalanceDisplay(userBalance, true);
-                showBalanceAnimation(totalSell);
-                
-                saveInventory();
-                tg.showAlert(`Успешно продано! Вы получили +${totalSell} ⭐`);
+            if (itemsToSell.length > 0) {
+                // Нативное окно подтверждения Telegram
+                tg.showConfirm(`Вы уверены, что хотите продать ${itemsToSell.length} предметов?`, function(confirmed) {
+                    if (confirmed) {
+                        let totalSell = itemsToSell.reduce((sum, item) => sum + item.value, 0);
+                        const newInventory = inventory.filter(item => item.isFavorite); // Оставляем только избранное
+                        
+                        tg.HapticFeedback.notificationOccurred('success');
+                        inventory = newInventory;
+                        
+                        userBalance += totalSell;
+                        updateBalanceDisplay(userBalance, true);
+                        showBalanceAnimation(totalSell);
+                        
+                        saveInventory();
+                        tg.showAlert(`Успешно продано! Вы получили +${totalSell} ⭐`);
+                    }
+                });
             } else {
                 tg.HapticFeedback.notificationOccurred('error');
                 tg.showAlert('Нет предметов для продажи (или все добавлены в избранное).');
