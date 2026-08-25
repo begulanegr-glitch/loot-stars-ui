@@ -13,6 +13,9 @@
             --accent-green: #71e654;
             --green-glow: rgba(113, 230, 84, 0.4);
             --border-color: #3e4257;
+            --purple: #5a3e8c;
+            --purple-glow: rgba(90, 62, 140, 0.5);
+            
             --row-height: 120px;
             --item-size: 100px;
         }
@@ -47,15 +50,15 @@
         h2 { font-size: 16px; margin-top: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; color: #d4bfff; }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 16px; }
         
-        .case-card-special { background-color: var(--bg-color); border: 2px solid #5a3e8c; border-radius: 16px; padding: 0; text-align: center; transition: transform 0.1s; overflow: hidden; box-shadow: 0 0 20px rgba(90, 62, 140, 0.4); display: flex; flex-direction: column; }
+        .case-card-special { background-color: var(--bg-color); border: 2px solid var(--purple); border-radius: 16px; padding: 0; text-align: center; transition: transform 0.1s; overflow: hidden; box-shadow: 0 0 20px var(--purple-glow); display: flex; flex-direction: column; }
         .case-card-special:active { transform: scale(0.95); }
         .premium-case-img { width: 100%; display: block; -webkit-mask-image: linear-gradient(to bottom, black 95%, transparent 100%); mask-image: linear-gradient(to bottom, black 95%, transparent 100%); }
         .case-info-box { background-color: transparent; padding: 0px 14px 16px 14px; position: relative; z-index: 2; margin-top: -5px; }
         .case-name { font-size: 16px; font-weight: 800; margin-bottom: 4px; color: #ffffff; }
         .case-price { font-size: 14px; color: var(--accent-green); font-weight: bold; margin-bottom: 12px; display: flex; justify-content: center; align-items: center; gap: 4px; }
         .case-price img { width: 14px; height: 14px; }
-        .case-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 16px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; flex-direction: column; align-items: center;}
-        .case-card:active { transform: scale(0.95); }
+        .case-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 16px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.2s;}
+        .case-card:active { transform: scale(0.95); border-color: var(--accent-green); }
         .case-icon { font-size: 36px; margin-bottom: 8px; }
         .case-name-std { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #e2d3fd; }
         .case-price-std { font-size: 12px; color: var(--accent-green); margin-bottom: 12px; font-weight: bold; display: flex; justify-content: center; align-items: center; gap: 4px; }
@@ -107,7 +110,7 @@
         .action-btn:active { transform: scale(0.95); }
         .btn-withdraw { background: #3e4257; color: white; }
         .btn-withdraw:disabled { background: #222533; color: #666; cursor: not-allowed; text-transform: none; font-size: 12px; }
-        .btn-fav { background: #1a1b26; border: 2px solid #5a3e8c; color: #d4bfff; }
+        .btn-fav { background: #1a1b26; border: 2px solid var(--purple); color: #d4bfff; }
         .btn-sell { background: linear-gradient(135deg, #71e654, #4db335); color: #0b1a10; }
         .btn-sell:disabled { background: #333; color: #666; cursor: not-allowed; }
 
@@ -121,7 +124,7 @@
         .spin-btn:active { transform: translateY(6px); box-shadow: 0 0 0 #4db335; }
         .spin-btn:disabled { background: #555; box-shadow: 0 6px 0 #333; color: #888; cursor: not-allowed; transform: translateY(6px); }
         .roulette-wrapper { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
-        .roulette-row { width: 100%; height: var(--row-height); background: #1a1b26; border: 2px solid #5a3e8c; border-radius: 12px; position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); transition: height 0.3s ease; }
+        .roulette-row { width: 100%; height: var(--row-height); background: #1a1b26; border: 2px solid var(--purple); border-radius: 12px; position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); transition: height 0.3s ease; }
         .roulette-strip { display: flex; height: 100%; position: absolute; left: 0; top: 0; }
         .roulette-item { box-sizing: border-box; width: var(--item-size); height: var(--item-size); margin: 6px; background: var(--bg-color); border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0; border: 1px solid var(--border-color); transition: all 0.3s ease; }
         .roulette-item img { width: 50%; height: 50%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); margin-bottom: 2px; }
@@ -147,16 +150,57 @@
         .loading-content img { max-width: 220px; border-radius: 20px; animation: pulseLogo 2s infinite alternate ease-in-out; mix-blend-mode: lighten; }
         .loading-text { margin-top: 24px; font-size: 18px; font-weight: bold; color: var(--accent-green); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px var(--green-glow); animation: pulseText 1.5s infinite alternate ease-in-out; }
 
-        /* --- ИГРЫ (PvP АРЕНА) --- */
-        .games-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; margin-top: 10px;}
-        .game-rules { font-size: 12px; color: #a1a1aa; margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; border-left: 3px solid var(--accent-green); }
-        .lobby-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .lobby-info { display: flex; flex-direction: column; gap: 4px; }
-        .lobby-title { font-size: 14px; font-weight: 800; color: #fff; }
-        .lobby-bet { font-size: 12px; color: var(--accent-green); font-weight: bold; display: flex; align-items: center; gap: 4px;}
-        .lobby-players { font-size: 12px; color: #888; }
-        .btn-join { background: #3e4257; color: white; padding: 8px 16px; border-radius: 8px; font-weight: bold; border: none; font-size: 12px; cursor: pointer; transition: 0.2s; }
-        .btn-join:active { transform: scale(0.95); background: var(--accent-green); color: #000; }
+        /* --- ИГРЫ (PvP АРЕНА - НОВЫЙ ДИЗАЙН) --- */
+        #section-games-menu { display: none; }
+        #section-games-menu.active { display: block; }
+        
+        #theory-lobbies-screen { display: none; flex-direction: column; padding-bottom: 100px; }
+        .theory-top-stats { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: bold; color: #a1a1aa; margin-bottom: 15px; margin-top: 10px;}
+        .stat-group { display: flex; gap: 10px; }
+        .stat-group span { display: flex; align-items: center; gap: 4px; }
+        
+        .create-battle-btn { background: linear-gradient(135deg, var(--purple), #8e44ad); color: white; width: 100%; padding: 12px; border-radius: 12px; font-weight: 900; font-size: 14px; text-transform: uppercase; border: none; cursor: pointer; margin-bottom: 20px; box-shadow: 0 4px 15px var(--purple-glow); transition: 0.2s;}
+        .create-battle-btn:active { transform: scale(0.98); }
+
+        /* Дизайн карточки лобби (Как на скрине Screenshot_72_2) */
+        .battle-card { display: flex; align-items: center; background: #161722; border: 1px solid var(--border-color); border-radius: 16px; padding: 12px; margin-bottom: 12px; transition: 0.2s; }
+        .battle-card:hover { border-color: var(--purple); box-shadow: 0 0 10px rgba(90, 62, 140, 0.2); }
+        
+        .b-live-box { display: flex; flex-direction: column; align-items: center; justify-content: center; padding-right: 15px; border-right: 1px solid rgba(255,255,255,0.05); margin-right: 15px; }
+        .b-hex { width: 30px; height: 30px; border: 2px solid #ffb13b; border-radius: 6px; display: flex; justify-content: center; align-items: center; margin-bottom: 4px; box-shadow: 0 0 8px rgba(255, 177, 59, 0.3); }
+        .b-hex::after { content: ''; width: 10px; height: 10px; border: 2px solid transparent; border-top-color: #ffb13b; border-radius: 50%; animation: spin 1s linear infinite; }
+        .b-live-text { font-size: 10px; color: #a1a1aa; font-weight: bold; }
+        
+        .b-bet { flex: 1; display: flex; align-items: center; }
+        .b-bet img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); }
+        
+        .b-cost { background: #222533; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; color: #fff; display: flex; flex-direction: column; align-items: center; margin: 0 15px; }
+        .b-cost span { font-size: 10px; color: #888; font-weight: normal; }
+        
+        .b-players { display: flex; align-items: center; gap: -5px; margin-right: 15px; }
+        .b-player-slot { width: 28px; height: 28px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: bold; color: white; border: 2px solid #161722; margin-left: -8px; }
+        .slot-blue { background: #0077ff; }
+        .slot-green { background: var(--accent-green); color: #000; }
+        .slot-empty { background: transparent; border: 1px dashed #555; color: #555; }
+        
+        .b-actions { display: flex; flex-direction: column; gap: 6px; }
+        .b-btn { padding: 6px 12px; border-radius: 6px; font-size: 10px; font-weight: 900; text-transform: uppercase; border: none; cursor: pointer; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; gap: 8px;}
+        .b-btn:active { transform: scale(0.95); }
+        .b-btn-join { background: linear-gradient(135deg, #71e654, #4db335); color: #000; }
+        .b-btn-watch { background: #2b2e3e; color: #a1a1aa; }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Комната ожидания (Владелец лобби) */
+        #lobby-waiting-screen { display: none; flex-direction: column; align-items: center; padding-top: 50px; text-align: center; }
+        .waiting-title { font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 20px; }
+        .waiting-slots { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
+        .w-slot { width: 60px; height: 60px; border-radius: 50%; background: #222533; border: 2px dashed #555; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #555; }
+        .w-slot.filled { background: var(--purple); border: 2px solid var(--accent-green); color: #fff; border-style: solid;}
+        
+        .btn-call-bots { background: linear-gradient(135deg, #00e5ff, #0077ff); color: white; width: 100%; max-width: 300px; padding: 15px; border-radius: 12px; font-weight: 900; font-size: 16px; margin-bottom: 15px; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 119, 255, 0.4); }
+        .btn-call-bots:active { transform: scale(0.95); }
+        .btn-cancel { background: transparent; color: #ff2a5f; border: 1px solid #ff2a5f; width: 100%; max-width: 300px; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; }
 
         /* Терминал Узлов */
         #node-game-screen { display: none; flex-direction: column; align-items: center; padding: 20px; padding-top: 40px; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #0b0c10; z-index: 500; overflow-y: auto;}
@@ -208,22 +252,10 @@
             </div>
             <div class="modal-body">
                 <div id="modal-tab-profile" class="tab-content active">
-                    <div class="stat-box">
-                        <span class="stat-label">Дата регистрации:</span>
-                        <span class="stat-value" id="stat-reg-date">01.01.2024</span>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-label">Открыто кейсов:</span>
-                        <span class="stat-value" id="stat-cases-opened">0</span>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-label">Выиграно в кейсах:</span>
-                        <span class="stat-value" id="stat-total-won">0 <img src="star.png?v=8" alt="star"></span>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-label">Звёзд получено (Telegram):</span>
-                        <span class="stat-value" id="stat-tg-stars">0 <img src="star.png?v=8" alt="star"></span>
-                    </div>
+                    <div class="stat-box"> <span class="stat-label">Дата регистрации:</span> <span class="stat-value" id="stat-reg-date">01.01.2024</span> </div>
+                    <div class="stat-box"> <span class="stat-label">Открыто кейсов:</span> <span class="stat-value" id="stat-cases-opened">0</span> </div>
+                    <div class="stat-box"> <span class="stat-label">Выиграно в кейсах:</span> <span class="stat-value" id="stat-total-won">0 <img src="star.png?v=8" alt="star"></span> </div>
+                    <div class="stat-box"> <span class="stat-label">Звёзд получено:</span> <span class="stat-value" id="stat-tg-stars">0 <img src="star.png?v=8" alt="star"></span> </div>
                 </div>
                 <div id="modal-tab-inventory" class="tab-content">
                     <div class="inv-header">
@@ -245,12 +277,9 @@
             <div class="action-content">
                 <img id="action-item-icon" src="" class="action-icon">
                 <div id="action-item-name" class="action-name">Предмет</div>
-                
                 <button id="action-btn-withdraw" class="action-btn btn-withdraw" onclick="withdrawItem()">Вывести в Telegram</button>
                 <button id="action-btn-fav" class="action-btn btn-fav" onclick="toggleFavorite()">В избранное ❤️</button>
-                <button id="action-btn-sell" class="action-btn btn-sell" onclick="sellSingleItem()">
-                    Продать за <span id="action-item-price">0</span> <img src="star.png?v=8" style="width:16px; height:16px;">
-                </button>
+                <button id="action-btn-sell" class="action-btn btn-sell" onclick="sellSingleItem()"> Продать за <span id="action-item-price">0</span> <img src="star.png?v=8" style="width:16px; height:16px;"> </button>
             </div>
         </div>
     </div>
@@ -259,7 +288,7 @@
     <div id="create-lobby-modal" class="modal-overlay">
         <div class="modal-content" style="max-width: 320px; padding: 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h3 style="margin:0; color: #fff;">Создать Игру</h3>
+                <h3 style="margin:0; color: #fff;">Создать Битву</h3>
                 <button class="close-btn" style="color: #666; padding:0;" onclick="closeCreateLobby()">×</button>
             </div>
             <label style="color: #a1a1aa; font-size: 12px; margin-bottom: 5px; display:block;">Ставка (Звёзды):</label>
@@ -267,73 +296,117 @@
             
             <label style="color: #a1a1aa; font-size: 12px; margin-bottom: 5px; display:block;">Количество игроков:</label>
             <select id="lobby-players-input" class="node-input" style="width: 100%; margin-bottom: 25px; padding: 10px;">
-                <option value="2">2 Игрока (1v1)</option>
+                <option value="2">2 Игрока (Дуэль)</option>
                 <option value="3">3 Игрока</option>
-                <option value="4" selected>4 Игрока</option>
+                <option value="4" selected>4 Игрока (Мясорубка)</option>
             </select>
-
-            <button class="btn btn-sell" onclick="confirmCreateLobby()">СОЗДАТЬ</button>
+            <button class="btn btn-sell" onclick="confirmCreateLobby()">СОЗДАТЬ ЛОББИ</button>
         </div>
     </div>
 
     <!-- ГЛАВНЫЙ ЭКРАН С РАЗДЕЛАМИ -->
     <div id="app-content">
         <div id="section-bonuses" class="app-section">
-            <div class="empty-inv" style="padding-top: 50px;">
-                <h3 style="color: var(--accent-green);">🎁 Бонусы</h3>
-                <p>Раздел находится в разработке</p>
-            </div>
+            <div class="empty-inv" style="padding-top: 50px;"><h3 style="color: var(--accent-green);">🎁 Бонусы</h3><p>Раздел находится в разработке</p></div>
         </div>
         <div id="section-news" class="app-section">
-            <div class="empty-inv" style="padding-top: 50px;">
-                <h3 style="color: var(--accent-green);">📰 Новости</h3>
-                <p>Раздел находится в разработке</p>
-            </div>
+            <div class="empty-inv" style="padding-top: 50px;"><h3 style="color: var(--accent-green);">📰 Новости</h3><p>Раздел находится в разработке</p></div>
         </div>
         <div id="section-cases" class="app-section active">
             <div id="app-cases-grid"></div>
         </div>
 
-        <!-- РАЗДЕЛ ИГРЫ (PvP АРЕНА) -->
-        <div id="section-games" class="app-section">
-            <div class="games-header">
-                <h3 style="color: #00e5ff; margin:0; text-shadow: 0 0 10px rgba(0,229,255,0.4);">ТЕОРИЯ ИГР</h3>
-                <button class="btn" style="width: auto; padding: 8px 14px; background: linear-gradient(135deg, #00e5ff, #0077ff); color: white;" onclick="openCreateLobby()">Создать лобби</button>
-            </div>
-            <div class="game-rules">
-                <b>Краткие правила:</b> У вас есть 100 энергии. Распределите её между узлами A, B, C. 
-                Узел забирает тот, кто вложил больше энергии. 
-                <b>Анти-Зерг:</b> Если игроки ставят одинаково — их ставки сгорают! Побеждает игрок с наибольшим количеством очков за узлы.
-            </div>
-            
-            <div id="lobby-list">
-                <!-- Фейковые лобби -->
-                <div class="lobby-card">
-                    <div class="lobby-info">
-                        <div class="lobby-title">Арена Ботов #842</div>
-                        <div class="lobby-bet">150 <img src="star.png?v=8"></div>
-                        <div class="lobby-players">Ожидание: 3/4</div>
-                    </div>
-                    <button class="btn-join" onclick="joinLobby(150, 4)">ИГРАТЬ</button>
-                </div>
-                <div class="lobby-card">
-                    <div class="lobby-info">
-                        <div class="lobby-title">Дуэль #911</div>
-                        <div class="lobby-bet">500 <img src="star.png?v=8"></div>
-                        <div class="lobby-players">Ожидание: 1/2</div>
-                    </div>
-                    <button class="btn-join" onclick="joinLobby(500, 2)">ИГРАТЬ</button>
-                </div>
-                <div class="lobby-card">
-                    <div class="lobby-info">
-                        <div class="lobby-title">Мясорубка #007</div>
-                        <div class="lobby-bet">50 <img src="star.png?v=8"></div>
-                        <div class="lobby-players">Ожидание: 2/3</div>
-                    </div>
-                    <button class="btn-join" onclick="joinLobby(50, 3)">ИГРАТЬ</button>
+        <!-- РАЗДЕЛ МЕНЮ ИГР -->
+        <div id="section-games-menu" class="app-section">
+            <h2 style="color: #00e5ff; text-shadow: 0 0 10px rgba(0,229,255,0.4);">РЕЖИМЫ ИГРЫ</h2>
+            <div class="case-card-special" style="border-color: #00e5ff; box-shadow: 0 0 15px rgba(0,229,255,0.2); margin-top: 15px;" onclick="openTheoryLobbies()">
+                <div style="padding: 20px; text-align: center;">
+                    <div style="font-size: 40px; margin-bottom: 10px;">🧠</div>
+                    <div class="case-name" style="color: #00e5ff;">ТЕОРИЯ ИГР (PvP)</div>
+                    <p style="font-size: 12px; color: #a1a1aa; line-height: 1.4; margin-bottom: 15px;">
+                        Психологическое доминирование. Распредели энергию по 3 узлам. Одинаковые ставки сгорают. Побеждает хитрейший!
+                    </p>
+                    <button class="btn" style="background: linear-gradient(135deg, #00e5ff, #0077ff); color: white;">СПИСОК ЛОББИ</button>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- ЭКРАН СПИСКА ЛОББИ (ТЕОРИЯ ИГР) -->
+    <div id="theory-lobbies-screen">
+        <button class="back-btn" onclick="backToGamesMenu()">← Меню Игр</button>
+        
+        <div class="theory-top-stats">
+            <div class="stat-group">
+                <span>⚔️ <span style="color:#fff;">3</span> АКТИВНЫЕ</span>
+                <span style="margin-left:10px;">⚔️ <span style="color:#fff;">12450</span> ВСЕГО БИТВ</span>
+            </div>
+            <div class="stat-group">
+                <span style="color:#ff2a5f;">💀 12 Поражений</span>
+            </div>
+        </div>
+
+        <button class="create-battle-btn" onclick="openCreateLobby()">Создать Битву</button>
+
+        <div id="lobby-list">
+            <!-- Фейковое Лобби 1 -->
+            <div class="battle-card">
+                <div class="b-live-box">
+                    <div class="b-hex"></div>
+                    <div class="b-live-text">Live</div>
+                </div>
+                <div class="b-bet">
+                    <img src="star.png?v=8">
+                </div>
+                <div class="b-cost">
+                    60 ⭐
+                    <span>Стоимость</span>
+                </div>
+                <div class="b-players">
+                    <div class="b-player-slot slot-blue" style="z-index: 3;">A</div>
+                    <div class="b-player-slot" style="z-index: 2;"><img src="https://telegram.org/img/t_logo.png" style="width:100%; border-radius:50%;"></div>
+                    <div class="b-player-slot slot-empty" style="z-index: 1;">+</div>
+                </div>
+                <div class="b-actions">
+                    <button class="b-btn b-btn-join">Принять вызов ⚔️</button>
+                    <button class="b-btn b-btn-watch">Смотреть 👁️</button>
+                </div>
+            </div>
+
+            <!-- Фейковое Лобби 2 -->
+            <div class="battle-card">
+                <div class="b-live-box">
+                    <div class="b-hex"></div>
+                    <div class="b-live-text">Live</div>
+                </div>
+                <div class="b-bet">
+                    <img src="star.png?v=8">
+                    <img src="star.png?v=8" style="margin-left:-15px;">
+                </div>
+                <div class="b-cost">
+                    500 ⭐
+                    <span>Стоимость</span>
+                </div>
+                <div class="b-players">
+                    <div class="b-player-slot slot-green" style="z-index: 2;">Me</div>
+                    <div class="b-player-slot slot-empty" style="z-index: 1;">+</div>
+                </div>
+                <div class="b-actions">
+                    <button class="b-btn b-btn-join">Принять вызов ⚔️</button>
+                    <button class="b-btn b-btn-watch">Смотреть 👁️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЭКРАН ОЖИДАНИЯ В ЛОББИ -->
+    <div id="lobby-waiting-screen">
+        <div class="waiting-title">ОЖИДАНИЕ ИГРОКОВ...</div>
+        <div class="waiting-slots" id="waiting-slots-container">
+            <!-- Слоты генерируются через JS -->
+        </div>
+        <button class="btn-call-bots" onclick="callBotsToLobby()">ПОЗВАТЬ БОТОВ 🤖</button>
+        <button class="btn-cancel" onclick="cancelLobby()">ОТМЕНИТЬ И ВЕРНУТЬ СТАВКУ</button>
     </div>
 
     <!-- ТЕРМИНАЛ ЗАХВАТА УЗЛОВ (САМА ИГРА) -->
@@ -367,7 +440,7 @@
         </div>
 
         <button class="btn-confirm-nodes" id="btn-submit-nodes" onclick="resolveGame()" disabled>РАСПРЕДЕЛИТЬ</button>
-        <button class="btn" id="btn-leave-nodes" style="margin-top: 15px; width: 100%; max-width: 300px; background: #3e4257; color: white; display: none;" onclick="closeNodeGame()">ВЫЙТИ ИЗ ТЕРМИНАЛА</button>
+        <button class="btn" id="btn-leave-nodes" style="margin-top: 15px; width: 100%; max-width: 300px; background: #3e4257; color: white; display: none;" onclick="finishGameAndReturn()">ВЫЙТИ ИЗ ТЕРМИНАЛА</button>
 
         <div class="game-results" id="game-results-panel">
             <h3 style="margin-top:0; color:#fff; text-align:center; margin-bottom: 15px;">РЕЗУЛЬТАТЫ СИСТЕМЫ</h3>
@@ -376,7 +449,7 @@
     </div>
 
 
-    <!-- ЭКРАН РУЛЕТКИ -->
+    <!-- ЭКРАН РУЛЕТКИ КЕЙСОВ -->
     <div id="roulette-screen">
         <button class="back-btn" onclick="closeRoulette()">← Назад</button>
         <div class="roulette-wrapper" id="roulette-wrapper"></div>
@@ -410,7 +483,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16.5C21 16.88 20.79 17.21 20.47 17.38L12.5 21.82C12.19 21.99 11.81 21.99 11.5 21.82L3.53 17.38C3.21 17.21 3 16.88 3 16.5V7.5C3 7.12 3.21 6.79 3.53 6.62L11.5 2.18C11.81 2.01 12.19 2.01 12.5 2.18L20.47 6.62C20.79 6.79 21 7.12 21 7.5V16.5ZM12 4.15L5.6 7.7L12 11.25L18.4 7.7L12 4.15ZM5 15.91L11 19.24V12.58L5 9.25V15.91ZM19 15.91V9.25L13 12.58V19.24L19 15.91Z"/></svg>
             <span>Кейсы</span>
         </button>
-        <button class="nav-item" onclick="switchNav(3, 'games')">
+        <button class="nav-item" onclick="switchNav(3, 'games-menu')">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.58 16.09l-1.09-7.66C20.21 6.27 18.4 5 16.14 5h-8.28C5.6 5 3.79 6.27 3.51 8.43l-1.09 7.66C2.2 17.63 3.39 19 4.94 19c.68 0 1.32-.27 1.8-.75L9 16h6l2.25 2.25c.48.48 1.13.75 1.8.75 1.56 0 2.75-1.37 2.53-2.91zM11 11H9v2H8v-2H6v-1h2V8h1v2h2v1zm4-1c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
             <span>Игры</span>
         </button>
@@ -425,15 +498,17 @@
         tg.expand();
 
         let userBalance = localStorage.getItem('lootgift_balance');
-        if (userBalance === null) userBalance = 1000; 
-        else userBalance = parseInt(userBalance);
+        if (userBalance === null) userBalance = 1000; else userBalance = parseInt(userBalance);
         document.getElementById('balance-display').innerText = userBalance;
         
         let spinsCount = localStorage.getItem('lootgift_spins');
         if (spinsCount === null) spinsCount = 0; else spinsCount = parseInt(spinsCount);
+        
         let totalWon = localStorage.getItem('lootgift_total_won');
         if (totalWon === null) totalWon = 0; else totalWon = parseInt(totalWon);
+        
         let inventory = JSON.parse(localStorage.getItem('lootgift_inventory') || '[]');
+        
         let regDate = localStorage.getItem('lootgift_reg_date');
         if (!regDate) { regDate = new Date().toLocaleDateString('ru-RU'); localStorage.setItem('lootgift_reg_date', regDate); }
 
@@ -444,18 +519,37 @@
 
         function closeWebApp() { tg.HapticFeedback.impactOccurred('medium'); tg.close(); }
 
+        // Навигация
         function switchNav(index, sectionId) {
             tg.HapticFeedback.impactOccurred('light');
             document.querySelectorAll('.nav-item:not(.exit-btn)').forEach((btn, i) => btn.classList.toggle('active', i === index));
             document.getElementById('nav-indicator').style.transform = `translateX(${index * 100}%)`;
+            
+            // Скрываем все разделы, включая лобби и терминалы, чтобы вернуться в чистый вид
             document.querySelectorAll('.app-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('theory-lobbies-screen').style.display = 'none';
+            document.getElementById('lobby-waiting-screen').style.display = 'none';
+            document.getElementById('node-game-screen').style.display = 'none';
+            
             document.getElementById(`section-${sectionId}`).classList.add('active');
         }
-        document.getElementById('nav-indicator').style.transform = `translateX(200%)`; // Стартовая позиция
+        document.getElementById('nav-indicator').style.transform = `translateX(200%)`; 
 
         // --- ЛОГИКА ТЕОРИИ ИГР (PvP АРЕНА) ---
         let currentGame = { bet: 0, players: 0, pts: [100, 60, 30] };
 
+        // 1. Открытие меню лобби
+        function openTheoryLobbies() {
+            tg.HapticFeedback.impactOccurred('light');
+            document.getElementById('section-games-menu').classList.remove('active');
+            document.getElementById('theory-lobbies-screen').style.display = 'flex';
+        }
+        function backToGamesMenu() {
+            document.getElementById('theory-lobbies-screen').style.display = 'none';
+            document.getElementById('section-games-menu').classList.add('active');
+        }
+
+        // 2. Создание лобби
         function openCreateLobby() {
             tg.HapticFeedback.impactOccurred('light');
             document.getElementById('create-lobby-modal').classList.add('active');
@@ -466,32 +560,71 @@
             let bet = parseInt(document.getElementById('lobby-bet-input').value);
             let players = parseInt(document.getElementById('lobby-players-input').value);
             if(isNaN(bet) || bet < 10) { tg.showAlert("Минимальная ставка 10 ⭐"); return; }
+            if (userBalance < bet) { tg.showAlert("Недостаточно звёзд!"); return; }
+            
             closeCreateLobby();
-            joinLobby(bet, players);
-        }
-
-        function joinLobby(bet, players) {
-            if (userBalance < bet) { tg.showAlert("Недостаточно звёзд для входа в лобби!"); return; }
-            tg.HapticFeedback.impactOccurred('medium');
             
             // Списываем ставку
             userBalance -= bet;
             updateBalanceDisplay(userBalance, true);
             showBalanceAnimation(-bet);
 
-            // Рандомим очки для узлов (зацикленность)
-            let ptsOptions = [ [100, 60, 30], [150, 50, 20], [80, 80, 40], [200, 100, 50] ];
-            currentGame.pts = ptsOptions[Math.floor(Math.random() * ptsOptions.length)];
             currentGame.bet = bet;
             currentGame.players = players;
 
-            // Настраиваем UI
+            // Настраиваем визуал Комнаты Ожидания
+            document.getElementById('theory-lobbies-screen').style.display = 'none';
+            document.querySelector('.bottom-nav').style.display = 'none';
+            document.getElementById('lobby-waiting-screen').style.display = 'flex';
+
+            let slotsHtml = `<div class="w-slot filled">МЫ</div>`;
+            for(let i = 1; i < players; i++) {
+                slotsHtml += `<div class="w-slot">?</div>`;
+            }
+            document.getElementById('waiting-slots-container').innerHTML = slotsHtml;
+        }
+
+        // 3. Отмена или Запуск с ботами
+        function cancelLobby() {
+            tg.HapticFeedback.impactOccurred('medium');
+            userBalance += currentGame.bet;
+            updateBalanceDisplay(userBalance, true);
+            showBalanceAnimation(currentGame.bet);
+            
+            document.getElementById('lobby-waiting-screen').style.display = 'none';
+            document.getElementById('theory-lobbies-screen').style.display = 'flex';
+            document.querySelector('.bottom-nav').style.display = 'flex';
+        }
+
+        function callBotsToLobby() {
+            tg.HapticFeedback.impactOccurred('heavy');
+            
+            // Визуально заполняем слоты ботами
+            let slots = document.querySelectorAll('.w-slot');
+            slots.forEach((s, index) => {
+                if (index > 0) {
+                    s.classList.add('filled');
+                    s.innerText = '🤖';
+                }
+            });
+
+            // Рандомим очки узлов
+            let ptsOptions = [ [100, 60, 30], [150, 50, 20], [80, 80, 40], [200, 100, 50] ];
+            currentGame.pts = ptsOptions[Math.floor(Math.random() * ptsOptions.length)];
+
+            setTimeout(() => {
+                document.getElementById('lobby-waiting-screen').style.display = 'none';
+                startTerminal();
+            }, 1000);
+        }
+
+        // 4. Терминал Игры
+        function startTerminal() {
             document.getElementById('pts-A').innerText = currentGame.pts[0] + " ОЧКОВ";
             document.getElementById('pts-B').innerText = currentGame.pts[1] + " ОЧКОВ";
             document.getElementById('pts-C').innerText = currentGame.pts[2] + " ОЧКОВ";
-            document.getElementById('game-bank').innerText = bet * players;
+            document.getElementById('game-bank').innerText = currentGame.bet * currentGame.players;
             
-            // Сброс полей
             document.getElementById('input-A').value = 0; document.getElementById('input-B').value = 0; document.getElementById('input-C').value = 0;
             document.getElementById('input-A').disabled = false; document.getElementById('input-B').disabled = false; document.getElementById('input-C').disabled = false;
             document.getElementById('btn-submit-nodes').disabled = true;
@@ -502,9 +635,6 @@
             document.querySelectorAll('.node-result').forEach(r => r.style.display = 'none');
             calculateEnergy();
 
-            // Переход на экран
-            document.getElementById('app-content').style.display = 'none';
-            document.querySelector('.bottom-nav').style.display = 'none';
             document.getElementById('node-game-screen').style.display = 'flex';
         }
 
@@ -529,12 +659,6 @@
             }
         }
 
-        function closeNodeGame() {
-            document.getElementById('node-game-screen').style.display = 'none';
-            document.getElementById('app-content').style.display = 'block';
-            document.querySelector('.bottom-nav').style.display = 'flex';
-        }
-
         function resolveGame() {
             tg.HapticFeedback.impactOccurred('heavy');
             document.getElementById('btn-submit-nodes').disabled = true;
@@ -545,28 +669,24 @@
             let pA = parseInt(document.getElementById('input-A').value);
             let pB = parseInt(document.getElementById('input-B').value);
             let pC = parseInt(document.getElementById('input-C').value);
-            let playerEnergies = [pA, pB, pC];
 
-            // ГЕНЕРАЦИЯ ИИ БОТОВ (70% шанс на умную игру против игрока)
+            // ИИ Ботов (70% победа бота)
             let botWillWin = Math.random() < 0.70;
             let botEnergies = [];
             
-            for(let i=1; i<currentGame.players; i++) {
+            for(let i=1; i < currentGame.players; i++) {
                 if (botWillWin && i === 1) {
-                    // Умный бот перебивает 2 слабых узла игрока на 1 единицу
                     let bE = [0,0,0];
                     let left = 100;
                     let sorted = [ {id:0, e:pA}, {id:1, e:pB}, {id:2, e:pC} ].sort((x,y) => x.e - y.e);
                     
                     if (left > sorted[0].e) { bE[sorted[0].id] = sorted[0].e + 1; left -= bE[sorted[0].id]; }
                     if (left > sorted[1].e) { bE[sorted[1].id] = sorted[1].e + 1; left -= bE[sorted[1].id]; }
-                    bE[sorted[2].id] += left; // Слив остатка
+                    bE[sorted[2].id] += left; 
                     
-                    // Если игрок вкинул 100 в А, бот вкидывает 100 в А для правила Анти-Зерг (сжечь ставку)
                     if (pA === 100) bE = [100, 0, 0];
                     botEnergies.push(bE);
                 } else {
-                    // Глупый/рандомный бот
                     let a = Math.floor(Math.random() * 101);
                     let b = Math.floor(Math.random() * (101 - a));
                     let c = 100 - a - b;
@@ -574,23 +694,19 @@
                 }
             }
 
-            // Формируем все ставки
-            let allPlayers = [ {id: 0, name: "Вы", e: playerEnergies, score: 0} ];
+            let allPlayers = [ {id: 0, name: "Вы", e: [pA, pB, pC], score: 0} ];
             for(let i=0; i<botEnergies.length; i++) {
                 allPlayers.push({id: i+1, name: "Бот " + (i+1), e: botEnergies[i], score: 0});
             }
 
-            // ПРАВИЛО АНТИ-ЗЕРГ (Определение победителей узлов)
             function getWinnerForNode(nodeIndex) {
                 let counts = {};
                 allPlayers.forEach(p => counts[p.e[nodeIndex]] = (counts[p.e[nodeIndex]] || 0) + 1);
-                
-                // Ищем максимальную УНИКАЛЬНУЮ ставку
                 let sortedUnique = Object.keys(counts).map(Number).sort((a,b)=>b-a);
                 for (let val of sortedUnique) {
                     if (counts[val] === 1) return allPlayers.find(p => p.e[nodeIndex] === val);
                 }
-                return null; // Замыкание! Никто не выиграл
+                return null;
             }
 
             let winnerA = getWinnerForNode(0);
@@ -601,38 +717,31 @@
             if (winnerB) winnerB.score += currentGame.pts[1];
             if (winnerC) winnerC.score += currentGame.pts[2];
 
-            // Определение общего победителя игры
             let maxScore = -1;
             allPlayers.forEach(p => { if(p.score > maxScore) maxScore = p.score; });
             let winnersCount = allPlayers.filter(p => p.score === maxScore).length;
-            let finalWinner = (winnersCount === 1) ? allPlayers.find(p => p.score === maxScore) : null; // Если ничья по очкам - ничья в игре
+            let finalWinner = (winnersCount === 1) ? allPlayers.find(p => p.score === maxScore) : null; 
 
-            // Визуал побед на узлах
             if(winnerA && winnerA.id === 0) { document.getElementById('node-box-A').classList.add('active'); document.getElementById('node-res-A').style.display='block';}
             if(winnerB && winnerB.id === 0) { document.getElementById('node-box-B').classList.add('active'); document.getElementById('node-res-B').style.display='block';}
             if(winnerC && winnerC.id === 0) { document.getElementById('node-box-C').classList.add('active'); document.getElementById('node-res-C').style.display='block';}
 
-            // Выдача награды
             let pot = currentGame.bet * currentGame.players;
             let resultHtml = "";
-            
             allPlayers.forEach(p => {
                 resultHtml += `<div class="res-row"><span>${p.name} [${p.e.join(', ')}]</span> <span>${p.score} pts</span></div>`;
             });
 
             if (finalWinner && finalWinner.id === 0) {
-                // ИГРОК ПОБЕДИЛ
                 userBalance += pot;
                 updateBalanceDisplay(userBalance, true);
                 showBalanceAnimation(pot);
                 resultHtml += `<div class="res-row" style="color:var(--accent-green)">ВЫ ЗАБРАЛИ БАНК: +${pot} ⭐</div>`;
                 tg.HapticFeedback.notificationOccurred('success');
             } else if (finalWinner) {
-                // БОТ ПОБЕДИЛ
                 resultHtml += `<div class="res-row" style="color:#ff2a5f">ПОБЕДИЛ ${finalWinner.name.toUpperCase()}</div>`;
                 tg.HapticFeedback.notificationOccurred('error');
             } else {
-                // НИЧЬЯ (Возврат ставки)
                 userBalance += currentGame.bet;
                 updateBalanceDisplay(userBalance, true);
                 showBalanceAnimation(currentGame.bet);
@@ -646,8 +755,13 @@
             document.getElementById('btn-leave-nodes').style.display = 'block';
         }
 
+        function finishGameAndReturn() {
+            document.getElementById('node-game-screen').style.display = 'none';
+            document.getElementById('theory-lobbies-screen').style.display = 'flex';
+            document.querySelector('.bottom-nav').style.display = 'flex';
+        }
 
-        // --- ФУНКЦИИ ПРОФИЛЯ, КЕЙСОВ, ИНВЕНТАРЯ (БЕЗ ИЗМЕНЕНИЙ) ---
+        // --- ФУНКЦИИ ПРОФИЛЯ, КЕЙСОВ, ИНВЕНТАРЯ И РУЛЕТКИ ---
         function saveInventory() { localStorage.setItem('lootgift_inventory', JSON.stringify(inventory)); renderInventory(); }
         function openProfileModal() { tg.HapticFeedback.impactOccurred('light'); document.getElementById('profile-modal').classList.add('active'); document.getElementById('stat-reg-date').innerText = regDate; document.getElementById('stat-cases-opened').innerText = spinsCount; document.getElementById('stat-total-won').innerHTML = `${totalWon} <img src="star.png?v=8" alt="star">`; document.getElementById('stat-tg-stars').innerHTML = `1000 <img src="star.png?v=8" alt="star">`; renderInventory(); }
         function closeProfileModal() { document.getElementById('profile-modal').classList.remove('active'); }
@@ -666,6 +780,7 @@
         let currentQty = 1; let currentItemSize = 100; let activeCaseId = null; let activeCasePrice = 0; let isFarmCase = false; let isFiftyCase = false;
         window.addEventListener('load', () => { setTimeout(() => { document.getElementById('loading-screen').style.opacity = '0'; document.getElementById('loading-screen').style.visibility = 'hidden'; document.body.style.overflow = 'auto'; }, 2500); });
         const rarityNames = { 'legendary': { name: 'ЛЕГЕНДАРНЫЙ', color: '#ff2a5f' }, 'rare': { name: 'РЕДКИЙ', color: '#ffb13b' }, 'common': { name: 'ОБЫЧНЫЙ', color: '#8b5cf6' }, 'trash': { name: 'БАЗОВЫЙ', color: '#9ca3af' } };
+        
         const casesData = {
             epicCase: [ { icon: 'bear.png?v=8', name: 'Мишка', value: 15, prob: 0.35, rarity: 'trash' }, { icon: 'rose.png?v=8', name: 'Роза', value: 25, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '25 Stars', value: 25, prob: 0.169, rarity: 'trash' }, { icon: 'cake.png?v=8', name: 'Торт', value: 50, prob: 0.08, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '50 Stars', value: 50, prob: 0.10, rarity: 'common' }, { icon: 'diamond.png?v=8', name: 'Алмаз', value: 100, prob: 0.07, rarity: 'common' }, { icon: 'stars150.png?v=8', name: '150 Stars', value: 150, prob: 0.04, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '300 Stars', value: 300, prob: 0.02, rarity: 'common' }, { icon: 'tie.png?v=8', name: 'Бабочка', value: 600, prob: 0.01, rarity: 'rare' }, { icon: 'button.png?v=8', name: 'Кнопка', value: 700, prob: 0.008, rarity: 'rare' }, { icon: 'sphere.png?v=8', name: 'Сфера', value: 1305, prob: 0.002, rarity: 'legendary' }, { icon: 'eagle.png?v=8', name: 'Орёл', value: 2655, prob: 0.001, rarity: 'legendary' } ],
             shadowCase: [ { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.0349, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '10 Stars', value: 10, prob: 0.05, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '25 Stars', value: 25, prob: 0.10, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '50 Stars', value: 50, prob: 0.15, rarity: 'trash' }, { icon: 'stars150.png?v=8', name: '100 Stars', value: 100, prob: 0.15, rarity: 'trash' }, { icon: 'stars150.png?v=8', name: '250 Stars', value: 250, prob: 0.20, rarity: 'rare' }, { icon: 'stars300.png?v=8', name: '500 Stars', value: 500, prob: 0.15, rarity: 'rare' }, { icon: 'stars300.png?v=8', name: '1000 Stars', value: 1000, prob: 0.10, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '2500 Stars', value: 2500, prob: 0.04, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '5000 Stars', value: 5000, prob: 0.02, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '10000 Stars', value: 10000, prob: 0.005, rarity: 'legendary' }, { icon: 'pepe.png?v=8', name: 'Пепе', value: 677097, prob: 0.0001, rarity: 'legendary' } ],
@@ -680,6 +795,7 @@
             fifty2: [ { icon: 'stars50.png?v=8', name: 'Пак 4 Stars', value: 4, prob: 0.80, rarity: 'common' }, { icon: 'cupcake.png?v=8', name: 'Кекс', value: 400, prob: 0.20, rarity: 'legendary' } ],
             fifty3: [ { icon: 'stars50.png?v=8', name: 'Пак 20 Stars', value: 20, prob: 0.80, rarity: 'common' }, { icon: 'fairy_shoes.png?v=8', name: 'Туфельки', value: 2031, prob: 0.20, rarity: 'legendary' } ]
         };
+
         function getRandomItem(caseId) { spinsCount++; localStorage.setItem('lootgift_spins', spinsCount); let rand = Math.random(); let items = casesData[caseId]; if (spinsCount <= 2 && rand > 0.4 && !caseId.startsWith('farm') && !caseId.startsWith('fifty')) { return items[7]; } let cumulative = 0; for (let i = 0; i < items.length; i++) { cumulative += items[i].prob; if (rand <= cumulative) { let selected = items[i]; if (selected.name === 'Пепе' && totalWon < 1500000) { return items.find(i => i.name === '10000 Stars') || items[0]; } return selected; } } return items[0]; }
         function renderLootGrid(caseId) { const grid = document.getElementById('loot-grid'); grid.innerHTML = ''; const uniqueItems = []; const seenNames = new Set(); [...casesData[caseId]].reverse().forEach(item => { if (!seenNames.has(item.name)) { seenNames.add(item.name); uniqueItems.push(item); } }); uniqueItems.forEach(item => { const rInfo = rarityNames[item.rarity]; grid.innerHTML += ` <div class="loot-box rarity-${item.rarity}"> <img src="${item.icon}" alt="${item.name}"> <div class="loot-name">${item.name}</div> <div class="rarity-text" style="color: ${rInfo.color}">${rInfo.name}</div> </div> `; }); }
         function renderRouletteRows() { const wrapper = document.getElementById('roulette-wrapper'); wrapper.innerHTML = ''; let itemSize = 100; if (currentQty === 2) itemSize = 85; if (currentQty === 3) itemSize = 75; if (currentQty === 4) itemSize = 65; if (currentQty === 5) itemSize = 55; if (currentQty === 10) itemSize = 35; currentItemSize = itemSize; wrapper.style.setProperty('--item-size', itemSize + 'px'); wrapper.style.setProperty('--row-height', (itemSize + 12) + 'px'); for(let i = 0; i < currentQty; i++) { wrapper.innerHTML += ` <div class="roulette-row"> <div class="center-line"></div> <div class="roulette-strip" id="strip-${i}"></div> </div> `; } document.getElementById('spin-cost').innerText = (activeCasePrice * currentQty); }
@@ -687,7 +803,47 @@
         function openCaseScreen(caseId, price) { if (!casesData[caseId]) { tg.showAlert('Этот модуль находится в разработке!'); return; } activeCaseId = caseId; activeCasePrice = price; isFarmCase = caseId.startsWith('farm'); isFiftyCase = caseId.startsWith('fifty'); buildQtyButtons(isFarmCase); document.getElementById('app-content').style.display = 'none'; document.querySelector('.bottom-nav').style.display = 'none'; const rScreen = document.getElementById('roulette-screen'); rScreen.style.display = 'flex'; setTimeout(() => rScreen.style.opacity = '1', 50); renderRouletteRows(); renderLootGrid(caseId); }
         function closeRoulette() { const rScreen = document.getElementById('roulette-screen'); rScreen.style.opacity = '0'; setTimeout(() => { rScreen.style.display = 'none'; document.getElementById('app-content').style.display = 'block'; document.querySelector('.bottom-nav').style.display = 'flex'; activeCaseId = null; }, 500); }
         function selectQty(btn, qty) { document.querySelectorAll('.qty-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentQty = qty; renderRouletteRows(); }
-        function spinRoulette() { const totalCost = activeCasePrice * currentQty; if (userBalance < totalCost) { tg.HapticFeedback.notificationOccurred('error'); tg.showAlert('Недостаточно звёзд на балансе!'); return; } userBalance -= totalCost; updateBalanceDisplay(userBalance, true); showBalanceAnimation(-totalCost); const btn = document.getElementById('spin-btn'); btn.disabled = true; tg.HapticFeedback.impactOccurred('medium'); let drops = []; let starsWonThisSpin = 0; const newItems = []; const totalItems = 50; const winnerIndex = 40; const wrapper = document.getElementById('roulette-wrapper'); const itemTotalWidth = currentItemSize + 12; const currentItems = casesData[activeCaseId]; for(let rowIdx = 0; rowIdx < currentQty; rowIdx++) { let actualItem = getRandomItem(activeCaseId); drops.push(actualItem); if (actualItem.name.includes('Star') || actualItem.name.includes('Stars')) { starsWonThisSpin += actualItem.value; } else if (actualItem.value > 0) { const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2); newItems.push({ uid: uniqueId, name: actualItem.name, icon: actualItem.icon, value: actualItem.value, rarity: actualItem.rarity, isFavorite: false }); } let strip = document.getElementById(`strip-${rowIdx}`); strip.style.transition = 'none'; strip.style.transform = 'translateX(0)'; strip.innerHTML = ''; for (let i = 0; i < totalItems; i++) { let div = document.createElement('div'); div.className = 'roulette-item'; if (i === winnerIndex) { div.innerHTML = `<img src="${actualItem.icon}"><div class="roulette-name">${actualItem.name}</div>`; } else { let r = Math.random(); let visualItem; if (isFarmCase) { if (r < 0.85) visualItem = currentItems[0]; else if (r < 0.98) visualItem = currentItems[1]; else visualItem = currentItems[2]; } else if (isFiftyCase) { if (r < 0.5) visualItem = currentItems[0]; else visualItem = currentItems[1]; } else { if (r < 0.10) visualItem = currentItems[0]; else if (r < 0.30) visualItem = currentItems[5]; else if (r < 0.60) visualItem = currentItems[7]; else if (r < 0.82) visualItem = currentItems[8]; else if (r < 0.97) visualItem = currentItems[9]; else visualItem = currentItems[11]; } div.innerHTML = `<img src="${visualItem.icon}"><div class="roulette-name">${visualItem.name}</div>`; } strip.appendChild(div); } let duration = 5 + (rowIdx * 0.15); setTimeout(() => { strip.style.transition = `transform ${duration}s cubic-bezier(0.15, 0.85, 0.1, 1)`; const containerWidth = wrapper.offsetWidth; const randomOffset = Math.floor(Math.random() * (currentItemSize * 0.8)) - (currentItemSize * 0.4); const stopPosition = (containerWidth / 2) - (winnerIndex * itemTotalWidth + (itemTotalWidth / 2)) + randomOffset; strip.style.transform = `translateX(${stopPosition}px)`; }, 50); } let maxDelay = 5200 + ((currentQty - 1) * 150); setTimeout(() => { btn.disabled = false; if (starsWonThisSpin > 0) { userBalance += starsWonThisSpin; updateBalanceDisplay(userBalance, true); showBalanceAnimation(starsWonThisSpin); } if (newItems.length > 0) { inventory.push(...newItems); saveInventory(); } let totalValueWon = drops.reduce((sum, item) => sum + item.value, 0); totalWon += totalValueWon; localStorage.setItem('lootgift_total_won', totalWon); tg.HapticFeedback.notificationOccurred('success'); let dropCounts = {}; drops.forEach(d => { dropCounts[d.name] = (dropCounts[d.name] || 0) + 1; }); let dropStr = Object.keys(dropCounts).map(name => `${name} (x${dropCounts[name]})`).join(', '); let msg = `Добыча:\n${dropStr}`; if (starsWonThisSpin > 0) msg += `\n\nВы получили: +${starsWonThisSpin} ⭐`; if (newItems.length > 0) msg += `\nПредметы добавлены в инвентарь! 🎒`; tg.showAlert(msg); }, maxDelay); }
+        
+        function spinRoulette() { 
+            const totalCost = activeCasePrice * currentQty; 
+            if (userBalance < totalCost) { tg.HapticFeedback.notificationOccurred('error'); tg.showAlert('Недостаточно звёзд на балансе!'); return; } 
+            userBalance -= totalCost; updateBalanceDisplay(userBalance, true); showBalanceAnimation(-totalCost); 
+            const btn = document.getElementById('spin-btn'); btn.disabled = true; tg.HapticFeedback.impactOccurred('medium'); 
+            let drops = []; let starsWonThisSpin = 0; const newItems = []; const totalItems = 50; const winnerIndex = 40; const wrapper = document.getElementById('roulette-wrapper'); const itemTotalWidth = currentItemSize + 12; const currentItems = casesData[activeCaseId]; 
+            
+            for(let rowIdx = 0; rowIdx < currentQty; rowIdx++) { 
+                let actualItem = getRandomItem(activeCaseId); drops.push(actualItem); 
+                if (actualItem.name.includes('Star') || actualItem.name.includes('Stars')) { starsWonThisSpin += actualItem.value; } 
+                else if (actualItem.value > 0) { const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2); newItems.push({ uid: uniqueId, name: actualItem.name, icon: actualItem.icon, value: actualItem.value, rarity: actualItem.rarity, isFavorite: false }); } 
+                
+                let strip = document.getElementById(`strip-${rowIdx}`); strip.style.transition = 'none'; strip.style.transform = 'translateX(0)'; strip.innerHTML = ''; 
+                for (let i = 0; i < totalItems; i++) { 
+                    let div = document.createElement('div'); div.className = 'roulette-item'; 
+                    if (i === winnerIndex) { div.innerHTML = `<img src="${actualItem.icon}"><div class="roulette-name">${actualItem.name}</div>`; } 
+                    else { 
+                        let r = Math.random(); let visualItem; 
+                        if (isFarmCase) { if (r < 0.85) visualItem = currentItems[0]; else if (r < 0.98) visualItem = currentItems[1]; else visualItem = currentItems[2]; } 
+                        else if (isFiftyCase) { if (r < 0.5) visualItem = currentItems[0]; else visualItem = currentItems[1]; } 
+                        else { if (r < 0.10) visualItem = currentItems[0]; else if (r < 0.30) visualItem = currentItems[5]; else if (r < 0.60) visualItem = currentItems[7]; else if (r < 0.82) visualItem = currentItems[8]; else if (r < 0.97) visualItem = currentItems[9]; else visualItem = currentItems[11]; } 
+                        div.innerHTML = `<img src="${visualItem.icon}"><div class="roulette-name">${visualItem.name}</div>`; 
+                    } 
+                    strip.appendChild(div); 
+                } 
+                let duration = 5 + (rowIdx * 0.15); 
+                setTimeout(() => { strip.style.transition = `transform ${duration}s cubic-bezier(0.15, 0.85, 0.1, 1)`; const containerWidth = wrapper.offsetWidth; const randomOffset = Math.floor(Math.random() * (currentItemSize * 0.8)) - (currentItemSize * 0.4); const stopPosition = (containerWidth / 2) - (winnerIndex * itemTotalWidth + (itemTotalWidth / 2)) + randomOffset; strip.style.transform = `translateX(${stopPosition}px)`; }, 50); 
+            } 
+            
+            let maxDelay = 5200 + ((currentQty - 1) * 150); 
+            setTimeout(() => { 
+                btn.disabled = false; 
+                if (starsWonThisSpin > 0) { userBalance += starsWonThisSpin; updateBalanceDisplay(userBalance, true); showBalanceAnimation(starsWonThisSpin); } 
+                if (newItems.length > 0) { inventory.push(...newItems); saveInventory(); } 
+                let totalValueWon = drops.reduce((sum, item) => sum + item.value, 0); totalWon += totalValueWon; localStorage.setItem('lootgift_total_won', totalWon); tg.HapticFeedback.notificationOccurred('success'); 
+                let dropCounts = {}; drops.forEach(d => { dropCounts[d.name] = (dropCounts[d.name] || 0) + 1; }); let dropStr = Object.keys(dropCounts).map(name => `${name} (x${dropCounts[name]})`).join(', '); let msg = `Добыча:\n${dropStr}`; 
+                if (starsWonThisSpin > 0) msg += `\n\nВы получили: +${starsWonThisSpin} ⭐`; if (newItems.length > 0) msg += `\nПредметы добавлены в инвентарь! 🎒`; tg.showAlert(msg); 
+            }, maxDelay); 
+        }
+
         const categoriesDataList = [ { title: "Премиум Модули", cases: [ { id: 'epicCase', name: "Эпический Дар", price: 100, image: "case1.jpg.jfif?v=8", special: true } ] }, { title: "Стандартные Модули", cases: [ { id: 'summerCase', name: "Пляжный Вайб", price: 10, image: "case2.png?v=8", special: false }, { id: 'neonCase', name: "Неоновый Тайник", price: 25, image: "case3.png?v=8", special: false }, { id: 'goldCase', name: "Золотая Казна", price: 50, image: "case4.png?v=8", special: false }, { id: 'vintageCase', name: "Винтажный Бокс", price: 100, image: "case5.png?v=8", special: false }, { id: 'shadowCase', name: "Теневой Синдикат", price: 1000, image: "case6.png?v=8", special: false } ] }, { title: "Фарм модули", cases: [ { id: 'farm1', name: "Фарм Очков", price: 1, image: "farm1.png?v=8", special: false }, { id: 'farm2', name: "Фарм Шлема", price: 2, image: "farm2.png?v=8", special: false }, { id: 'farm3', name: "Фарм Кепки", price: 5, image: "farm3.png?v=8", special: false } ] }, { title: "50 / 50", cases: [ { id: 'fifty1', name: "Алмазный Риск", price: 50, image: "scale1.png?v=8", special: false }, { id: 'fifty2', name: "Сладкий Куш", price: 200, image: "scale2.png?v=8", special: false }, { id: 'fifty3', name: "Шаг Феи", price: 1000, image: "scale3.png?v=8", special: false } ] } ];
         const appCasesGrid = document.getElementById('app-cases-grid'); categoriesDataList.forEach(category => { const title = document.createElement('h2'); title.innerText = category.title; appCasesGrid.appendChild(title); const grid = document.createElement('div'); grid.className = 'grid-container'; category.cases.forEach(c => { const card = document.createElement('div'); if (c.special) { card.className = 'case-card-special'; card.innerHTML = ` <img src="${c.image}" class="premium-case-img" alt="${c.name}"> <div class="case-info-box"> <div class="case-name">${c.name}</div> <div class="case-price">${c.price} <img src="star.png?v=8" alt="star"></div> <button class="btn btn-premium" onclick="openCaseScreen('${c.id}', ${c.price})">ОТКРЫТЬ</button> </div> `; } else { card.className = 'case-card'; let iconHtml = c.image ? `<img src="${c.image}" style="width:75px; height:75px; object-fit:contain; margin-bottom:8px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));">` : `<div class="case-icon">${c.icon}</div>`; card.innerHTML = ` ${iconHtml} <div class="case-name-std">${c.name}</div> <div class="case-price-std">${c.price} <img src="star.png?v=8" alt="star" style="width:12px; height:12px; vertical-align:middle;"></div> <button class="btn" onclick="openCaseScreen('${c.id}', ${c.price})">ОТКРЫТЬ</button> `; } grid.appendChild(card); }); appCasesGrid.appendChild(grid); });
     </script>
