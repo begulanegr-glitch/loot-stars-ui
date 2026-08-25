@@ -147,8 +147,11 @@
         /* --- ЭКРАН ЗАГРУЗКИ --- */
         #loading-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #050508; transition: opacity 0.6s ease, visibility 0.6s ease; }
         .loading-content { text-align: center; display: flex; flex-direction: column; align-items: center; }
-        .loading-content img { max-width: 220px; border-radius: 20px; animation: pulseLogo 2s infinite alternate ease-in-out; mix-blend-mode: lighten; }
+        .loading-content img { max-width: 220px; border-radius: 20px; animation: pulseLogo 2s infinite alternate ease-in-out; }
         .loading-text { margin-top: 24px; font-size: 18px; font-weight: bold; color: var(--accent-green); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px var(--green-glow); animation: pulseText 1.5s infinite alternate ease-in-out; }
+
+        @keyframes pulseLogo { 0% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(113, 230, 84, 0.2)); } 100% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(113, 230, 84, 0.8)); } }
+        @keyframes pulseText { 0% { opacity: 0.6; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1.05); } }
 
         /* --- ИГРЫ (PvP АРЕНА - НОВЫЙ ДИЗАЙН) --- */
         #section-games-menu { display: none; }
@@ -162,27 +165,21 @@
         .create-battle-btn { background: linear-gradient(135deg, var(--purple), #8e44ad); color: white; width: 100%; padding: 12px; border-radius: 12px; font-weight: 900; font-size: 14px; text-transform: uppercase; border: none; cursor: pointer; margin-bottom: 20px; box-shadow: 0 4px 15px var(--purple-glow); transition: 0.2s;}
         .create-battle-btn:active { transform: scale(0.98); }
 
-        /* Дизайн карточки лобби (Как на скрине Screenshot_72_2) */
         .battle-card { display: flex; align-items: center; background: #161722; border: 1px solid var(--border-color); border-radius: 16px; padding: 12px; margin-bottom: 12px; transition: 0.2s; }
         .battle-card:hover { border-color: var(--purple); box-shadow: 0 0 10px rgba(90, 62, 140, 0.2); }
-        
         .b-live-box { display: flex; flex-direction: column; align-items: center; justify-content: center; padding-right: 15px; border-right: 1px solid rgba(255,255,255,0.05); margin-right: 15px; }
         .b-hex { width: 30px; height: 30px; border: 2px solid #ffb13b; border-radius: 6px; display: flex; justify-content: center; align-items: center; margin-bottom: 4px; box-shadow: 0 0 8px rgba(255, 177, 59, 0.3); }
         .b-hex::after { content: ''; width: 10px; height: 10px; border: 2px solid transparent; border-top-color: #ffb13b; border-radius: 50%; animation: spin 1s linear infinite; }
         .b-live-text { font-size: 10px; color: #a1a1aa; font-weight: bold; }
-        
         .b-bet { flex: 1; display: flex; align-items: center; }
         .b-bet img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); }
-        
         .b-cost { background: #222533; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; color: #fff; display: flex; flex-direction: column; align-items: center; margin: 0 15px; }
         .b-cost span { font-size: 10px; color: #888; font-weight: normal; }
-        
         .b-players { display: flex; align-items: center; gap: -5px; margin-right: 15px; }
         .b-player-slot { width: 28px; height: 28px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: bold; color: white; border: 2px solid #161722; margin-left: -8px; }
         .slot-blue { background: #0077ff; }
         .slot-green { background: var(--accent-green); color: #000; }
         .slot-empty { background: transparent; border: 1px dashed #555; color: #555; }
-        
         .b-actions { display: flex; flex-direction: column; gap: 6px; }
         .b-btn { padding: 6px 12px; border-radius: 6px; font-size: 10px; font-weight: 900; text-transform: uppercase; border: none; cursor: pointer; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; gap: 8px;}
         .b-btn:active { transform: scale(0.95); }
@@ -191,13 +188,12 @@
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Комната ожидания (Владелец лобби) */
+        /* Комната ожидания */
         #lobby-waiting-screen { display: none; flex-direction: column; align-items: center; padding-top: 50px; text-align: center; }
         .waiting-title { font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 20px; }
         .waiting-slots { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
         .w-slot { width: 60px; height: 60px; border-radius: 50%; background: #222533; border: 2px dashed #555; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #555; }
         .w-slot.filled { background: var(--purple); border: 2px solid var(--accent-green); color: #fff; border-style: solid;}
-        
         .btn-call-bots { background: linear-gradient(135deg, #00e5ff, #0077ff); color: white; width: 100%; max-width: 300px; padding: 15px; border-radius: 12px; font-weight: 900; font-size: 16px; margin-bottom: 15px; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 119, 255, 0.4); }
         .btn-call-bots:active { transform: scale(0.95); }
         .btn-cancel { background: transparent; color: #ff2a5f; border: 1px solid #ff2a5f; width: 100%; max-width: 300px; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; }
@@ -207,13 +203,14 @@
         .terminal-header { text-align: center; margin-bottom: 30px; width: 100%; }
         .terminal-title { font-size: 24px; font-weight: 900; color: #fff; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,255,255,0.3); margin-bottom: 5px; }
         .terminal-bank { font-size: 16px; color: var(--accent-green); font-weight: bold; }
-        .energy-hud { font-size: 20px; font-weight: 900; color: #00e5ff; background: rgba(0, 229, 255, 0.1); border: 1px solid #00e5ff; padding: 10px 20px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 0 15px rgba(0,229,255,0.3); }
+        .energy-hud { font-size: 20px; font-weight: 900; color: #00e5ff; background: rgba(0, 229, 255, 0.1); border: 1px solid #00e5ff; padding: 10px 20px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 0 15px rgba(0,229,255,0.3); transition: 0.3s; }
         
         .nodes-container { display: flex; justify-content: center; gap: 15px; width: 100%; max-width: 400px; margin-bottom: 40px; }
         .node-box { flex: 1; background: #1a1b26; border: 2px solid #3e4257; border-radius: 16px; padding: 15px 10px; display: flex; flex-direction: column; align-items: center; transition: 0.3s; position: relative; }
         .node-box.active { border-color: var(--accent-green); box-shadow: 0 0 15px var(--green-glow); transform: translateY(-5px); }
         .node-name { font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 5px; }
-        .node-pts { font-size: 12px; color: #ffb13b; font-weight: bold; margin-bottom: 15px; }
+        .node-pts { font-size: 14px; color: #ffb13b; font-weight: bold; margin-bottom: 15px; height: 18px;}
+        .hidden-pts { font-size: 14px; color: #555; }
         .node-input { width: 80%; background: #0b0c10; border: 1px solid #555; color: #fff; font-size: 18px; font-weight: bold; text-align: center; padding: 8px; border-radius: 8px; outline: none; }
         .node-input:focus { border-color: var(--accent-green); }
         .node-result { position: absolute; top: -15px; background: var(--accent-green); color: #000; font-size: 12px; font-weight: 900; padding: 4px 8px; border-radius: 6px; display: none; }
@@ -225,6 +222,10 @@
         .game-results { width: 100%; max-width: 400px; margin-top: 20px; background: #1a1b26; border-radius: 12px; padding: 15px; display: none; border: 1px solid #3e4257;}
         .res-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #333; font-size: 14px;}
         .res-row:last-child { border-bottom: none; font-weight: bold; color: var(--accent-green); font-size: 16px; margin-top: 10px;}
+
+        /* Анимация вскрытия очков */
+        .reveal-anim { animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; display: inline-block; }
+        @keyframes popIn { 0% { transform: scale(0); opacity: 0; color: #fff; } 50% { transform: scale(1.3); opacity: 1; color: #fff; } 100% { transform: scale(1); opacity: 1; color: #ffb13b; } }
 
     </style>
 </head>
@@ -339,62 +340,36 @@
         <div class="theory-top-stats">
             <div class="stat-group">
                 <span>⚔️ <span style="color:#fff;">3</span> АКТИВНЫЕ</span>
-                <span style="margin-left:10px;">⚔️ <span style="color:#fff;">12450</span> ВСЕГО БИТВ</span>
+                <span style="margin-left:10px;">⚔️ <span id="top-stat-battles" style="color:#fff;">0</span> ВСЕГО БИТВ</span>
             </div>
             <div class="stat-group">
-                <span style="color:#ff2a5f;">💀 12 Поражений</span>
+                <span style="color:#ff2a5f;">💀 <span id="top-stat-defeats">0</span> Поражений</span>
             </div>
         </div>
 
         <button class="create-battle-btn" onclick="openCreateLobby()">Создать Битву</button>
 
         <div id="lobby-list">
-            <!-- Фейковое Лобби 1 -->
             <div class="battle-card">
-                <div class="b-live-box">
-                    <div class="b-hex"></div>
-                    <div class="b-live-text">Live</div>
-                </div>
-                <div class="b-bet">
-                    <img src="star.png?v=8">
-                </div>
-                <div class="b-cost">
-                    60 ⭐
-                    <span>Стоимость</span>
-                </div>
+                <div class="b-live-box"><div class="b-hex"></div><div class="b-live-text">Live</div></div>
+                <div class="b-bet"><img src="star.png?v=8"></div>
+                <div class="b-cost">60 ⭐<span>Стоимость</span></div>
                 <div class="b-players">
                     <div class="b-player-slot slot-blue" style="z-index: 3;">A</div>
                     <div class="b-player-slot" style="z-index: 2;"><img src="https://telegram.org/img/t_logo.png" style="width:100%; border-radius:50%;"></div>
                     <div class="b-player-slot slot-empty" style="z-index: 1;">+</div>
                 </div>
-                <div class="b-actions">
-                    <button class="b-btn b-btn-join">Принять вызов ⚔️</button>
-                    <button class="b-btn b-btn-watch">Смотреть 👁️</button>
-                </div>
+                <div class="b-actions"><button class="b-btn b-btn-join">Принять вызов ⚔️</button><button class="b-btn b-btn-watch">Смотреть 👁️</button></div>
             </div>
-
-            <!-- Фейковое Лобби 2 -->
             <div class="battle-card">
-                <div class="b-live-box">
-                    <div class="b-hex"></div>
-                    <div class="b-live-text">Live</div>
-                </div>
-                <div class="b-bet">
-                    <img src="star.png?v=8">
-                    <img src="star.png?v=8" style="margin-left:-15px;">
-                </div>
-                <div class="b-cost">
-                    500 ⭐
-                    <span>Стоимость</span>
-                </div>
+                <div class="b-live-box"><div class="b-hex"></div><div class="b-live-text">Live</div></div>
+                <div class="b-bet"><img src="star.png?v=8"><img src="star.png?v=8" style="margin-left:-15px;"></div>
+                <div class="b-cost">500 ⭐<span>Стоимость</span></div>
                 <div class="b-players">
                     <div class="b-player-slot slot-green" style="z-index: 2;">Me</div>
                     <div class="b-player-slot slot-empty" style="z-index: 1;">+</div>
                 </div>
-                <div class="b-actions">
-                    <button class="b-btn b-btn-join">Принять вызов ⚔️</button>
-                    <button class="b-btn b-btn-watch">Смотреть 👁️</button>
-                </div>
+                <div class="b-actions"><button class="b-btn b-btn-join">Принять вызов ⚔️</button><button class="b-btn b-btn-watch">Смотреть 👁️</button></div>
             </div>
         </div>
     </div>
@@ -402,9 +377,7 @@
     <!-- ЭКРАН ОЖИДАНИЯ В ЛОББИ -->
     <div id="lobby-waiting-screen">
         <div class="waiting-title">ОЖИДАНИЕ ИГРОКОВ...</div>
-        <div class="waiting-slots" id="waiting-slots-container">
-            <!-- Слоты генерируются через JS -->
-        </div>
+        <div class="waiting-slots" id="waiting-slots-container"></div>
         <button class="btn-call-bots" onclick="callBotsToLobby()">ПОЗВАТЬ БОТОВ 🤖</button>
         <button class="btn-cancel" onclick="cancelLobby()">ОТМЕНИТЬ И ВЕРНУТЬ СТАВКУ</button>
     </div>
@@ -422,20 +395,20 @@
             <div class="node-box" id="node-box-A">
                 <div class="node-result" id="node-res-A">ПОБЕДА</div>
                 <div class="node-name">NODE A</div>
-                <div class="node-pts" id="pts-A">100 ОЧКОВ</div>
-                <input type="number" class="node-input" id="input-A" value="0" min="0" max="100" oninput="calculateEnergy()">
+                <div class="node-pts" id="pts-A"><span class="hidden-pts">??? ОЧКОВ</span></div>
+                <input type="number" class="node-input" id="input-A" value="0" min="0" max="100" oninput="calculateEnergy(this)">
             </div>
             <div class="node-box" id="node-box-B">
                 <div class="node-result" id="node-res-B">ПОБЕДА</div>
                 <div class="node-name">NODE B</div>
-                <div class="node-pts" id="pts-B">60 ОЧКОВ</div>
-                <input type="number" class="node-input" id="input-B" value="0" min="0" max="100" oninput="calculateEnergy()">
+                <div class="node-pts" id="pts-B"><span class="hidden-pts">??? ОЧКОВ</span></div>
+                <input type="number" class="node-input" id="input-B" value="0" min="0" max="100" oninput="calculateEnergy(this)">
             </div>
             <div class="node-box" id="node-box-C">
                 <div class="node-result" id="node-res-C">ПОБЕДА</div>
                 <div class="node-name">NODE C</div>
-                <div class="node-pts" id="pts-C">30 ОЧКОВ</div>
-                <input type="number" class="node-input" id="input-C" value="0" min="0" max="100" oninput="calculateEnergy()">
+                <div class="node-pts" id="pts-C"><span class="hidden-pts">??? ОЧКОВ</span></div>
+                <input type="number" class="node-input" id="input-C" value="0" min="0" max="100" oninput="calculateEnergy(this)">
             </div>
         </div>
 
@@ -501,12 +474,15 @@
         if (userBalance === null) userBalance = 1000; else userBalance = parseInt(userBalance);
         document.getElementById('balance-display').innerText = userBalance;
         
-        let spinsCount = localStorage.getItem('lootgift_spins');
-        if (spinsCount === null) spinsCount = 0; else spinsCount = parseInt(spinsCount);
+        // Статистика (Общая и Арена)
+        let spinsCount = parseInt(localStorage.getItem('lootgift_spins') || '0');
+        let totalWon = parseInt(localStorage.getItem('lootgift_total_won') || '0');
+        let arenaBattles = parseInt(localStorage.getItem('lootgift_arena_battles') || '0');
+        let arenaDefeats = parseInt(localStorage.getItem('lootgift_arena_defeats') || '0');
         
-        let totalWon = localStorage.getItem('lootgift_total_won');
-        if (totalWon === null) totalWon = 0; else totalWon = parseInt(totalWon);
-        
+        document.getElementById('top-stat-battles').innerText = arenaBattles;
+        document.getElementById('top-stat-defeats').innerText = arenaDefeats;
+
         let inventory = JSON.parse(localStorage.getItem('lootgift_inventory') || '[]');
         
         let regDate = localStorage.getItem('lootgift_reg_date');
@@ -525,7 +501,6 @@
             document.querySelectorAll('.nav-item:not(.exit-btn)').forEach((btn, i) => btn.classList.toggle('active', i === index));
             document.getElementById('nav-indicator').style.transform = `translateX(${index * 100}%)`;
             
-            // Скрываем все разделы, включая лобби и терминалы, чтобы вернуться в чистый вид
             document.querySelectorAll('.app-section').forEach(sec => sec.classList.remove('active'));
             document.getElementById('theory-lobbies-screen').style.display = 'none';
             document.getElementById('lobby-waiting-screen').style.display = 'none';
@@ -538,7 +513,6 @@
         // --- ЛОГИКА ТЕОРИИ ИГР (PvP АРЕНА) ---
         let currentGame = { bet: 0, players: 0, pts: [100, 60, 30] };
 
-        // 1. Открытие меню лобби
         function openTheoryLobbies() {
             tg.HapticFeedback.impactOccurred('light');
             document.getElementById('section-games-menu').classList.remove('active');
@@ -549,7 +523,6 @@
             document.getElementById('section-games-menu').classList.add('active');
         }
 
-        // 2. Создание лобби
         function openCreateLobby() {
             tg.HapticFeedback.impactOccurred('light');
             document.getElementById('create-lobby-modal').classList.add('active');
@@ -563,8 +536,6 @@
             if (userBalance < bet) { tg.showAlert("Недостаточно звёзд!"); return; }
             
             closeCreateLobby();
-            
-            // Списываем ставку
             userBalance -= bet;
             updateBalanceDisplay(userBalance, true);
             showBalanceAnimation(-bet);
@@ -572,7 +543,6 @@
             currentGame.bet = bet;
             currentGame.players = players;
 
-            // Настраиваем визуал Комнаты Ожидания
             document.getElementById('theory-lobbies-screen').style.display = 'none';
             document.querySelector('.bottom-nav').style.display = 'none';
             document.getElementById('lobby-waiting-screen').style.display = 'flex';
@@ -584,7 +554,6 @@
             document.getElementById('waiting-slots-container').innerHTML = slotsHtml;
         }
 
-        // 3. Отмена или Запуск с ботами
         function cancelLobby() {
             tg.HapticFeedback.impactOccurred('medium');
             userBalance += currentGame.bet;
@@ -598,17 +567,11 @@
 
         function callBotsToLobby() {
             tg.HapticFeedback.impactOccurred('heavy');
-            
-            // Визуально заполняем слоты ботами
             let slots = document.querySelectorAll('.w-slot');
             slots.forEach((s, index) => {
-                if (index > 0) {
-                    s.classList.add('filled');
-                    s.innerText = '🤖';
-                }
+                if (index > 0) { s.classList.add('filled'); s.innerText = '🤖'; }
             });
 
-            // Рандомим очки узлов
             let ptsOptions = [ [100, 60, 30], [150, 50, 20], [80, 80, 40], [200, 100, 50] ];
             currentGame.pts = ptsOptions[Math.floor(Math.random() * ptsOptions.length)];
 
@@ -618,11 +581,12 @@
             }, 1000);
         }
 
-        // 4. Терминал Игры
+        // 4. Терминал Игры и Ограничитель Энергии
         function startTerminal() {
-            document.getElementById('pts-A').innerText = currentGame.pts[0] + " ОЧКОВ";
-            document.getElementById('pts-B').innerText = currentGame.pts[1] + " ОЧКОВ";
-            document.getElementById('pts-C').innerText = currentGame.pts[2] + " ОЧКОВ";
+            // Прячем настоящие очки до конца раунда
+            document.getElementById('pts-A').innerHTML = '<span class="hidden-pts">??? ОЧКОВ</span>';
+            document.getElementById('pts-B').innerHTML = '<span class="hidden-pts">??? ОЧКОВ</span>';
+            document.getElementById('pts-C').innerHTML = '<span class="hidden-pts">??? ОЧКОВ</span>';
             document.getElementById('game-bank').innerText = currentGame.bet * currentGame.players;
             
             document.getElementById('input-A').value = 0; document.getElementById('input-B').value = 0; document.getElementById('input-C').value = 0;
@@ -633,26 +597,39 @@
             document.getElementById('game-results-panel').style.display = 'none';
             document.querySelectorAll('.node-box').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.node-result').forEach(r => r.style.display = 'none');
-            calculateEnergy();
-
+            
+            calculateEnergy(document.getElementById('input-A'));
             document.getElementById('node-game-screen').style.display = 'flex';
         }
 
-        function calculateEnergy() {
+        function calculateEnergy(element) {
             let a = parseInt(document.getElementById('input-A').value) || 0;
             let b = parseInt(document.getElementById('input-B').value) || 0;
             let c = parseInt(document.getElementById('input-C').value) || 0;
             let total = a + b + c;
-            let left = 100 - total;
             
+            // Если больше 100, урезаем ставку конкретно в том инпуте, который мы сейчас меняем
+            if (total > 100) {
+                let excess = total - 100;
+                let currentVal = parseInt(element.value) || 0;
+                element.value = currentVal - excess;
+                
+                a = parseInt(document.getElementById('input-A').value) || 0;
+                b = parseInt(document.getElementById('input-B').value) || 0;
+                c = parseInt(document.getElementById('input-C').value) || 0;
+                total = a + b + c;
+                
+                tg.HapticFeedback.notificationOccurred('error');
+                tg.showAlert("Недостаточно энергии! Максимум 100.");
+            }
+            
+            let left = 100 - total;
             let counter = document.getElementById('energy-counter');
             counter.innerText = left;
+            
             if (left === 0) {
                 counter.style.color = "#71e654";
                 document.getElementById('btn-submit-nodes').disabled = false;
-            } else if (left < 0) {
-                counter.style.color = "#ff2a5f";
-                document.getElementById('btn-submit-nodes').disabled = true;
             } else {
                 counter.style.color = "#00e5ff";
                 document.getElementById('btn-submit-nodes').disabled = true;
@@ -660,99 +637,114 @@
         }
 
         function resolveGame() {
-            tg.HapticFeedback.impactOccurred('heavy');
             document.getElementById('btn-submit-nodes').disabled = true;
             document.getElementById('input-A').disabled = true;
             document.getElementById('input-B').disabled = true;
             document.getElementById('input-C').disabled = true;
 
-            let pA = parseInt(document.getElementById('input-A').value);
-            let pB = parseInt(document.getElementById('input-B').value);
-            let pC = parseInt(document.getElementById('input-C').value);
-
-            // ИИ Ботов (70% победа бота)
-            let botWillWin = Math.random() < 0.70;
-            let botEnergies = [];
+            // АНИМАЦИЯ ВСКРЫТИЯ ОЧКОВ
+            const ptsA = document.getElementById('pts-A');
+            const ptsB = document.getElementById('pts-B');
+            const ptsC = document.getElementById('pts-C');
             
-            for(let i=1; i < currentGame.players; i++) {
-                if (botWillWin && i === 1) {
-                    let bE = [0,0,0];
-                    let left = 100;
-                    let sorted = [ {id:0, e:pA}, {id:1, e:pB}, {id:2, e:pC} ].sort((x,y) => x.e - y.e);
+            ptsA.innerHTML = `<span class="reveal-anim">${currentGame.pts[0]} ОЧКОВ</span>`;
+            ptsB.innerHTML = `<span class="reveal-anim">${currentGame.pts[1]} ОЧКОВ</span>`;
+            ptsC.innerHTML = `<span class="reveal-anim">${currentGame.pts[2]} ОЧКОВ</span>`;
+            
+            tg.HapticFeedback.impactOccurred('heavy');
+
+            // Ждем 1.5 секунды, пока пройдет анимация, и затем выдаем результаты
+            setTimeout(() => {
+                let pA = parseInt(document.getElementById('input-A').value);
+                let pB = parseInt(document.getElementById('input-B').value);
+                let pC = parseInt(document.getElementById('input-C').value);
+
+                let botWillWin = Math.random() < 0.70;
+                let botEnergies = [];
+                
+                for(let i=1; i < currentGame.players; i++) {
+                    if (botWillWin && i === 1) {
+                        let bE = [0,0,0];
+                        let left = 100;
+                        let sorted = [ {id:0, e:pA}, {id:1, e:pB}, {id:2, e:pC} ].sort((x,y) => x.e - y.e);
+                        if (left > sorted[0].e) { bE[sorted[0].id] = sorted[0].e + 1; left -= bE[sorted[0].id]; }
+                        if (left > sorted[1].e) { bE[sorted[1].id] = sorted[1].e + 1; left -= bE[sorted[1].id]; }
+                        bE[sorted[2].id] += left; 
+                        if (pA === 100) bE = [100, 0, 0];
+                        botEnergies.push(bE);
+                    } else {
+                        let a = Math.floor(Math.random() * 101);
+                        let b = Math.floor(Math.random() * (101 - a));
+                        let c = 100 - a - b;
+                        botEnergies.push([a,b,c]);
+                    }
+                }
+
+                let allPlayers = [ {id: 0, name: "Вы", e: [pA, pB, pC], score: 0} ];
+                for(let i=0; i<botEnergies.length; i++) {
+                    allPlayers.push({id: i+1, name: "Бот " + (i+1), e: botEnergies[i], score: 0});
+                }
+
+                function getWinnerForNode(nodeIndex) {
+                    let counts = {};
+                    allPlayers.forEach(p => counts[p.e[nodeIndex]] = (counts[p.e[nodeIndex]] || 0) + 1);
+                    let sortedUnique = Object.keys(counts).map(Number).sort((a,b)=>b-a);
+                    for (let val of sortedUnique) {
+                        if (counts[val] === 1) return allPlayers.find(p => p.e[nodeIndex] === val);
+                    }
+                    return null;
+                }
+
+                let winnerA = getWinnerForNode(0);
+                let winnerB = getWinnerForNode(1);
+                let winnerC = getWinnerForNode(2);
+
+                if (winnerA) winnerA.score += currentGame.pts[0];
+                if (winnerB) winnerB.score += currentGame.pts[1];
+                if (winnerC) winnerC.score += currentGame.pts[2];
+
+                let maxScore = -1;
+                allPlayers.forEach(p => { if(p.score > maxScore) maxScore = p.score; });
+                let winnersCount = allPlayers.filter(p => p.score === maxScore).length;
+                let finalWinner = (winnersCount === 1) ? allPlayers.find(p => p.score === maxScore) : null; 
+
+                if(winnerA && winnerA.id === 0) { document.getElementById('node-box-A').classList.add('active'); document.getElementById('node-res-A').style.display='block';}
+                if(winnerB && winnerB.id === 0) { document.getElementById('node-box-B').classList.add('active'); document.getElementById('node-res-B').style.display='block';}
+                if(winnerC && winnerC.id === 0) { document.getElementById('node-box-C').classList.add('active'); document.getElementById('node-res-C').style.display='block';}
+
+                let pot = currentGame.bet * currentGame.players;
+                let resultHtml = "";
+                allPlayers.forEach(p => {
+                    resultHtml += `<div class="res-row"><span>${p.name} [${p.e.join(', ')}]</span> <span>${p.score} pts</span></div>`;
+                });
+
+                // ЗАПИСЬ РЕАЛЬНОЙ СТАТИСТИКИ АРЕНЫ
+                arenaBattles++;
+                localStorage.setItem('lootgift_arena_battles', arenaBattles);
+                document.getElementById('top-stat-battles').innerText = arenaBattles;
+
+                if (finalWinner && finalWinner.id === 0) {
+                    userBalance += pot; updateBalanceDisplay(userBalance, true); showBalanceAnimation(pot);
+                    resultHtml += `<div class="res-row" style="color:var(--accent-green)">ВЫ ЗАБРАЛИ БАНК: +${pot} ⭐</div>`;
+                    tg.HapticFeedback.notificationOccurred('success');
+                } else if (finalWinner) {
+                    arenaDefeats++;
+                    localStorage.setItem('lootgift_arena_defeats', arenaDefeats);
+                    document.getElementById('top-stat-defeats').innerText = arenaDefeats;
                     
-                    if (left > sorted[0].e) { bE[sorted[0].id] = sorted[0].e + 1; left -= bE[sorted[0].id]; }
-                    if (left > sorted[1].e) { bE[sorted[1].id] = sorted[1].e + 1; left -= bE[sorted[1].id]; }
-                    bE[sorted[2].id] += left; 
-                    
-                    if (pA === 100) bE = [100, 0, 0];
-                    botEnergies.push(bE);
+                    resultHtml += `<div class="res-row" style="color:#ff2a5f">ПОБЕДИЛ ${finalWinner.name.toUpperCase()}</div>`;
+                    tg.HapticFeedback.notificationOccurred('error');
                 } else {
-                    let a = Math.floor(Math.random() * 101);
-                    let b = Math.floor(Math.random() * (101 - a));
-                    let c = 100 - a - b;
-                    botEnergies.push([a,b,c]);
+                    userBalance += currentGame.bet; updateBalanceDisplay(userBalance, true); showBalanceAnimation(currentGame.bet);
+                    resultHtml += `<div class="res-row" style="color:#a1a1aa">НИЧЬЯ! ВОЗВРАТ СТАВКИ: +${currentGame.bet} ⭐</div>`;
+                    tg.HapticFeedback.notificationOccurred('warning');
                 }
-            }
 
-            let allPlayers = [ {id: 0, name: "Вы", e: [pA, pB, pC], score: 0} ];
-            for(let i=0; i<botEnergies.length; i++) {
-                allPlayers.push({id: i+1, name: "Бот " + (i+1), e: botEnergies[i], score: 0});
-            }
+                document.getElementById('results-content').innerHTML = resultHtml;
+                document.getElementById('game-results-panel').style.display = 'block';
+                document.getElementById('btn-leave-nodes').style.display = 'block';
 
-            function getWinnerForNode(nodeIndex) {
-                let counts = {};
-                allPlayers.forEach(p => counts[p.e[nodeIndex]] = (counts[p.e[nodeIndex]] || 0) + 1);
-                let sortedUnique = Object.keys(counts).map(Number).sort((a,b)=>b-a);
-                for (let val of sortedUnique) {
-                    if (counts[val] === 1) return allPlayers.find(p => p.e[nodeIndex] === val);
-                }
-                return null;
-            }
-
-            let winnerA = getWinnerForNode(0);
-            let winnerB = getWinnerForNode(1);
-            let winnerC = getWinnerForNode(2);
-
-            if (winnerA) winnerA.score += currentGame.pts[0];
-            if (winnerB) winnerB.score += currentGame.pts[1];
-            if (winnerC) winnerC.score += currentGame.pts[2];
-
-            let maxScore = -1;
-            allPlayers.forEach(p => { if(p.score > maxScore) maxScore = p.score; });
-            let winnersCount = allPlayers.filter(p => p.score === maxScore).length;
-            let finalWinner = (winnersCount === 1) ? allPlayers.find(p => p.score === maxScore) : null; 
-
-            if(winnerA && winnerA.id === 0) { document.getElementById('node-box-A').classList.add('active'); document.getElementById('node-res-A').style.display='block';}
-            if(winnerB && winnerB.id === 0) { document.getElementById('node-box-B').classList.add('active'); document.getElementById('node-res-B').style.display='block';}
-            if(winnerC && winnerC.id === 0) { document.getElementById('node-box-C').classList.add('active'); document.getElementById('node-res-C').style.display='block';}
-
-            let pot = currentGame.bet * currentGame.players;
-            let resultHtml = "";
-            allPlayers.forEach(p => {
-                resultHtml += `<div class="res-row"><span>${p.name} [${p.e.join(', ')}]</span> <span>${p.score} pts</span></div>`;
-            });
-
-            if (finalWinner && finalWinner.id === 0) {
-                userBalance += pot;
-                updateBalanceDisplay(userBalance, true);
-                showBalanceAnimation(pot);
-                resultHtml += `<div class="res-row" style="color:var(--accent-green)">ВЫ ЗАБРАЛИ БАНК: +${pot} ⭐</div>`;
-                tg.HapticFeedback.notificationOccurred('success');
-            } else if (finalWinner) {
-                resultHtml += `<div class="res-row" style="color:#ff2a5f">ПОБЕДИЛ ${finalWinner.name.toUpperCase()}</div>`;
-                tg.HapticFeedback.notificationOccurred('error');
-            } else {
-                userBalance += currentGame.bet;
-                updateBalanceDisplay(userBalance, true);
-                showBalanceAnimation(currentGame.bet);
-                resultHtml += `<div class="res-row" style="color:#a1a1aa">НИЧЬЯ! ВОЗВРАТ СТАВКИ: +${currentGame.bet} ⭐</div>`;
-                tg.HapticFeedback.notificationOccurred('warning');
-            }
-
-            document.getElementById('results-content').innerHTML = resultHtml;
-            document.getElementById('game-results-panel').style.display = 'block';
-            document.getElementById('btn-submit-nodes').style.display = 'none';
-            document.getElementById('btn-leave-nodes').style.display = 'block';
+            }, 1200); // Задержка для анимации цифр
         }
 
         function finishGameAndReturn() {
@@ -761,7 +753,7 @@
             document.querySelector('.bottom-nav').style.display = 'flex';
         }
 
-        // --- ФУНКЦИИ ПРОФИЛЯ, КЕЙСОВ, ИНВЕНТАРЯ И РУЛЕТКИ ---
+        // --- ФУНКЦИИ ПРОФИЛЯ И РУЛЕТКИ (БЕЗ ИЗМЕНЕНИЙ) ---
         function saveInventory() { localStorage.setItem('lootgift_inventory', JSON.stringify(inventory)); renderInventory(); }
         function openProfileModal() { tg.HapticFeedback.impactOccurred('light'); document.getElementById('profile-modal').classList.add('active'); document.getElementById('stat-reg-date').innerText = regDate; document.getElementById('stat-cases-opened').innerText = spinsCount; document.getElementById('stat-total-won').innerHTML = `${totalWon} <img src="star.png?v=8" alt="star">`; document.getElementById('stat-tg-stars').innerHTML = `1000 <img src="star.png?v=8" alt="star">`; renderInventory(); }
         function closeProfileModal() { document.getElementById('profile-modal').classList.remove('active'); }
