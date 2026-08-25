@@ -72,26 +72,26 @@
         #roulette-screen { display: none; flex-direction: column; align-items: center; padding-top: 20px; opacity: 0; transition: opacity 0.5s ease; }
         .back-btn { align-self: flex-start; background: #3e4257; padding: 8px 16px; border-radius: 8px; color: white; border: none; margin-bottom: 20px; cursor: pointer; font-weight: bold; }
         
-        .roulette-wrapper { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-        .roulette-row { width: 100%; height: var(--row-height); background: #1a1b26; border: 2px solid #5a3e8c; border-radius: 12px; position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); transition: height 0.3s ease; }
-        .roulette-strip { display: flex; height: 100%; position: absolute; left: 0; top: 0; }
-        
-        .roulette-item { box-sizing: border-box; width: var(--item-size); height: var(--item-size); margin: 10px; background: var(--bg-color); border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0; border: 1px solid var(--border-color); transition: all 0.3s ease; }
-        .roulette-item img { width: 50%; height: 50%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); margin-bottom: 4px; }
-        .roulette-name { font-size: 12px; font-weight: bold; color: white; text-align: center; padding: 0 4px;}
-        
-        .center-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #71e654; transform: translateX(-50%); z-index: 10; box-shadow: 0 0 10px #71e654; }
+        .qty-row { display: flex; gap: 8px; margin-bottom: 15px; width: 100%; max-width: 350px; justify-content: center; }
+        .qty-btn { background: var(--card-bg); border: 1px solid var(--border-color); color: white; border-radius: 6px; padding: 10px 16px; font-weight: bold; cursor: pointer; transition: 0.2s; flex: 1; text-align: center; }
+        .qty-btn.active { background: var(--accent-green); color: #000; border-color: var(--accent-green); }
 
         .spin-btn { display: flex; justify-content: center; align-items: center; gap: 8px; background: #71e654; color: #000; font-size: 20px; font-weight: 900; padding: 15px 20px; border-radius: 12px; border: none; box-shadow: 0 6px 0 #4db335; cursor: pointer; text-transform: uppercase; width: 100%; max-width: 350px; margin-bottom: 15px; transition: 0.2s; }
         .spin-btn:active { transform: translateY(6px); box-shadow: 0 0 0 #4db335; }
         .spin-btn:disabled { background: #555; box-shadow: 0 6px 0 #333; color: #888; cursor: not-allowed; transform: translateY(6px); }
 
-        .qty-row { display: flex; gap: 8px; margin-bottom: 15px; }
-        .qty-btn { background: var(--card-bg); border: 1px solid var(--border-color); color: white; border-radius: 6px; padding: 10px 16px; font-weight: bold; cursor: pointer; transition: 0.2s; flex: 1; text-align: center; }
-        .qty-btn.active { background: var(--accent-green); color: #000; border-color: var(--accent-green); }
+        .roulette-wrapper { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+        .roulette-row { width: 100%; height: var(--row-height); background: #1a1b26; border: 2px solid #5a3e8c; border-radius: 12px; position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); transition: height 0.3s ease; }
+        .roulette-strip { display: flex; height: 100%; position: absolute; left: 0; top: 0; }
+        
+        .roulette-item { box-sizing: border-box; width: var(--item-size); height: var(--item-size); margin: 6px; background: var(--bg-color); border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0; border: 1px solid var(--border-color); transition: all 0.3s ease; }
+        .roulette-item img { width: 50%; height: 50%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); margin-bottom: 2px; }
+        .roulette-name { font-size: 10px; font-weight: bold; color: white; text-align: center; padding: 0 2px;}
+        
+        .center-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #71e654; transform: translateX(-50%); z-index: 10; box-shadow: 0 0 10px #71e654; }
 
         /* --- СЕТКА ЛУТА --- */
-        .loot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 350px; }
+        .loot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 350px; margin-bottom: 20px; }
         .loot-box { background: #1a1b26; border: 1px solid #3e4257; border-radius: 8px; height: 85px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: pointer; }
         .loot-box img { width: 45%; height: 45%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); transition: 0.3s; margin-top: 4px; }
         .loot-name { font-size: 10px; font-weight: 800; color: #fff; margin-top: 4px; text-align: center; transition: 0.3s; z-index: 1; text-shadow: 0 1px 2px #000; }
@@ -116,7 +116,7 @@
             <span id="tg-username">Игрок</span>
         </div>
         <div class="balance-box" id="balance-box">
-            <img src="star.png?v=4" class="balance-star" alt="star"> <span id="balance-display">1000</span>
+            <img src="star.png?v=5" class="balance-star" alt="star"> <span id="balance-display">1000</span>
         </div>
     </div>
 
@@ -133,18 +133,16 @@
 
     <div id="roulette-screen">
         <button class="back-btn" onclick="closeRoulette()">← Назад</button>
-        <div class="roulette-wrapper" id="roulette-wrapper"></div>
-        <button class="spin-btn" id="spin-btn" onclick="spinRoulette()">
-            КРУТИТЬ ЗА <span id="spin-cost">100</span> <img src="star.png?v=4" style="width:24px; height:24px;" alt="star">
-        </button>
         
-        <div class="qty-row">
-            <button class="qty-btn active" onclick="selectQty(this, 1)">1</button>
-            <button class="qty-btn" onclick="selectQty(this, 2)">2</button>
-            <button class="qty-btn" onclick="selectQty(this, 3)">3</button>
-            <button class="qty-btn" onclick="selectQty(this, 4)">4</button>
-            <button class="qty-btn" onclick="selectQty(this, 5)">5</button>
+        <div class="qty-row" id="qty-row-container">
+            <!-- Кнопки генерируются динамически -->
         </div>
+
+        <button class="spin-btn" id="spin-btn" onclick="spinRoulette()">
+            КРУТИТЬ ЗА <span id="spin-cost">100</span> <img src="star.png?v=5" style="width:24px; height:24px;" alt="star">
+        </button>
+
+        <div class="roulette-wrapper" id="roulette-wrapper"></div>
 
         <div class="loot-grid" id="loot-grid"></div>
     </div>
@@ -229,6 +227,7 @@
         let currentItemSize = 100;
         let activeCaseId = null;
         let activeCasePrice = 0;
+        let isFarmCase = false;
 
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -247,89 +246,107 @@
         };
 
         const casesData = {
+            // --- ПРЕМИУМ И СТАНДАРТ ---
             epicCase: [
-                { icon: 'bear.png?v=4', name: 'Мишка', value: 15, prob: 0.35, rarity: 'trash' },
-                { icon: 'rose.png?v=4', name: 'Роза', value: 25, prob: 0.15, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '25 Stars', value: 25, prob: 0.169, rarity: 'trash' },
-                { icon: 'cake.png?v=4', name: 'Торт', value: 50, prob: 0.08, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '50 Stars', value: 50, prob: 0.10, rarity: 'common' },
-                { icon: 'diamond.png?v=4', name: 'Алмаз', value: 100, prob: 0.07, rarity: 'common' },
-                { icon: 'stars150.png?v=4', name: '150 Stars', value: 150, prob: 0.04, rarity: 'common' },
-                { icon: 'stars300.png?v=4', name: '300 Stars', value: 300, prob: 0.02, rarity: 'common' },
-                { icon: 'tie.png?v=4', name: 'Бабочка', value: 600, prob: 0.01, rarity: 'rare' },
-                { icon: 'button.png?v=4', name: 'Кнопка', value: 700, prob: 0.008, rarity: 'rare' },
-                { icon: 'sphere.png?v=4', name: 'Сфера', value: 1305, prob: 0.002, rarity: 'legendary' },
-                { icon: 'eagle.png?v=4', name: 'Орёл', value: 2655, prob: 0.001, rarity: 'legendary' }
+                { icon: 'bear.png?v=5', name: 'Мишка', value: 15, prob: 0.35, rarity: 'trash' },
+                { icon: 'rose.png?v=5', name: 'Роза', value: 25, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '25 Stars', value: 25, prob: 0.169, rarity: 'trash' },
+                { icon: 'cake.png?v=5', name: 'Торт', value: 50, prob: 0.08, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '50 Stars', value: 50, prob: 0.10, rarity: 'common' },
+                { icon: 'diamond.png?v=5', name: 'Алмаз', value: 100, prob: 0.07, rarity: 'common' },
+                { icon: 'stars150.png?v=5', name: '150 Stars', value: 150, prob: 0.04, rarity: 'common' },
+                { icon: 'stars300.png?v=5', name: '300 Stars', value: 300, prob: 0.02, rarity: 'common' },
+                { icon: 'tie.png?v=5', name: 'Бабочка', value: 600, prob: 0.01, rarity: 'rare' },
+                { icon: 'button.png?v=5', name: 'Кнопка', value: 700, prob: 0.008, rarity: 'rare' },
+                { icon: 'sphere.png?v=5', name: 'Сфера', value: 1305, prob: 0.002, rarity: 'legendary' },
+                { icon: 'eagle.png?v=5', name: 'Орёл', value: 2655, prob: 0.001, rarity: 'legendary' }
             ],
             shadowCase: [
-                { icon: 'stars50.png?v=4', name: '1 Star', value: 1, prob: 0.0349, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '10 Stars', value: 10, prob: 0.05, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '25 Stars', value: 25, prob: 0.10, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '50 Stars', value: 50, prob: 0.15, rarity: 'trash' },
-                { icon: 'stars150.png?v=4', name: '100 Stars', value: 100, prob: 0.15, rarity: 'trash' },
-                { icon: 'stars150.png?v=4', name: '250 Stars', value: 250, prob: 0.20, rarity: 'rare' },
-                { icon: 'stars300.png?v=4', name: '500 Stars', value: 500, prob: 0.15, rarity: 'rare' },
-                { icon: 'stars300.png?v=4', name: '1000 Stars', value: 1000, prob: 0.10, rarity: 'common' },
-                { icon: 'stars300.png?v=4', name: '2500 Stars', value: 2500, prob: 0.04, rarity: 'common' },
-                { icon: 'stars300.png?v=4', name: '5000 Stars', value: 5000, prob: 0.02, rarity: 'common' },
-                { icon: 'stars300.png?v=4', name: '10000 Stars', value: 10000, prob: 0.005, rarity: 'legendary' },
-                { icon: 'pepe.png?v=4', name: 'Пепе', value: 677097, prob: 0.0001, rarity: 'legendary' } 
+                { icon: 'stars50.png?v=5', name: '1 Star', value: 1, prob: 0.0349, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '10 Stars', value: 10, prob: 0.05, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '25 Stars', value: 25, prob: 0.10, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '50 Stars', value: 50, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars150.png?v=5', name: '100 Stars', value: 100, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars150.png?v=5', name: '250 Stars', value: 250, prob: 0.20, rarity: 'rare' },
+                { icon: 'stars300.png?v=5', name: '500 Stars', value: 500, prob: 0.15, rarity: 'rare' },
+                { icon: 'stars300.png?v=5', name: '1000 Stars', value: 1000, prob: 0.10, rarity: 'common' },
+                { icon: 'stars300.png?v=5', name: '2500 Stars', value: 2500, prob: 0.04, rarity: 'common' },
+                { icon: 'stars300.png?v=5', name: '5000 Stars', value: 5000, prob: 0.02, rarity: 'common' },
+                { icon: 'stars300.png?v=5', name: '10000 Stars', value: 10000, prob: 0.005, rarity: 'legendary' },
+                { icon: 'pepe.png?v=5', name: 'Пепе', value: 677097, prob: 0.0001, rarity: 'legendary' } 
             ],
             goldCase: [
-                { icon: 'stars50.png?v=4', name: '5 Stars', value: 5, prob: 0.25, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '10 Stars', value: 10, prob: 0.25, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '15 Stars', value: 15, prob: 0.15, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '25 Stars', value: 25, prob: 0.15, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '50 Stars', value: 50, prob: 0.10, rarity: 'common' },
-                { icon: 'stars150.png?v=4', name: '75 Stars', value: 75, prob: 0.045, rarity: 'rare' },
-                { icon: 'stars150.png?v=4', name: '100 Stars', value: 100, prob: 0.03, rarity: 'rare' },
-                { icon: 'stars150.png?v=4', name: '150 Stars', value: 150, prob: 0.012, rarity: 'common' },
-                { icon: 'stars300.png?v=4', name: '300 Stars', value: 300, prob: 0.007, rarity: 'common' },
-                { icon: 'stars300.png?v=4', name: '500 Stars', value: 500, prob: 0.003, rarity: 'rare' },
-                { icon: 'stars300.png?v=4', name: '1000 Stars', value: 1000, prob: 0.002, rarity: 'legendary' },
-                { icon: 'stars300.png?v=4', name: '2500 Stars', value: 2500, prob: 0.001, rarity: 'legendary' }
+                { icon: 'stars50.png?v=5', name: '5 Stars', value: 5, prob: 0.25, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '10 Stars', value: 10, prob: 0.25, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '15 Stars', value: 15, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '25 Stars', value: 25, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '50 Stars', value: 50, prob: 0.10, rarity: 'common' },
+                { icon: 'stars150.png?v=5', name: '75 Stars', value: 75, prob: 0.045, rarity: 'rare' },
+                { icon: 'stars150.png?v=5', name: '100 Stars', value: 100, prob: 0.03, rarity: 'rare' },
+                { icon: 'stars150.png?v=5', name: '150 Stars', value: 150, prob: 0.012, rarity: 'common' },
+                { icon: 'stars300.png?v=5', name: '300 Stars', value: 300, prob: 0.007, rarity: 'common' },
+                { icon: 'stars300.png?v=5', name: '500 Stars', value: 500, prob: 0.003, rarity: 'rare' },
+                { icon: 'stars300.png?v=5', name: '1000 Stars', value: 1000, prob: 0.002, rarity: 'legendary' },
+                { icon: 'stars300.png?v=5', name: '2500 Stars', value: 2500, prob: 0.001, rarity: 'legendary' }
             ],
             vintageCase: [
-                { icon: 'stars50.png?v=4', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '1 Star', value: 1, prob: 0.174, rarity: 'trash' }, 
-                { icon: 'book.png?v=4', name: 'Книга', value: 580, prob: 0.027, rarity: 'common' },
-                { icon: 'basket.png?v=4', name: 'Корзинка', value: 620, prob: 0.02, rarity: 'common' },
-                { icon: 'cake.png?v=4', name: 'Торт', value: 646, prob: 0.015, rarity: 'rare' },
-                { icon: 'saber.png?v=4', name: 'Меч', value: 711, prob: 0.008, rarity: 'rare' },
-                { icon: 'cigar.png?v=4', name: 'Сигара', value: 1500, prob: 0.005, rarity: 'legendary' },
-                { icon: 'glasses.png?v=4', name: 'Очки', value: 10564, prob: 0.001, rarity: 'legendary' }
+                { icon: 'stars50.png?v=5', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '1 Star', value: 1, prob: 0.174, rarity: 'trash' }, 
+                { icon: 'book.png?v=5', name: 'Книга', value: 580, prob: 0.027, rarity: 'common' },
+                { icon: 'basket.png?v=5', name: 'Корзинка', value: 620, prob: 0.02, rarity: 'common' },
+                { icon: 'cake.png?v=5', name: 'Торт', value: 646, prob: 0.015, rarity: 'rare' },
+                { icon: 'saber.png?v=5', name: 'Меч', value: 711, prob: 0.008, rarity: 'rare' },
+                { icon: 'cigar.png?v=5', name: 'Сигара', value: 1500, prob: 0.005, rarity: 'legendary' },
+                { icon: 'glasses.png?v=5', name: 'Очки', value: 10564, prob: 0.001, rarity: 'legendary' }
             ],
             neonCase: [
-                { icon: 'stars50.png?v=4', name: '5 Stars', value: 5, prob: 0.45, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '10 Stars', value: 10, prob: 0.25, rarity: 'trash' },
-                { icon: 'heart.png?v=4', name: 'Сердце', value: 15, prob: 0.12, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '25 Stars', value: 25, prob: 0.06, rarity: 'common' },
-                { icon: 'rose.png?v=4', name: 'Роза', value: 25, prob: 0.06, rarity: 'common' },
-                { icon: 'rocket.png?v=4', name: 'Ракета', value: 50, prob: 0.03, rarity: 'common' },
-                { icon: 'trophy.png?v=4', name: 'Кубок', value: 100, prob: 0.015, rarity: 'rare' },
-                { icon: 'sock.png?v=4', name: 'Носок', value: 375, prob: 0.002, rarity: 'rare' },
-                { icon: 'tamagotchi.png?v=4', name: 'Тамагочи', value: 495, prob: 0.001, rarity: 'legendary' },
-                { icon: 'gluhwein.png?v=4', name: 'Глинтвейн', value: 519, prob: 0.001, rarity: 'legendary' },
-                { icon: 'surfboard.png?v=4', name: 'Серф', value: 711, prob: 0.0006, rarity: 'legendary' },
-                { icon: 'candle.png?v=4', name: 'Свеча', value: 951, prob: 0.0004, rarity: 'legendary' }
+                { icon: 'stars50.png?v=5', name: '5 Stars', value: 5, prob: 0.45, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '10 Stars', value: 10, prob: 0.25, rarity: 'trash' },
+                { icon: 'heart.png?v=5', name: 'Сердце', value: 15, prob: 0.12, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '25 Stars', value: 25, prob: 0.06, rarity: 'common' },
+                { icon: 'rose.png?v=5', name: 'Роза', value: 25, prob: 0.06, rarity: 'common' },
+                { icon: 'rocket.png?v=5', name: 'Ракета', value: 50, prob: 0.03, rarity: 'common' },
+                { icon: 'trophy.png?v=5', name: 'Кубок', value: 100, prob: 0.015, rarity: 'rare' },
+                { icon: 'sock.png?v=5', name: 'Носок', value: 375, prob: 0.002, rarity: 'rare' },
+                { icon: 'tamagotchi.png?v=5', name: 'Тамагочи', value: 495, prob: 0.001, rarity: 'legendary' },
+                { icon: 'gluhwein.png?v=5', name: 'Глинтвейн', value: 519, prob: 0.001, rarity: 'legendary' },
+                { icon: 'surfboard.png?v=5', name: 'Серф', value: 711, prob: 0.0006, rarity: 'legendary' },
+                { icon: 'candle.png?v=5', name: 'Свеча', value: 951, prob: 0.0004, rarity: 'legendary' }
             ],
             summerCase: [
-                { icon: 'stars50.png?v=4', name: '1 Star', value: 1, prob: 0.3605, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '2 Stars', value: 2, prob: 0.25, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '3 Stars', value: 3, prob: 0.15, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '5 Stars', value: 5, prob: 0.10, rarity: 'trash' },
-                { icon: 'stars50.png?v=4', name: '10 Stars', value: 10, prob: 0.05, rarity: 'common' },
-                { icon: 'heart.png?v=4', name: 'Сердце', value: 15, prob: 0.05, rarity: 'common' },
-                { icon: 'rose.png?v=4', name: 'Роза', value: 25, prob: 0.02, rarity: 'common' },
-                { icon: 'tulips.png?v=4', name: 'Тюльпаны', value: 50, prob: 0.01, rarity: 'common' },
-                { icon: 'diamond.png?v=4', name: 'Алмаз', value: 100, prob: 0.005, rarity: 'rare' },
-                { icon: 'flamingo.png?v=4', name: 'Фламинго', value: 370, prob: 0.0025, rarity: 'rare' },
-                { icon: 'lollipop.png?v=4', name: 'Леденец', value: 450, prob: 0.0015, rarity: 'legendary' },
-                { icon: 'bouquet.png?v=4', name: 'Букет', value: 600, prob: 0.0005, rarity: 'legendary' }
+                { icon: 'stars50.png?v=5', name: '1 Star', value: 1, prob: 0.3605, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '2 Stars', value: 2, prob: 0.25, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '3 Stars', value: 3, prob: 0.15, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '5 Stars', value: 5, prob: 0.10, rarity: 'trash' },
+                { icon: 'stars50.png?v=5', name: '10 Stars', value: 10, prob: 0.05, rarity: 'common' },
+                { icon: 'heart.png?v=5', name: 'Сердце', value: 15, prob: 0.05, rarity: 'common' },
+                { icon: 'rose.png?v=5', name: 'Роза', value: 25, prob: 0.02, rarity: 'common' },
+                { icon: 'tulips.png?v=5', name: 'Тюльпаны', value: 50, prob: 0.01, rarity: 'common' },
+                { icon: 'diamond.png?v=5', name: 'Алмаз', value: 100, prob: 0.005, rarity: 'rare' },
+                { icon: 'flamingo.png?v=5', name: 'Фламинго', value: 370, prob: 0.0025, rarity: 'rare' },
+                { icon: 'lollipop.png?v=5', name: 'Леденец', value: 450, prob: 0.0015, rarity: 'legendary' },
+                { icon: 'bouquet.png?v=5', name: 'Букет', value: 600, prob: 0.0005, rarity: 'legendary' }
+            ],
+
+            // --- НОВЫЕ ФАРМ КЕЙСЫ ---
+            farm1: [
+                { icon: 'empty.png?v=5', name: 'Пустышка', value: 0, prob: 0.89995, rarity: 'trash' },
+                { icon: 'star.png?v=5', name: '1 Star', value: 1, prob: 0.10, rarity: 'common' },
+                { icon: 'glasses.png?v=5', name: 'Очки', value: 10564, prob: 0.00005, rarity: 'legendary' }
+            ],
+            farm2: [
+                { icon: 'empty.png?v=5', name: 'Пустышка', value: 0, prob: 0.89995, rarity: 'trash' },
+                { icon: 'star.png?v=5', name: '2 Stars', value: 2, prob: 0.10, rarity: 'common' },
+                { icon: 'helmet.png?v=5', name: 'Шлем', value: 19297, prob: 0.00005, rarity: 'legendary' }
+            ],
+            farm3: [
+                { icon: 'empty.png?v=5', name: 'Пустышка', value: 0, prob: 0.89995, rarity: 'trash' },
+                { icon: 'star.png?v=5', name: '5 Stars', value: 5, prob: 0.10, rarity: 'common' },
+                { icon: 'tg_cap.png?v=5', name: 'Кепка', value: 43169, prob: 0.00005, rarity: 'legendary' }
             ]
         };
 
@@ -340,7 +357,6 @@
             spinsCount = parseInt(spinsCount);
         }
 
-        // --- ЗАЩИТА 1.5 МЛН ЗВЕЗД ---
         function getRandomItem(caseId) {
             spinsCount++;
             localStorage.setItem('lootgift_spins', spinsCount);
@@ -350,7 +366,8 @@
             let items = casesData[caseId];
             let rand = Math.random();
             
-            if (spinsCount <= 2 && rand > 0.4) {
+            // Временно отключаем хардкод для фарма, чтобы не выпадало лишнее
+            if (spinsCount <= 2 && rand > 0.4 && !caseId.startsWith('farm')) {
                 return items[7]; 
             }
             
@@ -405,10 +422,11 @@
             if (currentQty === 3) itemSize = 75; 
             if (currentQty === 4) itemSize = 65; 
             if (currentQty === 5) itemSize = 55; 
+            if (currentQty === 10) itemSize = 35; // Уменьшенный размер для 10 кейсов
             
             currentItemSize = itemSize; 
             wrapper.style.setProperty('--item-size', itemSize + 'px');
-            wrapper.style.setProperty('--row-height', (itemSize + 20) + 'px');
+            wrapper.style.setProperty('--row-height', (itemSize + 12) + 'px');
 
             for(let i = 0; i < currentQty; i++) {
                 wrapper.innerHTML += `
@@ -422,6 +440,26 @@
             document.getElementById('spin-cost').innerText = (activeCasePrice * currentQty);
         }
 
+        function buildQtyButtons(isFarm) {
+            const container = document.getElementById('qty-row-container');
+            if (isFarm) {
+                container.innerHTML = `
+                    <button class="qty-btn active" onclick="selectQty(this, 5)">5</button>
+                    <button class="qty-btn" onclick="selectQty(this, 10)">10</button>
+                `;
+                currentQty = 5;
+            } else {
+                container.innerHTML = `
+                    <button class="qty-btn active" onclick="selectQty(this, 1)">1</button>
+                    <button class="qty-btn" onclick="selectQty(this, 2)">2</button>
+                    <button class="qty-btn" onclick="selectQty(this, 3)">3</button>
+                    <button class="qty-btn" onclick="selectQty(this, 4)">4</button>
+                    <button class="qty-btn" onclick="selectQty(this, 5)">5</button>
+                `;
+                currentQty = 1;
+            }
+        }
+
         function openCaseScreen(caseId, price) {
             if (!casesData[caseId]) {
                 tg.showAlert('Этот модуль находится в разработке!');
@@ -429,6 +467,9 @@
             }
             activeCaseId = caseId;
             activeCasePrice = price;
+            isFarmCase = caseId.startsWith('farm');
+            
+            buildQtyButtons(isFarmCase);
             
             document.getElementById('app-content').style.display = 'none';
             const rScreen = document.getElementById('roulette-screen');
@@ -478,7 +519,7 @@
             const totalItems = 50; 
             const winnerIndex = 40; 
             const wrapper = document.getElementById('roulette-wrapper');
-            const itemTotalWidth = currentItemSize + 20;
+            const itemTotalWidth = currentItemSize + 12;
             const currentItems = casesData[activeCaseId];
 
             for(let rowIdx = 0; rowIdx < currentQty; rowIdx++) {
@@ -500,19 +541,27 @@
                     } else {
                         let r = Math.random();
                         let visualItem;
-                        if (r < 0.10) visualItem = currentItems[0];      
-                        else if (r < 0.30) visualItem = currentItems[5]; 
-                        else if (r < 0.60) visualItem = currentItems[7]; 
-                        else if (r < 0.82) visualItem = currentItems[8]; 
-                        else if (r < 0.97) visualItem = currentItems[9]; 
-                        else visualItem = currentItems[11];              
+                        
+                        if (isFarmCase) {
+                            // Для фарма заполняем визуальную полосу пустышками и кэшбеками
+                            if (r < 0.85) visualItem = currentItems[0]; // Пустышка
+                            else if (r < 0.98) visualItem = currentItems[1]; // Кэшбек
+                            else visualItem = currentItems[2]; // Джекпот 
+                        } else {
+                            if (r < 0.10) visualItem = currentItems[0];      
+                            else if (r < 0.30) visualItem = currentItems[5]; 
+                            else if (r < 0.60) visualItem = currentItems[7]; 
+                            else if (r < 0.82) visualItem = currentItems[8]; 
+                            else if (r < 0.97) visualItem = currentItems[9]; 
+                            else visualItem = currentItems[11];              
+                        }
                         
                         div.innerHTML = `<img src="${visualItem.icon}"><div class="roulette-name">${visualItem.name}</div>`;
                     }
                     strip.appendChild(div);
                 }
 
-                let duration = 5 + (rowIdx * 0.2); 
+                let duration = 5 + (rowIdx * 0.15); 
                 setTimeout(() => {
                     strip.style.transition = `transform ${duration}s cubic-bezier(0.15, 0.85, 0.1, 1)`;
                     const containerWidth = wrapper.offsetWidth;
@@ -522,7 +571,7 @@
                 }, 50);
             }
 
-            let maxDelay = 5200 + ((currentQty - 1) * 200);
+            let maxDelay = 5200 + ((currentQty - 1) * 150);
             setTimeout(() => {
                 btn.disabled = false;
                 
@@ -548,30 +597,30 @@
             }, maxDelay);
         }
 
-        // РЕНДЕР КЕЙСОВ ОТСОРТИРОВАН СТРОГО ПО ЦЕНЕ
+        // РЕНДЕР КЕЙСОВ
         const categories = [
             {
                 title: "Премиум Модули",
                 cases: [
-                    { id: 'epicCase', name: "Эпический Дар", price: 100, image: "case1.jpg.jfif?v=4", special: true }
+                    { id: 'epicCase', name: "Эпический Дар", price: 100, image: "case1.jpg.jfif?v=5", special: true }
                 ]
             },
             {
                 title: "Стандартные Модули",
                 cases: [
-                    { id: 'summerCase', name: "Пляжный Вайб", price: 10, image: "case2.png?v=4", special: false },
-                    { id: 'neonCase', name: "Неоновый Тайник", price: 25, image: "case3.png?v=4", special: false },
-                    { id: 'goldCase', name: "Золотая Казна", price: 50, image: "case4.png?v=4", special: false },
-                    { id: 'vintageCase', name: "Винтажный Бокс", price: 100, image: "case5.png?v=4", special: false },
-                    { id: 'shadowCase', name: "Теневой Синдикат", price: 1000, image: "case6.png?v=4", special: false }
+                    { id: 'summerCase', name: "Пляжный Вайб", price: 10, image: "case2.png?v=5", special: false },
+                    { id: 'neonCase', name: "Неоновый Тайник", price: 25, image: "case3.png?v=5", special: false },
+                    { id: 'goldCase', name: "Золотая Казна", price: 50, image: "case4.png?v=5", special: false },
+                    { id: 'vintageCase', name: "Винтажный Бокс", price: 100, image: "case5.png?v=5", special: false },
+                    { id: 'shadowCase', name: "Теневой Синдикат", price: 1000, image: "case6.png?v=5", special: false }
                 ]
             },
             {
-                title: "Фарм кейсы",
+                title: "Фарм модули",
                 cases: [
-                    { id: 'farmSmall', name: "Мелкий Фарм", price: 15, icon: "📦", special: false },
-                    { id: 'farmBig', name: "Крупный Фарм", price: 40, icon: "🧰", special: false },
-                    { id: 'farmMega', name: "Мега Фарм", price: 100, icon: "💎", special: false }
+                    { id: 'farm1', name: "Фарм Очков", price: 1, image: "farm1.png?v=5", special: false },
+                    { id: 'farm2', name: "Фарм Шлема", price: 2, image: "farm2.png?v=5", special: false },
+                    { id: 'farm3', name: "Фарм Кепки", price: 5, image: "farm3.png?v=5", special: false }
                 ]
             },
             {
@@ -600,7 +649,7 @@
                         <img src="${c.image}" class="premium-case-img" alt="${c.name}">
                         <div class="case-info-box">
                             <div class="case-name">${c.name}</div>
-                            <div class="case-price">${c.price} <img src="star.png?v=4" alt="star"></div>
+                            <div class="case-price">${c.price} <img src="star.png?v=5" alt="star"></div>
                             <button class="btn btn-premium" onclick="openCaseScreen('${c.id}', ${c.price})">ОТКРЫТЬ</button>
                         </div>
                     `;
@@ -613,7 +662,7 @@
                     card.innerHTML = `
                         ${iconHtml}
                         <div class="case-name-std">${c.name}</div>
-                        <div class="case-price-std">${c.price} <img src="star.png?v=4" alt="star" style="width:12px; height:12px; vertical-align:middle;"></div>
+                        <div class="case-price-std">${c.price} <img src="star.png?v=5" alt="star" style="width:12px; height:12px; vertical-align:middle;"></div>
                         <button class="btn" onclick="openCaseScreen('${c.id}', ${c.price})">ОТКРЫТЬ</button>
                     `;
                 }
