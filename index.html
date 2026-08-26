@@ -15,6 +15,8 @@
             --border-color: #3e4257;
             --purple: #5a3e8c;
             --purple-glow: rgba(90, 62, 140, 0.5);
+            --cyan: #00e5ff;
+            --red: #ff2a5f;
             
             --row-height: 120px;
             --item-size: 100px;
@@ -40,8 +42,8 @@
         .nav-item span { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
         .nav-item.active { color: #fff; }
         .nav-item.active svg { fill: var(--accent-green); filter: drop-shadow(0 0 5px var(--green-glow)); }
-        .nav-item.exit-btn { color: #ff2a5f; }
-        .nav-item.exit-btn svg { fill: #ff2a5f; }
+        .nav-item.exit-btn { color: var(--red); }
+        .nav-item.exit-btn svg { fill: var(--red); }
         .nav-item.exit-btn:active { transform: scale(0.9); }
 
         /* --- СЕКЦИИ ПРИЛОЖЕНИЯ --- */
@@ -91,6 +93,7 @@
         .inv-count { font-weight: bold; color: #a1a1aa; font-size: 14px; }
         .sell-all-btn { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 12px; cursor: pointer; text-transform: uppercase; box-shadow: 0 2px 5px rgba(155, 89, 182, 0.3); transition: 0.2s; }
         .sell-all-btn:active { transform: scale(0.95); }
+        
         .inventory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .inv-item { background: #1a1b26; border: 1px solid #3e4257; border-radius: 8px; height: 90px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; cursor: pointer; transition: 0.2s; }
         .inv-item:active { transform: scale(0.95); border-color: var(--accent-green); }
@@ -114,7 +117,7 @@
         .btn-sell { background: linear-gradient(135deg, #71e654, #4db335); color: #0b1a10; }
         .btn-sell:disabled { background: #333; color: #666; cursor: not-allowed; }
 
-        /* --- ЭКРАН РУЛЕТКИ --- */
+        /* --- ЭКРАН РУЛЕТКИ КЕЙСОВ --- */
         #roulette-screen { display: none; flex-direction: column; align-items: center; padding-top: 20px; opacity: 0; transition: opacity 0.5s ease; padding-bottom: 100px;}
         .back-btn { align-self: flex-start; background: #3e4257; padding: 8px 16px; border-radius: 8px; color: white; border: none; margin-bottom: 20px; cursor: pointer; font-weight: bold; }
         .qty-row { display: flex; gap: 8px; margin-bottom: 15px; width: 100%; max-width: 350px; justify-content: center; }
@@ -153,79 +156,39 @@
         @keyframes pulseLogo { 0% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(113, 230, 84, 0.2)); } 100% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(113, 230, 84, 0.8)); } }
         @keyframes pulseText { 0% { opacity: 0.6; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1.05); } }
 
-        /* --- ИГРЫ (PvP АРЕНА - НОВЫЙ ДИЗАЙН) --- */
-        #section-games-menu { display: none; }
-        #section-games-menu.active { display: block; }
+        /* --- АПГРЕЙДЕР (НОВЫЙ РЕЖИМ) --- */
+        #upgrader-screen { display: none; flex-direction: column; align-items: center; padding-top: 10px; padding-bottom: 100px; }
+        .upg-layout { display: flex; width: 100%; max-width: 400px; justify-content: space-between; align-items: stretch; margin-top: 20px; gap: 10px; }
         
-        #theory-lobbies-screen { display: none; flex-direction: column; padding-bottom: 100px; }
-        .theory-top-stats { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: bold; color: #a1a1aa; margin-bottom: 15px; margin-top: 10px;}
-        .stat-group { display: flex; gap: 10px; }
-        .stat-group span { display: flex; align-items: center; gap: 4px; }
+        /* Блоки выбора */
+        .upg-item-col { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        .upg-box { background: #1a1b26; border: 2px dashed #3e4257; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; height: 140px; position: relative; }
+        .upg-box:active { transform: scale(0.95); }
+        .upg-box.filled { border-style: solid; border-color: var(--purple); box-shadow: inset 0 0 20px rgba(90, 62, 140, 0.2); }
+        .upg-box img { width: 60%; height: 60%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); margin-top: 10px; }
+        .upg-box-text { color: #a1a1aa; font-weight: bold; font-size: 12px; text-transform: uppercase; text-align: center; padding: 0 10px; }
+        .upg-val { position: absolute; bottom: 8px; font-size: 12px; font-weight: 900; color: var(--accent-green); background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 6px; display: flex; align-items: center; gap: 4px;}
         
-        .create-battle-btn { background: linear-gradient(135deg, var(--purple), #8e44ad); color: white; width: 100%; padding: 12px; border-radius: 12px; font-weight: 900; font-size: 14px; text-transform: uppercase; border: none; cursor: pointer; margin-bottom: 20px; box-shadow: 0 4px 15px var(--purple-glow); transition: 0.2s;}
-        .create-battle-btn:active { transform: scale(0.98); }
-
-        .battle-card { display: flex; align-items: center; background: #161722; border: 1px solid var(--border-color); border-radius: 16px; padding: 12px; margin-bottom: 12px; transition: 0.2s; }
-        .battle-card:hover { border-color: var(--purple); box-shadow: 0 0 10px rgba(90, 62, 140, 0.2); }
-        .b-live-box { display: flex; flex-direction: column; align-items: center; justify-content: center; padding-right: 15px; border-right: 1px solid rgba(255,255,255,0.05); margin-right: 15px; }
-        .b-hex { width: 30px; height: 30px; border: 2px solid #ffb13b; border-radius: 6px; display: flex; justify-content: center; align-items: center; margin-bottom: 4px; box-shadow: 0 0 8px rgba(255, 177, 59, 0.3); }
-        .b-hex::after { content: ''; width: 10px; height: 10px; border: 2px solid transparent; border-top-color: #ffb13b; border-radius: 50%; animation: spin 1s linear infinite; }
-        .b-live-text { font-size: 10px; color: #a1a1aa; font-weight: bold; }
-        .b-bet { flex: 1; display: flex; align-items: center; }
-        .b-bet img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); }
-        .b-cost { background: #222533; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold; color: #fff; display: flex; flex-direction: column; align-items: center; margin: 0 15px; }
-        .b-cost span { font-size: 10px; color: #888; font-weight: normal; }
-        .b-players { display: flex; align-items: center; gap: -5px; margin-right: 15px; }
-        .b-player-slot { width: 28px; height: 28px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: bold; color: white; border: 2px solid #161722; margin-left: -8px; }
-        .slot-blue { background: #0077ff; }
-        .slot-green { background: var(--accent-green); color: #000; }
-        .slot-empty { background: transparent; border: 1px dashed #555; color: #555; }
-        .b-actions { display: flex; flex-direction: column; gap: 6px; }
-        .b-btn { padding: 6px 12px; border-radius: 6px; font-size: 10px; font-weight: 900; text-transform: uppercase; border: none; cursor: pointer; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; gap: 8px;}
-        .b-btn:active { transform: scale(0.95); }
-        .b-btn-join { background: linear-gradient(135deg, #71e654, #4db335); color: #000; }
-        .b-btn-watch { background: #2b2e3e; color: #a1a1aa; }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* Комната ожидания */
-        #lobby-waiting-screen { display: none; flex-direction: column; align-items: center; padding-top: 50px; text-align: center; }
-        .waiting-title { font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 20px; }
-        .waiting-slots { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
-        .w-slot { width: 60px; height: 60px; border-radius: 50%; background: #222533; border: 2px dashed #555; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #555; }
-        .w-slot.filled { background: var(--purple); border: 2px solid var(--accent-green); color: #fff; border-style: solid;}
-        .btn-call-bots { background: linear-gradient(135deg, #00e5ff, #0077ff); color: white; width: 100%; max-width: 300px; padding: 15px; border-radius: 12px; font-weight: 900; font-size: 16px; margin-bottom: 15px; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 119, 255, 0.4); }
-        .btn-call-bots:active { transform: scale(0.95); }
-        .btn-cancel { background: transparent; color: #ff2a5f; border: 1px solid #ff2a5f; width: 100%; max-width: 300px; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; }
-
-        /* Терминал Узлов */
-        #node-game-screen { display: none; flex-direction: column; align-items: center; padding: 20px; padding-top: 40px; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #0b0c10; z-index: 500; overflow-y: auto;}
-        .terminal-header { text-align: center; margin-bottom: 30px; width: 100%; }
-        .terminal-title { font-size: 24px; font-weight: 900; color: #fff; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,255,255,0.3); margin-bottom: 5px; }
-        .terminal-bank { font-size: 16px; color: var(--accent-green); font-weight: bold; }
-        .energy-hud { font-size: 20px; font-weight: 900; color: #00e5ff; background: rgba(0, 229, 255, 0.1); border: 1px solid #00e5ff; padding: 10px 20px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 0 15px rgba(0,229,255,0.3); transition: 0.3s; }
+        /* Центральная шкала */
+        .upg-center { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 60px; position: relative; }
+        .upg-chance { font-size: 14px; font-weight: 900; color: #fff; margin-bottom: 10px; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
         
-        .nodes-container { display: flex; justify-content: center; gap: 15px; width: 100%; max-width: 400px; margin-bottom: 40px; }
-        .node-box { flex: 1; background: #1a1b26; border: 2px solid #3e4257; border-radius: 16px; padding: 15px 10px; display: flex; flex-direction: column; align-items: center; transition: 0.3s; position: relative; }
-        .node-box.active { border-color: var(--accent-green); box-shadow: 0 0 15px var(--green-glow); transform: translateY(-5px); }
-        .node-name { font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 5px; }
-        .node-pts { font-size: 14px; color: #ffb13b; font-weight: bold; margin-bottom: 15px; height: 18px;}
-        .hidden-pts { font-size: 14px; color: #555; }
-        .node-input { width: 80%; background: #0b0c10; border: 1px solid #555; color: #fff; font-size: 18px; font-weight: bold; text-align: center; padding: 8px; border-radius: 8px; outline: none; }
-        .node-input:focus { border-color: var(--accent-green); }
-        .node-result { position: absolute; top: -15px; background: var(--accent-green); color: #000; font-size: 12px; font-weight: 900; padding: 4px 8px; border-radius: 6px; display: none; }
+        .upg-bar-container { width: 24px; height: 200px; background: #222533; border: 2px solid #3e4257; border-radius: 12px; position: relative; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
+        /* Красный фон (провал) */
+        .upg-bar-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--red); opacity: 0.8; }
+        /* Зеленая зона (успех) растет снизу */
+        .upg-bar-green { position: absolute; bottom: 0; left: 0; right: 0; background: var(--accent-green); height: 0%; transition: height 0.4s ease; box-shadow: 0 0 15px var(--green-glow); }
+        
+        /* Прыгающая стрелочка */
+        .upg-arrow { position: absolute; left: -14px; bottom: 0%; color: #fff; font-size: 18px; line-height: 1; transform: translateY(50%); text-shadow: 0 0 5px rgba(0,0,0,0.8); z-index: 10; }
 
-        .btn-confirm-nodes { background: linear-gradient(135deg, #00e5ff, #0077ff); color: #fff; border: none; padding: 15px 30px; border-radius: 12px; font-size: 16px; font-weight: 900; text-transform: uppercase; width: 100%; max-width: 300px; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 119, 255, 0.4); transition: 0.2s; }
-        .btn-confirm-nodes:active { transform: scale(0.95); }
-        .btn-confirm-nodes:disabled { background: #333; color: #666; box-shadow: none; cursor: not-allowed; transform: none; }
+        .btn-upgrade { background: linear-gradient(135deg, var(--purple), #8e44ad); color: white; width: 100%; max-width: 400px; padding: 15px; border-radius: 12px; font-weight: 900; font-size: 16px; text-transform: uppercase; border: none; cursor: pointer; box-shadow: 0 4px 15px var(--purple-glow); transition: 0.2s; margin-top: 30px;}
+        .btn-upgrade:active { transform: scale(0.95); }
+        .btn-upgrade:disabled { background: #333; color: #666; box-shadow: none; cursor: not-allowed; transform: none; }
 
-        .game-results { width: 100%; max-width: 400px; margin-top: 20px; background: #1a1b26; border-radius: 12px; padding: 15px; display: none; border: 1px solid #3e4257;}
-        .res-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #333; font-size: 14px;}
-        .res-row:last-child { border-bottom: none; font-weight: bold; color: var(--accent-green); font-size: 16px; margin-top: 10px;}
-
-        /* Анимация вскрытия очков */
-        .reveal-anim { animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; display: inline-block; }
-        @keyframes popIn { 0% { transform: scale(0); opacity: 0; color: #fff; } 50% { transform: scale(1.3); opacity: 1; color: #fff; } 100% { transform: scale(1); opacity: 1; color: #ffb13b; } }
+        /* Input звезд */
+        .stars-input { width: 100%; background: #0b0c10; border: 2px solid #3e4257; color: var(--accent-green); font-size: 20px; font-weight: 900; text-align: center; padding: 12px; border-radius: 12px; outline: none; margin-bottom: 20px; box-sizing: border-box;}
+        .stars-input:focus { border-color: var(--accent-green); }
 
     </style>
 </head>
@@ -241,7 +204,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПРОФИЛЯ / ИНВЕНТАРЯ -->
+    <!-- МОДАЛЬНЫЕ ОКНА ПРОФИЛЯ / ДЕЙСТВИЙ (Оставлены стандартными) -->
     <div id="profile-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -256,7 +219,6 @@
                     <div class="stat-box"> <span class="stat-label">Дата регистрации:</span> <span class="stat-value" id="stat-reg-date">01.01.2024</span> </div>
                     <div class="stat-box"> <span class="stat-label">Открыто кейсов:</span> <span class="stat-value" id="stat-cases-opened">0</span> </div>
                     <div class="stat-box"> <span class="stat-label">Выиграно в кейсах:</span> <span class="stat-value" id="stat-total-won">0 <img src="star.png?v=8" alt="star"></span> </div>
-                    <div class="stat-box"> <span class="stat-label">Звёзд получено:</span> <span class="stat-value" id="stat-tg-stars">0 <img src="star.png?v=8" alt="star"></span> </div>
                 </div>
                 <div id="modal-tab-inventory" class="tab-content">
                     <div class="inv-header">
@@ -269,12 +231,9 @@
         </div>
     </div>
 
-    <!-- ОКНО ДЕЙСТВИЙ С ПРЕДМЕТОМ -->
     <div id="item-action-modal" class="modal-overlay">
         <div class="modal-content" style="max-width: 300px; padding: 20px;">
-            <div style="display: flex; justify-content: flex-end; margin-bottom: -10px;">
-                <button class="close-btn" style="color: #666;" onclick="closeItemActionModal()">×</button>
-            </div>
+            <div style="display: flex; justify-content: flex-end; margin-bottom: -10px;"><button class="close-btn" style="color: #666;" onclick="closeItemActionModal()">×</button></div>
             <div class="action-content">
                 <img id="action-item-icon" src="" class="action-icon">
                 <div id="action-item-name" class="action-name">Предмет</div>
@@ -285,25 +244,53 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО СОЗДАНИЯ ЛОББИ -->
-    <div id="create-lobby-modal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 320px; padding: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h3 style="margin:0; color: #fff;">Создать Битву</h3>
-                <button class="close-btn" style="color: #666; padding:0;" onclick="closeCreateLobby()">×</button>
-            </div>
-            <label style="color: #a1a1aa; font-size: 12px; margin-bottom: 5px; display:block;">Ставка (Звёзды):</label>
-            <input type="number" id="lobby-bet-input" class="node-input" style="width: 90%; margin-bottom: 15px;" value="100" min="10">
-            
-            <label style="color: #a1a1aa; font-size: 12px; margin-bottom: 5px; display:block;">Количество игроков:</label>
-            <select id="lobby-players-input" class="node-input" style="width: 100%; margin-bottom: 25px; padding: 10px;">
-                <option value="2">2 Игрока (Дуэль)</option>
-                <option value="3">3 Игрока</option>
-                <option value="4" selected>4 Игрока (Мясорубка)</option>
-            </select>
-            <button class="btn btn-sell" onclick="confirmCreateLobby()">СОЗДАТЬ ЛОББИ</button>
+    <!-- МОДАЛЬНЫЕ ОКНА АПГРЕЙДЕРА -->
+    <!-- 1. Выбор типа ставки (Звезды или Предмет) -->
+    <div id="modal-upg-type" class="modal-overlay">
+        <div class="modal-content" style="max-width: 320px; padding: 20px; text-align: center;">
+            <h3 style="color: #fff; margin-top: 0;">ЧТО СТАВИМ?</h3>
+            <button class="btn btn-sell" style="margin-bottom: 10px; padding: 15px;" onclick="openUpgStars()">Свои Звёзды ⭐</button>
+            <button class="btn" style="background: #3e4257; color: #fff; padding: 15px;" onclick="openUpgInventory()">Предмет из инвентаря 🎒</button>
+            <button class="btn-cancel" style="margin-top: 15px; background: transparent; color: #ff2a5f; border: 1px solid #ff2a5f; padding: 10px; border-radius: 10px;" onclick="document.getElementById('modal-upg-type').classList.remove('active');">Отмена</button>
         </div>
     </div>
+
+    <!-- 2. Ввод звезд -->
+    <div id="modal-upg-stars" class="modal-overlay">
+        <div class="modal-content" style="max-width: 320px; padding: 20px; text-align: center;">
+            <h3 style="color: #fff; margin-top: 0;">СУММА ЗВЁЗД</h3>
+            <input type="number" id="upg-stars-input" class="stars-input" placeholder="Введите сумму..." min="1">
+            <button class="btn btn-sell" style="padding: 15px;" onclick="confirmUpgStars()">ПРИМЕНИТЬ</button>
+            <button class="btn-cancel" style="margin-top: 15px; background: transparent; color: #ff2a5f; border: 1px solid #ff2a5f; padding: 10px; border-radius: 10px;" onclick="document.getElementById('modal-upg-stars').classList.remove('active');">Отмена</button>
+        </div>
+    </div>
+
+    <!-- 3. Выбор предмета из инвентаря -->
+    <div id="modal-upg-inv" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 15px; background: #1a1b26;">
+                <h3 style="color:#fff; margin:0;">ИНВЕНТАРЬ</h3>
+                <button class="close-btn" onclick="document.getElementById('modal-upg-inv').classList.remove('active');">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="inventory-grid" id="upg-inv-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Выбор цели (Все предметы игры) -->
+    <div id="modal-upg-target" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 15px; background: #1a1b26;">
+                <h3 style="color:#fff; margin:0;">ВЫБЕРИТЕ ЦЕЛЬ</h3>
+                <button class="close-btn" onclick="document.getElementById('modal-upg-target').classList.remove('active');">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="inventory-grid" id="upg-target-grid"></div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- ГЛАВНЫЙ ЭКРАН С РАЗДЕЛАМИ -->
     <div id="app-content">
@@ -317,101 +304,58 @@
             <div id="app-cases-grid"></div>
         </div>
 
-        <!-- РАЗДЕЛ МЕНЮ ИГР -->
+        <!-- РАЗДЕЛ МЕНЮ ИГР (С АПГРЕЙДЕРОМ) -->
         <div id="section-games-menu" class="app-section">
-            <h2 style="color: #00e5ff; text-shadow: 0 0 10px rgba(0,229,255,0.4);">РЕЖИМЫ ИГРЫ</h2>
-            <div class="case-card-special" style="border-color: #00e5ff; box-shadow: 0 0 15px rgba(0,229,255,0.2); margin-top: 15px;" onclick="openTheoryLobbies()">
+            <h2 style="color: var(--purple); text-shadow: 0 0 10px var(--purple-glow);">РЕЖИМЫ ИГРЫ</h2>
+            
+            <div class="case-card-special" onclick="openUpgrader()" style="cursor:pointer;">
                 <div style="padding: 20px; text-align: center;">
-                    <div style="font-size: 40px; margin-bottom: 10px;">🧠</div>
-                    <div class="case-name" style="color: #00e5ff;">ТЕОРИЯ ИГР (PvP)</div>
+                    <div style="font-size: 40px; margin-bottom: 10px;">⬆️</div>
+                    <div class="case-name" style="color: #fff;">UPGRADER</div>
                     <p style="font-size: 12px; color: #a1a1aa; line-height: 1.4; margin-bottom: 15px;">
-                        Психологическое доминирование. Распредели энергию по 3 узлам. Одинаковые ставки сгорают. Побеждает хитрейший!
+                        Рискни своими звёздами или дешевым предметом, чтобы с шансом выковать дорогую легендарку!
                     </p>
-                    <button class="btn" style="background: linear-gradient(135deg, #00e5ff, #0077ff); color: white;">СПИСОК ЛОББИ</button>
+                    <button class="btn btn-premium">ИГРАТЬ</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ЭКРАН СПИСКА ЛОББИ (ТЕОРИЯ ИГР) -->
-    <div id="theory-lobbies-screen">
-        <button class="back-btn" onclick="backToGamesMenu()">← Меню Игр</button>
+    <!-- ЭКРАН АПГРЕЙДЕРА -->
+    <div id="upgrader-screen">
+        <button class="back-btn" onclick="backToGamesMenu()" style="align-self: flex-start; margin-left: 20px;">← Назад</button>
         
-        <div class="theory-top-stats">
-            <div class="stat-group">
-                <span>⚔️ <span style="color:#fff;">0</span> АКТИВНЫЕ</span>
-                <span style="margin-left:10px;">⚔️ <span id="top-stat-battles" style="color:#fff;">0</span> ВСЕГО БИТВ</span>
+        <h2 style="color: #fff; margin-top: 0;">UPGRADER</h2>
+
+        <div class="upg-layout">
+            <!-- Левый блок (Ставка) -->
+            <div class="upg-item-col">
+                <div class="upg-box" id="upg-box-bet" onclick="document.getElementById('modal-upg-type').classList.add('active');">
+                    <span class="upg-box-text" id="upg-txt-bet">ВЫБЕРИТЕ СТАВКУ</span>
+                </div>
             </div>
-            <div class="stat-group">
-                <span style="color:#ff2a5f;">💀 <span id="top-stat-defeats">0</span> Поражений</span>
+
+            <!-- Центр (Шкала) -->
+            <div class="upg-center">
+                <div class="upg-chance" id="upg-chance-txt">0%</div>
+                <div class="upg-bar-container">
+                    <div class="upg-bar-bg"></div>
+                    <div class="upg-bar-green" id="upg-bar-green"></div>
+                    <!-- Прыгающая стрелка -->
+                    <div class="upg-arrow" id="upg-arrow">▶</div>
+                </div>
             </div>
-        </div>
 
-        <button class="create-battle-btn" onclick="openCreateLobby()">Создать Битву</button>
-
-        <div id="lobby-list">
-            <div class="empty-inv" style="padding-top: 20px;">Нет активных битв.<br>Создайте свою!</div>
-        </div>
-    </div>
-
-    <!-- ЭКРАН ОЖИДАНИЯ В ЛОББИ -->
-    <div id="lobby-waiting-screen">
-        <div class="waiting-title">ОЖИДАНИЕ ИГРОКОВ...</div>
-        <div class="waiting-slots" id="waiting-slots-container"></div>
-        <button class="btn-call-bots" onclick="callBotsToLobby()">ПОЗВАТЬ БОТОВ 🤖</button>
-        <button class="btn-cancel" onclick="cancelLobby()">ОТМЕНИТЬ И ВЕРНУТЬ СТАВКУ</button>
-    </div>
-
-    <!-- ТЕРМИНАЛ ЗАХВАТА УЗЛОВ (САМА ИГРА) -->
-    <div id="node-game-screen">
-        <div class="terminal-header">
-            <div class="terminal-title">ТЕРМИНАЛ</div>
-            <div class="terminal-bank">БАНК ИГРЫ: <span id="game-bank">0</span> <img src="star.png?v=8" style="width:14px; height:14px; vertical-align:middle;"></div>
-        </div>
-        
-        <div class="energy-hud">ЭНЕРГИЯ: <span id="energy-counter">100</span> / 100</div>
-
-        <div class="nodes-container">
-            <div class="node-box" id="node-box-A">
-                <div class="node-result" id="node-res-A">ПОБЕДА</div>
-                <div class="node-name">NODE A</div>
-                <div class="node-pts" id="pts-A"><span class="hidden-pts">??? ОЧКОВ</span></div>
-                <input type="number" class="node-input" id="input-A" value="0" min="0" max="100" oninput="calculateEnergy(this)">
-            </div>
-            <div class="node-box" id="node-box-B">
-                <div class="node-result" id="node-res-B">ПОБЕДА</div>
-                <div class="node-name">NODE B</div>
-                <div class="node-pts" id="pts-B"><span class="hidden-pts">??? ОЧКОВ</span></div>
-                <input type="number" class="node-input" id="input-B" value="0" min="0" max="100" oninput="calculateEnergy(this)">
-            </div>
-            <div class="node-box" id="node-box-C">
-                <div class="node-result" id="node-res-C">ПОБЕДА</div>
-                <div class="node-name">NODE C</div>
-                <div class="node-pts" id="pts-C"><span class="hidden-pts">??? ОЧКОВ</span></div>
-                <input type="number" class="node-input" id="input-C" value="0" min="0" max="100" oninput="calculateEnergy(this)">
-            </div>
-        </div>
-
-        <button class="btn-confirm-nodes" id="btn-submit-nodes" onclick="resolveGame()" disabled>РАСПРЕДЕЛИТЬ</button>
-        <button class="btn" id="btn-leave-nodes" style="margin-top: 15px; width: 100%; max-width: 300px; background: #3e4257; color: white; display: none;" onclick="finishGameAndReturn()">ВЫЙТИ ИЗ ТЕРМИНАЛА</button>
-
-        <!-- БЛОК РУЛЕТКИ ПРИ НИЧЬЕЙ -->
-        <div id="tie-breaker-container" style="display: none; width: 100%; max-width: 400px; margin-top: 20px;">
-            <h3 style="color: #ffb13b; text-align: center; margin-top: 0;">НИЧЬЯ! РУЛЕТКА ЗА БАНК</h3>
-            <div style="width: 100%; height: 80px; background: #1a1b26; border: 2px solid var(--border-color); border-radius: 12px; position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);">
-                <div class="center-line" style="background: #ffb13b; box-shadow: 0 0 10px #ffb13b; width: 2px; position: absolute; left: 50%; transform: translateX(-50%); height: 100%; z-index: 10;"></div>
-                <div id="tie-roulette-strip" style="display: flex; height: 100%; position: absolute; left: 0; top: 0;">
-                    <!-- Аватарки будут тут -->
+            <!-- Правый блок (Цель) -->
+            <div class="upg-item-col">
+                <div class="upg-box" id="upg-box-target" onclick="openTargetModal()">
+                    <span class="upg-box-text" id="upg-txt-target">ВЫБЕРИТЕ ЦЕЛЬ</span>
                 </div>
             </div>
         </div>
 
-        <div class="game-results" id="game-results-panel">
-            <h3 style="margin-top:0; color:#fff; text-align:center; margin-bottom: 15px;">РЕЗУЛЬТАТЫ СИСТЕМЫ</h3>
-            <div id="results-content"></div>
-        </div>
+        <button class="btn-upgrade" id="btn-do-upgrade" onclick="startUpgrade()" disabled>UPGRADE!</button>
     </div>
-
 
     <!-- ЭКРАН РУЛЕТКИ КЕЙСОВ -->
     <div id="roulette-screen">
@@ -465,15 +409,8 @@
         if (userBalance === null) userBalance = 1000; else userBalance = parseInt(userBalance);
         document.getElementById('balance-display').innerText = userBalance;
         
-        // Статистика (Общая и Арена)
         let spinsCount = parseInt(localStorage.getItem('lootgift_spins') || '0');
         let totalWon = parseInt(localStorage.getItem('lootgift_total_won') || '0');
-        let arenaBattles = parseInt(localStorage.getItem('lootgift_arena_battles') || '0');
-        let arenaDefeats = parseInt(localStorage.getItem('lootgift_arena_defeats') || '0');
-        
-        document.getElementById('top-stat-battles').innerText = arenaBattles;
-        document.getElementById('top-stat-defeats').innerText = arenaDefeats;
-
         let inventory = JSON.parse(localStorage.getItem('lootgift_inventory') || '[]');
         
         let regDate = localStorage.getItem('lootgift_reg_date');
@@ -486,336 +423,290 @@
 
         function closeWebApp() { tg.HapticFeedback.impactOccurred('medium'); tg.close(); }
 
-        // Навигация
+        // --- БАЗОВАЯ НАВИГАЦИЯ ---
         function switchNav(index, sectionId) {
             tg.HapticFeedback.impactOccurred('light');
             document.querySelectorAll('.nav-item:not(.exit-btn)').forEach((btn, i) => btn.classList.toggle('active', i === index));
             document.getElementById('nav-indicator').style.transform = `translateX(${index * 100}%)`;
             
             document.querySelectorAll('.app-section').forEach(sec => sec.classList.remove('active'));
-            document.getElementById('theory-lobbies-screen').style.display = 'none';
-            document.getElementById('lobby-waiting-screen').style.display = 'none';
-            document.getElementById('node-game-screen').style.display = 'none';
-            document.getElementById('tie-breaker-container').style.display = 'none';
-            
+            document.getElementById('upgrader-screen').style.display = 'none';
             document.getElementById(`section-${sectionId}`).classList.add('active');
         }
         document.getElementById('nav-indicator').style.transform = `translateX(200%)`; 
 
-        // --- ЛОГИКА ТЕОРИИ ИГР (PvP АРЕНА) ---
-        let currentGame = { bet: 0, players: 0, pts: [100, 60, 30] };
+        // База всех предметов игры для Апгрейдера
+        const rarityNames = { 'legendary': { name: 'ЛЕГЕНДАРНЫЙ', color: '#ff2a5f' }, 'rare': { name: 'РЕДКИЙ', color: '#ffb13b' }, 'common': { name: 'ОБЫЧНЫЙ', color: '#8b5cf6' }, 'trash': { name: 'БАЗОВЫЙ', color: '#9ca3af' } };
+        const casesData = {
+            epicCase: [ { icon: 'bear.png?v=8', name: 'Мишка', value: 15, prob: 0.35, rarity: 'trash' }, { icon: 'rose.png?v=8', name: 'Роза', value: 25, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '25 Stars', value: 25, prob: 0.169, rarity: 'trash' }, { icon: 'cake.png?v=8', name: 'Торт', value: 50, prob: 0.08, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '50 Stars', value: 50, prob: 0.10, rarity: 'common' }, { icon: 'diamond.png?v=8', name: 'Алмаз', value: 100, prob: 0.07, rarity: 'common' }, { icon: 'stars150.png?v=8', name: '150 Stars', value: 150, prob: 0.04, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '300 Stars', value: 300, prob: 0.02, rarity: 'common' }, { icon: 'tie.png?v=8', name: 'Бабочка', value: 600, prob: 0.01, rarity: 'rare' }, { icon: 'button.png?v=8', name: 'Кнопка', value: 700, prob: 0.008, rarity: 'rare' }, { icon: 'sphere.png?v=8', name: 'Сфера', value: 1305, prob: 0.002, rarity: 'legendary' }, { icon: 'eagle.png?v=8', name: 'Орёл', value: 2655, prob: 0.001, rarity: 'legendary' } ],
+            shadowCase: [ { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.0349, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '10 Stars', value: 10, prob: 0.05, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '25 Stars', value: 25, prob: 0.10, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '50 Stars', value: 50, prob: 0.15, rarity: 'trash' }, { icon: 'stars150.png?v=8', name: '100 Stars', value: 100, prob: 0.15, rarity: 'trash' }, { icon: 'stars150.png?v=8', name: '250 Stars', value: 250, prob: 0.20, rarity: 'rare' }, { icon: 'stars300.png?v=8', name: '500 Stars', value: 500, prob: 0.15, rarity: 'rare' }, { icon: 'stars300.png?v=8', name: '1000 Stars', value: 1000, prob: 0.10, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '2500 Stars', value: 2500, prob: 0.04, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '5000 Stars', value: 5000, prob: 0.02, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '10000 Stars', value: 10000, prob: 0.005, rarity: 'legendary' }, { icon: 'pepe.png?v=8', name: 'Пепе', value: 677097, prob: 0.0001, rarity: 'legendary' } ],
+            goldCase: [ { icon: 'stars50.png?v=8', name: '5 Stars', value: 5, prob: 0.25, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '10 Stars', value: 10, prob: 0.25, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '15 Stars', value: 15, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '25 Stars', value: 25, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '50 Stars', value: 50, prob: 0.10, rarity: 'common' }, { icon: 'stars150.png?v=8', name: '75 Stars', value: 75, prob: 0.045, rarity: 'rare' }, { icon: 'stars150.png?v=8', name: '100 Stars', value: 100, prob: 0.03, rarity: 'rare' }, { icon: 'stars150.png?v=8', name: '150 Stars', value: 150, prob: 0.012, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '300 Stars', value: 300, prob: 0.007, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '500 Stars', value: 500, prob: 0.003, rarity: 'rare' }, { icon: 'stars300.png?v=8', name: '1000 Stars', value: 1000, prob: 0.002, rarity: 'legendary' }, { icon: 'stars300.png?v=8', name: '2500 Stars', value: 2500, prob: 0.001, rarity: 'legendary' } ],
+            vintageCase: [ { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.174, rarity: 'trash' }, { icon: 'book.png?v=8', name: 'Книга', value: 580, prob: 0.027, rarity: 'common' }, { icon: 'basket.png?v=8', name: 'Корзинка', value: 620, prob: 0.02, rarity: 'common' }, { icon: 'cake.png?v=8', name: 'Торт', value: 646, prob: 0.015, rarity: 'rare' }, { icon: 'saber.png?v=8', name: 'Меч', value: 711, prob: 0.008, rarity: 'rare' }, { icon: 'cigar.png?v=8', name: 'Сигара', value: 1500, prob: 0.005, rarity: 'legendary' }, { icon: 'glasses.png?v=8', name: 'Очки', value: 10564, prob: 0.001, rarity: 'legendary' } ],
+            neonCase: [ { icon: 'stars50.png?v=8', name: '5 Stars', value: 5, prob: 0.45, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '10 Stars', value: 10, prob: 0.25, rarity: 'trash' }, { icon: 'heart.png?v=8', name: 'Сердце', value: 15, prob: 0.12, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '25 Stars', value: 25, prob: 0.06, rarity: 'common' }, { icon: 'rose.png?v=8', name: 'Роза', value: 25, prob: 0.06, rarity: 'common' }, { icon: 'rocket.png?v=8', name: 'Ракета', value: 50, prob: 0.03, rarity: 'common' }, { icon: 'trophy.png?v=8', name: 'Кубок', value: 100, prob: 0.015, rarity: 'rare' }, { icon: 'sock.png?v=8', name: 'Носок', value: 375, prob: 0.002, rarity: 'rare' }, { icon: 'tamagotchi.png?v=8', name: 'Тамагочи', value: 495, prob: 0.001, rarity: 'legendary' }, { icon: 'gluhwein.png?v=8', name: 'Глинтвейн', value: 519, prob: 0.001, rarity: 'legendary' }, { icon: 'surfboard.png?v=8', name: 'Серф', value: 711, prob: 0.0006, rarity: 'legendary' }, { icon: 'candle.png?v=8', name: 'Свеча', value: 951, prob: 0.0004, rarity: 'legendary' } ],
+            summerCase: [ { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.3605, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '2 Stars', value: 2, prob: 0.25, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '3 Stars', value: 3, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '5 Stars', value: 5, prob: 0.10, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '10 Stars', value: 10, prob: 0.05, rarity: 'common' }, { icon: 'heart.png?v=8', name: 'Сердце', value: 15, prob: 0.05, rarity: 'common' }, { icon: 'rose.png?v=8', name: 'Роза', value: 25, prob: 0.02, rarity: 'common' }, { icon: 'tulips.png?v=8', name: 'Тюльпаны', value: 50, prob: 0.01, rarity: 'common' }, { icon: 'diamond.png?v=8', name: 'Алмаз', value: 100, prob: 0.005, rarity: 'rare' }, { icon: 'flamingo.png?v=8', name: 'Фламинго', value: 370, prob: 0.0025, rarity: 'rare' }, { icon: 'lollipop.png?v=8', name: 'Леденец', value: 450, prob: 0.0015, rarity: 'legendary' }, { icon: 'bouquet.png?v=8', name: 'Букет', value: 600, prob: 0.0005, rarity: 'legendary' } ],
+            farm1: [ { icon: 'empty.png?v=8', name: 'Пустышка', value: 0, prob: 0.89995, rarity: 'trash' }, { icon: 'star.png?v=8', name: '1 Star', value: 1, prob: 0.10, rarity: 'common' }, { icon: 'glasses.png?v=8', name: 'Очки', value: 10564, prob: 0.00005, rarity: 'legendary' } ],
+            farm2: [ { icon: 'empty.png?v=8', name: 'Пустышка', value: 0, prob: 0.89995, rarity: 'trash' }, { icon: 'star.png?v=8', name: '2 Stars', value: 2, prob: 0.10, rarity: 'common' }, { icon: 'helmet.png?v=8', name: 'Шлем', value: 19297, prob: 0.00005, rarity: 'legendary' } ],
+            farm3: [ { icon: 'empty.png?v=8', name: 'Пустышка', value: 0, prob: 0.89995, rarity: 'trash' }, { icon: 'star.png?v=8', name: '5 Stars', value: 5, prob: 0.10, rarity: 'common' }, { icon: 'tg_cap.png?v=8', name: 'Кепка', value: 43169, prob: 0.00005, rarity: 'legendary' } ],
+            fifty1: [ { icon: 'star.png?v=8', name: 'Пак 1 Star', value: 1, prob: 0.80, rarity: 'common' }, { icon: 'diamond.png?v=8', name: 'Алмаз', value: 100, prob: 0.20, rarity: 'legendary' } ],
+            fifty2: [ { icon: 'stars50.png?v=8', name: 'Пак 4 Stars', value: 4, prob: 0.80, rarity: 'common' }, { icon: 'cupcake.png?v=8', name: 'Кекс', value: 400, prob: 0.20, rarity: 'legendary' } ],
+            fifty3: [ { icon: 'stars50.png?v=8', name: 'Пак 20 Stars', value: 20, prob: 0.80, rarity: 'common' }, { icon: 'fairy_shoes.png?v=8', name: 'Туфельки', value: 2031, prob: 0.20, rarity: 'legendary' } ]
+        };
 
-        function openTheoryLobbies() {
+        let allGameItems = [];
+        let seenItems = new Set();
+        Object.values(casesData).flat().forEach(item => {
+            if(!seenItems.has(item.name) && item.value > 0 && !item.name.includes('Star') && !item.name.includes('Stars')) {
+                seenItems.add(item.name);
+                allGameItems.push(item);
+            }
+        });
+        allGameItems.sort((a,b) => a.value - b.value);
+
+        // --- ЛОГИКА АПГРЕЙДЕРА ---
+        let upgState = {
+            betType: null, // 'stars' или 'item'
+            betValue: 0,
+            betItemUid: null,
+            targetItem: null
+        };
+
+        function openUpgrader() {
             tg.HapticFeedback.impactOccurred('light');
             document.getElementById('section-games-menu').classList.remove('active');
-            document.getElementById('theory-lobbies-screen').style.display = 'flex';
+            document.getElementById('upgrader-screen').style.display = 'flex';
+            resetUpgrader();
         }
+
         function backToGamesMenu() {
-            document.getElementById('theory-lobbies-screen').style.display = 'none';
+            document.getElementById('upgrader-screen').style.display = 'none';
             document.getElementById('section-games-menu').classList.add('active');
         }
 
-        function openCreateLobby() {
-            tg.HapticFeedback.impactOccurred('light');
-            document.getElementById('create-lobby-modal').classList.add('active');
-        }
-        function closeCreateLobby() { document.getElementById('create-lobby-modal').classList.remove('active'); }
-
-        function confirmCreateLobby() {
-            let bet = parseInt(document.getElementById('lobby-bet-input').value);
-            let players = parseInt(document.getElementById('lobby-players-input').value);
-            if(isNaN(bet) || bet < 10) { tg.showAlert("Минимальная ставка 10 ⭐"); return; }
-            if (userBalance < bet) { tg.showAlert("Недостаточно звёзд!"); return; }
-            
-            closeCreateLobby();
-            userBalance -= bet;
-            updateBalanceDisplay(userBalance, true);
-            showBalanceAnimation(-bet);
-
-            currentGame.bet = bet;
-            currentGame.players = players;
-
-            document.getElementById('theory-lobbies-screen').style.display = 'none';
-            document.querySelector('.bottom-nav').style.display = 'none';
-            document.getElementById('lobby-waiting-screen').style.display = 'flex';
-
-            let slotsHtml = `<div class="w-slot filled">МЫ</div>`;
-            for(let i = 1; i < players; i++) {
-                slotsHtml += `<div class="w-slot">?</div>`;
-            }
-            document.getElementById('waiting-slots-container').innerHTML = slotsHtml;
+        function resetUpgrader() {
+            upgState = { betType: null, betValue: 0, betItemUid: null, targetItem: null };
+            document.getElementById('upg-box-bet').classList.remove('filled');
+            document.getElementById('upg-box-bet').innerHTML = `<span class="upg-box-text">ВЫБЕРИТЕ СТАВКУ</span>`;
+            document.getElementById('upg-box-target').classList.remove('filled');
+            document.getElementById('upg-box-target').innerHTML = `<span class="upg-box-text">ВЫБЕРИТЕ ЦЕЛЬ</span>`;
+            updateUpgraderUI();
+            document.getElementById('upg-arrow').style.transition = 'none';
+            document.getElementById('upg-arrow').style.bottom = '0%';
         }
 
-        function cancelLobby() {
-            tg.HapticFeedback.impactOccurred('medium');
-            userBalance += currentGame.bet;
-            updateBalanceDisplay(userBalance, true);
-            showBalanceAnimation(currentGame.bet);
-            
-            document.getElementById('lobby-waiting-screen').style.display = 'none';
-            document.getElementById('theory-lobbies-screen').style.display = 'flex';
-            document.querySelector('.bottom-nav').style.display = 'flex';
-        }
+        function updateUpgraderUI() {
+            let btn = document.getElementById('btn-do-upgrade');
+            let chanceText = document.getElementById('upg-chance-txt');
+            let greenBar = document.getElementById('upg-bar-green');
 
-        function callBotsToLobby() {
-            tg.HapticFeedback.impactOccurred('heavy');
-            let slots = document.querySelectorAll('.w-slot');
-            slots.forEach((s, index) => {
-                if (index > 0) { s.classList.add('filled'); s.innerText = '🤖'; }
-            });
-
-            let ptsOptions = [ [100, 60, 30], [150, 50, 20], [80, 80, 40], [200, 100, 50] ];
-            currentGame.pts = ptsOptions[Math.floor(Math.random() * ptsOptions.length)];
-
-            setTimeout(() => {
-                document.getElementById('lobby-waiting-screen').style.display = 'none';
-                startTerminal();
-            }, 1000);
-        }
-
-        // 4. Терминал Игры и Ограничитель Энергии
-        function startTerminal() {
-            document.getElementById('pts-A').innerHTML = '<span class="hidden-pts">??? ОЧКОВ</span>';
-            document.getElementById('pts-B').innerHTML = '<span class="hidden-pts">??? ОЧКОВ</span>';
-            document.getElementById('pts-C').innerHTML = '<span class="hidden-pts">??? ОЧКОВ</span>';
-            document.getElementById('game-bank').innerText = currentGame.bet * currentGame.players;
-            
-            document.getElementById('input-A').value = 0; document.getElementById('input-B').value = 0; document.getElementById('input-C').value = 0;
-            document.getElementById('input-A').disabled = false; document.getElementById('input-B').disabled = false; document.getElementById('input-C').disabled = false;
-            document.getElementById('btn-submit-nodes').disabled = true;
-            document.getElementById('btn-submit-nodes').style.display = 'block';
-            document.getElementById('btn-leave-nodes').style.display = 'none';
-            document.getElementById('game-results-panel').style.display = 'none';
-            document.getElementById('tie-breaker-container').style.display = 'none';
-            document.querySelectorAll('.node-box').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.node-result').forEach(r => r.style.display = 'none');
-            
-            calculateEnergy(document.getElementById('input-A'));
-            document.getElementById('node-game-screen').style.display = 'flex';
-        }
-
-        function calculateEnergy(element) {
-            let a = parseInt(document.getElementById('input-A').value) || 0;
-            let b = parseInt(document.getElementById('input-B').value) || 0;
-            let c = parseInt(document.getElementById('input-C').value) || 0;
-            let total = a + b + c;
-            
-            if (total > 100) {
-                let excess = total - 100;
-                let currentVal = parseInt(element.value) || 0;
-                element.value = currentVal - excess;
+            if (upgState.betValue > 0 && upgState.targetItem) {
+                let chance = (upgState.betValue / upgState.targetItem.value) * 100;
                 
-                a = parseInt(document.getElementById('input-A').value) || 0;
-                b = parseInt(document.getElementById('input-B').value) || 0;
-                c = parseInt(document.getElementById('input-C').value) || 0;
-                total = a + b + c;
-                
-                tg.HapticFeedback.notificationOccurred('error');
-                tg.showAlert("Недостаточно энергии! Максимум 100.");
-            }
-            
-            let left = 100 - total;
-            let counter = document.getElementById('energy-counter');
-            counter.innerText = left;
-            
-            if (left === 0) {
-                counter.style.color = "#71e654";
-                document.getElementById('btn-submit-nodes').disabled = false;
+                if (chance >= 100) {
+                    tg.showAlert('Ставка должна быть меньше стоимости цели!');
+                    upgState.targetItem = null;
+                    document.getElementById('upg-box-target').classList.remove('filled');
+                    document.getElementById('upg-box-target').innerHTML = `<span class="upg-box-text">ВЫБЕРИТЕ ЦЕЛЬ</span>`;
+                    chanceText.innerText = '0%';
+                    greenBar.style.height = '0%';
+                    btn.disabled = true;
+                    return;
+                }
+
+                // Визуальное ограничение шанса для красоты
+                if (chance > 95) chance = 95;
+
+                chanceText.innerText = chance.toFixed(1) + '%';
+                greenBar.style.height = chance + '%';
+                btn.disabled = false;
             } else {
-                counter.style.color = "#00e5ff";
-                document.getElementById('btn-submit-nodes').disabled = true;
+                chanceText.innerText = '0%';
+                greenBar.style.height = '0%';
+                btn.disabled = true;
             }
         }
 
-        function resolveGame() {
-            document.getElementById('btn-submit-nodes').disabled = true;
-            document.getElementById('input-A').disabled = true;
-            document.getElementById('input-B').disabled = true;
-            document.getElementById('input-C').disabled = true;
+        // Выбор ставки (Звёзды)
+        function openUpgStars() {
+            document.getElementById('modal-upg-type').classList.remove('active');
+            document.getElementById('modal-upg-stars').classList.add('active');
+            document.getElementById('upg-stars-input').value = '';
+        }
 
-            const ptsA = document.getElementById('pts-A');
-            const ptsB = document.getElementById('pts-B');
-            const ptsC = document.getElementById('pts-C');
+        function confirmUpgStars() {
+            let val = parseInt(document.getElementById('upg-stars-input').value);
+            if(isNaN(val) || val < 1) return;
+            if(val > userBalance) { tg.showAlert('Недостаточно звёзд на балансе!'); return; }
             
-            ptsA.innerHTML = `<span class="reveal-anim">${currentGame.pts[0]} ОЧКОВ</span>`;
-            ptsB.innerHTML = `<span class="reveal-anim">${currentGame.pts[1]} ОЧКОВ</span>`;
-            ptsC.innerHTML = `<span class="reveal-anim">${currentGame.pts[2]} ОЧКОВ</span>`;
+            document.getElementById('modal-upg-stars').classList.remove('active');
+            upgState.betType = 'stars';
+            upgState.betValue = val;
+            upgState.betItemUid = null;
             
-            tg.HapticFeedback.impactOccurred('heavy');
+            let box = document.getElementById('upg-box-bet');
+            box.classList.add('filled');
+            box.innerHTML = `<img src="star.png?v=8" style="width: 50%; height: 50%; filter: drop-shadow(0 0 10px rgba(113,230,84,0.5));"><div class="upg-val">${val} <img src="star.png?v=8" style="width:10px;height:10px;margin:0;"></div>`;
+            updateUpgraderUI();
+        }
 
-            setTimeout(() => {
-                let pA = parseInt(document.getElementById('input-A').value);
-                let pB = parseInt(document.getElementById('input-B').value);
-                let pC = parseInt(document.getElementById('input-C').value);
-
-                let botWillWin = Math.random() < 0.70;
-                let botEnergies = [];
-                
-                for(let i=1; i < currentGame.players; i++) {
-                    if (botWillWin && i === 1) {
-                        let bE = [0,0,0];
-                        let left = 100;
-                        let sorted = [ {id:0, e:pA}, {id:1, e:pB}, {id:2, e:pC} ].sort((x,y) => x.e - y.e);
-                        if (left > sorted[0].e) { bE[sorted[0].id] = sorted[0].e + 1; left -= bE[sorted[0].id]; }
-                        if (left > sorted[1].e) { bE[sorted[1].id] = sorted[1].e + 1; left -= bE[sorted[1].id]; }
-                        bE[sorted[2].id] += left; 
-                        if (pA === 100) bE = [100, 0, 0];
-                        botEnergies.push(bE);
-                    } else {
-                        let a = Math.floor(Math.random() * 101);
-                        let b = Math.floor(Math.random() * (101 - a));
-                        let c = 100 - a - b;
-                        botEnergies.push([a,b,c]);
-                    }
-                }
-
-                let allPlayers = [ {id: 0, name: "Вы", e: [pA, pB, pC], score: 0} ];
-                for(let i=0; i<botEnergies.length; i++) {
-                    allPlayers.push({id: i+1, name: "Бот " + (i+1), e: botEnergies[i], score: 0});
-                }
-
-                function getWinnerForNode(nodeIndex) {
-                    let counts = {};
-                    allPlayers.forEach(p => counts[p.e[nodeIndex]] = (counts[p.e[nodeIndex]] || 0) + 1);
-                    let sortedUnique = Object.keys(counts).map(Number).sort((a,b)=>b-a);
-                    for (let val of sortedUnique) {
-                        if (counts[val] === 1) return allPlayers.find(p => p.e[nodeIndex] === val);
-                    }
-                    return null;
-                }
-
-                let winnerA = getWinnerForNode(0);
-                let winnerB = getWinnerForNode(1);
-                let winnerC = getWinnerForNode(2);
-
-                if (winnerA) winnerA.score += currentGame.pts[0];
-                if (winnerB) winnerB.score += currentGame.pts[1];
-                if (winnerC) winnerC.score += currentGame.pts[2];
-
-                let maxScore = -1;
-                allPlayers.forEach(p => { if(p.score > maxScore) maxScore = p.score; });
-                
-                // ИЩЕМ НИЧЬЮ
-                let tiedPlayers = allPlayers.filter(p => p.score === maxScore);
-
-                if(winnerA && winnerA.id === 0) { document.getElementById('node-box-A').classList.add('active'); document.getElementById('node-res-A').style.display='block';}
-                if(winnerB && winnerB.id === 0) { document.getElementById('node-box-B').classList.add('active'); document.getElementById('node-res-B').style.display='block';}
-                if(winnerC && winnerC.id === 0) { document.getElementById('node-box-C').classList.add('active'); document.getElementById('node-res-C').style.display='block';}
-
-                let pot = currentGame.bet * currentGame.players;
-                let resultHtml = "";
-                allPlayers.forEach(p => {
-                    resultHtml += `<div class="res-row"><span>${p.name} [${p.e.join(', ')}]</span> <span>${p.score} pts</span></div>`;
+        // Выбор ставки (Инвентарь)
+        function openUpgInventory() {
+            document.getElementById('modal-upg-type').classList.remove('active');
+            const grid = document.getElementById('upg-inv-grid');
+            grid.innerHTML = '';
+            
+            let validItems = inventory.filter(i => !i.isFavorite);
+            if(validItems.length === 0) {
+                grid.innerHTML = '<div class="empty-inv">Инвентарь пуст или всё в избранном</div>';
+            } else {
+                validItems.reverse().forEach(item => {
+                    grid.innerHTML += `
+                        <div class="inv-item" onclick="selectUpgItem('${item.uid}')">
+                            <img src="${item.icon}">
+                            <div class="inv-item-name">${item.name}</div>
+                            <div class="inv-item-price">${item.value} <img src="star.png?v=8"></div>
+                        </div>
+                    `;
                 });
-
-                if (tiedPlayers.length === 1) {
-                    // ОБЫЧНАЯ ПОБЕДА (НЕТ НИЧЬИ)
-                    let finalWinner = tiedPlayers[0];
-                    arenaBattles++;
-                    localStorage.setItem('lootgift_arena_battles', arenaBattles);
-                    document.getElementById('top-stat-battles').innerText = arenaBattles;
-
-                    if (finalWinner.id === 0) {
-                        userBalance += pot; updateBalanceDisplay(userBalance, true); showBalanceAnimation(pot);
-                        resultHtml += `<div class="res-row" style="color:var(--accent-green)">ВЫ ЗАБРАЛИ БАНК: +${pot} ⭐</div>`;
-                        tg.HapticFeedback.notificationOccurred('success');
-                    } else {
-                        arenaDefeats++;
-                        localStorage.setItem('lootgift_arena_defeats', arenaDefeats);
-                        document.getElementById('top-stat-defeats').innerText = arenaDefeats;
-                        resultHtml += `<div class="res-row" style="color:#ff2a5f">ПОБЕДИЛ ${finalWinner.name.toUpperCase()}</div>`;
-                        tg.HapticFeedback.notificationOccurred('error');
-                    }
-
-                    document.getElementById('results-content').innerHTML = resultHtml;
-                    document.getElementById('game-results-panel').style.display = 'block';
-                    document.getElementById('btn-leave-nodes').style.display = 'block';
-                } else {
-                    // НИЧЬЯ -> ЗАПУСКАЕМ РУЛЕТКУ ТАЙ-БРЕЙКЕР!
-                    document.getElementById('results-content').innerHTML = resultHtml + `<div class="res-row" style="color:#ffb13b; font-size:12px; margin-top:5px;">НИЧЬЯ! ${tiedPlayers.length} ИГРОКОВ В РУЛЕТКЕ</div>`;
-                    document.getElementById('game-results-panel').style.display = 'block';
-                    
-                    startTieBreakerRoulette(tiedPlayers, pot);
-                }
-
-            }, 1200); 
+            }
+            document.getElementById('modal-upg-inv').classList.add('active');
         }
 
-        function startTieBreakerRoulette(tiedPlayers, pot) {
-            document.getElementById('tie-breaker-container').style.display = 'block';
-            const strip = document.getElementById('tie-roulette-strip');
-            strip.innerHTML = '';
-            strip.style.transition = 'none';
-            strip.style.transform = 'translateX(0)';
-
-            const finalWinAmount = Math.floor(pot * 0.85); // Вычет комиссии 15%
-            const winner = tiedPlayers[Math.floor(Math.random() * tiedPlayers.length)]; // Равные шансы 33.3%
-
-            const totalItems = 40;
-            const winnerIndex = 32;
-            const itemSize = 80; 
+        function selectUpgItem(uid) {
+            let item = inventory.find(i => i.uid === uid);
+            if(!item) return;
             
-            for (let i = 0; i < totalItems; i++) {
-                let div = document.createElement('div');
-                div.style.cssText = `width: ${itemSize}px; height: 100%; flex-shrink: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; font-weight: bold; font-size: 10px; border-right: 1px solid #333;`;
-                
-                let p = (i === winnerIndex) ? winner : tiedPlayers[Math.floor(Math.random() * tiedPlayers.length)];
-                
-                let avatarSrc = p.id === 0 ? document.getElementById('tg-avatar').src : '';
-                let avatarHtml = p.id === 0 
-                    ? `<img src="${avatarSrc}" style="width: 36px; height: 36px; border-radius: 50%; object-fit:cover;">` 
-                    : `🤖`;
-                    
-                div.innerHTML = `
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #222533; display: flex; justify-content: center; align-items: center; font-size: 20px; border: 2px solid ${p.id===0?'#71e654':'#5a3e8c'}; margin-bottom: 4px;">
-                        ${avatarHtml}
+            document.getElementById('modal-upg-inv').classList.remove('active');
+            upgState.betType = 'item';
+            upgState.betValue = item.value;
+            upgState.betItemUid = item.uid;
+            
+            let box = document.getElementById('upg-box-bet');
+            box.classList.add('filled');
+            box.innerHTML = `<img src="${item.icon}"><div class="upg-val">${item.value} <img src="star.png?v=8" style="width:10px;height:10px;margin:0;"></div>`;
+            updateUpgraderUI();
+        }
+
+        // Выбор цели
+        function openTargetModal() {
+            tg.HapticFeedback.impactOccurred('light');
+            const grid = document.getElementById('upg-target-grid');
+            grid.innerHTML = '';
+            
+            allGameItems.forEach((item, index) => {
+                grid.innerHTML += `
+                    <div class="inv-item rarity-${item.rarity}" onclick="selectUpgTarget(${index})">
+                        <img src="${item.icon}">
+                        <div class="inv-item-name">${item.name}</div>
+                        <div class="inv-item-price">${item.value} <img src="star.png?v=8"></div>
                     </div>
-                    <span>${p.id === 0 ? 'ВЫ' : p.name}</span>
                 `;
-                strip.appendChild(div);
+            });
+            document.getElementById('modal-upg-target').classList.add('active');
+        }
+
+        function selectUpgTarget(index) {
+            let item = allGameItems[index];
+            document.getElementById('modal-upg-target').classList.remove('active');
+            upgState.targetItem = item;
+            
+            let box = document.getElementById('upg-box-target');
+            box.classList.add('filled');
+            box.innerHTML = `<img src="${item.icon}"><div class="upg-val">${item.value} <img src="star.png?v=8" style="width:10px;height:10px;margin:0;"></div>`;
+            updateUpgraderUI();
+        }
+
+        // СТАРТ АПГРЕЙДА (Анимация и Расчет)
+        function startUpgrade() {
+            // Проверки
+            if(upgState.betType === 'stars' && userBalance < upgState.betValue) { tg.showAlert('Недостаточно звёзд на балансе!'); return; }
+            if(upgState.betType === 'item') {
+                let checkIdx = inventory.findIndex(i => i.uid === upgState.betItemUid);
+                if(checkIdx === -1) { tg.showAlert('Предмет не найден в инвентаре!'); return; }
             }
 
+            let btn = document.getElementById('btn-do-upgrade');
+            btn.disabled = true;
+            btn.innerText = "UPGRADING...";
+
+            // Списываем ставку
+            if(upgState.betType === 'stars') {
+                userBalance -= upgState.betValue;
+                updateBalanceDisplay(userBalance, true);
+                showBalanceAnimation(-upgState.betValue);
+            } else {
+                let idx = inventory.findIndex(i => i.uid === upgState.betItemUid);
+                inventory.splice(idx, 1);
+                saveInventory();
+            }
+
+            // Математика казино (реальный шанс урезан)
+            let visualChance = (upgState.betValue / upgState.targetItem.value) * 100;
+            let realChance = visualChance * 0.85; // Казино забирает 15% вероятности
+            let isWin = (Math.random() * 100) < realChance;
+
+            // Считаем где остановится стрелка (снизу 0, сверху 100)
+            let finalPos = 0;
+            if (isWin) {
+                // Остановится в зеленой зоне (от 0 до visualChance)
+                finalPos = Math.random() * visualChance;
+                if(finalPos < 2) finalPos = 2; // чтоб не пряталась в пол
+            } else {
+                // Остановится в красной зоне (от visualChance до 100)
+                finalPos = visualChance + (Math.random() * (100 - visualChance));
+                if(finalPos > 95) finalPos = 95;
+            }
+
+            let arrow = document.getElementById('upg-arrow');
+            arrow.style.transition = 'bottom 0.4s ease-in-out';
+            arrow.style.bottom = '95%';
+            tg.HapticFeedback.impactOccurred('medium');
+
+            // Имитация 5 отскоков
+            setTimeout(() => { arrow.style.bottom = '5%'; tg.HapticFeedback.impactOccurred('light'); }, 400);
+            setTimeout(() => { arrow.style.bottom = '85%'; tg.HapticFeedback.impactOccurred('light'); }, 800);
+            setTimeout(() => { arrow.style.bottom = '15%'; tg.HapticFeedback.impactOccurred('light'); }, 1200);
+            setTimeout(() => { arrow.style.bottom = '70%'; tg.HapticFeedback.impactOccurred('light'); }, 1600);
+            
+            // Финальное замедление
             setTimeout(() => {
-                strip.style.transition = 'transform 4s cubic-bezier(0.15, 0.85, 0.1, 1)';
-                const containerWidth = document.getElementById('tie-breaker-container').offsetWidth;
-                const randomOffset = Math.floor(Math.random() * (itemSize * 0.8)) - (itemSize * 0.4);
-                const stopPosition = (containerWidth / 2) - (winnerIndex * itemSize + (itemSize / 2)) + randomOffset;
-                strip.style.transform = `translateX(${stopPosition}px)`;
-            }, 100);
+                arrow.style.transition = 'bottom 1.5s cubic-bezier(0.1, 0.9, 0.2, 1)';
+                arrow.style.bottom = finalPos + '%';
+            }, 2000);
 
+            // Результат
             setTimeout(() => {
-                arenaBattles++;
-                localStorage.setItem('lootgift_arena_battles', arenaBattles);
-                document.getElementById('top-stat-battles').innerText = arenaBattles;
-
-                let resContent = document.getElementById('results-content').innerHTML;
-
-                if (winner.id === 0) {
-                    userBalance += finalWinAmount; 
-                    updateBalanceDisplay(userBalance, true); 
-                    showBalanceAnimation(finalWinAmount);
-                    resContent += `<div class="res-row" style="color:var(--accent-green); margin-top: 15px;">ВЫ ВЫИГРАЛИ РУЛЕТКУ: +${finalWinAmount} ⭐ <span style="font-size:10px;color:#888;">(ком. 15%)</span></div>`;
+                if (isWin) {
+                    btn.style.background = '#71e654';
+                    btn.innerText = "УСПЕХ!";
                     tg.HapticFeedback.notificationOccurred('success');
+                    
+                    const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+                    inventory.push({
+                        uid: uniqueId,
+                        name: upgState.targetItem.name,
+                        icon: upgState.targetItem.icon,
+                        value: upgState.targetItem.value,
+                        rarity: upgState.targetItem.rarity,
+                        isFavorite: false
+                    });
+                    saveInventory();
                 } else {
-                    arenaDefeats++;
-                    localStorage.setItem('lootgift_arena_defeats', arenaDefeats);
-                    document.getElementById('top-stat-defeats').innerText = arenaDefeats;
-                    resContent += `<div class="res-row" style="color:#ff2a5f; margin-top: 15px;">В РУЛЕТКЕ ПОБЕДИЛ ${winner.name.toUpperCase()}</div>`;
+                    btn.style.background = '#ff2a5f';
+                    btn.innerText = "КРАШ!";
                     tg.HapticFeedback.notificationOccurred('error');
                 }
-                
-                document.getElementById('results-content').innerHTML = resContent;
-                document.getElementById('btn-leave-nodes').style.display = 'block';
-            }, 4200);
+
+                // Сброс через 1.5 секунды
+                setTimeout(() => {
+                    btn.style.background = '';
+                    btn.innerText = "UPGRADE!";
+                    resetUpgrader();
+                }, 1500);
+
+            }, 3500);
         }
 
-        function finishGameAndReturn() {
-            document.getElementById('node-game-screen').style.display = 'none';
-            document.getElementById('theory-lobbies-screen').style.display = 'flex';
-            document.querySelector('.bottom-nav').style.display = 'flex';
-        }
-
-        // --- ФУНКЦИИ ПРОФИЛЯ И РУЛЕТКИ (БЕЗ ИЗМЕНЕНИЙ) ---
+        // --- ЛОГИКА ПРОФИЛЯ, ИНВЕНТАРЯ И КЕЙСОВ ---
         function saveInventory() { localStorage.setItem('lootgift_inventory', JSON.stringify(inventory)); renderInventory(); }
         function openProfileModal() { tg.HapticFeedback.impactOccurred('light'); document.getElementById('profile-modal').classList.add('active'); document.getElementById('stat-reg-date').innerText = regDate; document.getElementById('stat-cases-opened').innerText = spinsCount; document.getElementById('stat-total-won').innerHTML = `${totalWon} <img src="star.png?v=8" alt="star">`; document.getElementById('stat-tg-stars').innerHTML = `1000 <img src="star.png?v=8" alt="star">`; renderInventory(); }
         function closeProfileModal() { document.getElementById('profile-modal').classList.remove('active'); }
@@ -833,23 +724,7 @@
 
         let currentQty = 1; let currentItemSize = 100; let activeCaseId = null; let activeCasePrice = 0; let isFarmCase = false; let isFiftyCase = false;
         window.addEventListener('load', () => { setTimeout(() => { document.getElementById('loading-screen').style.opacity = '0'; document.getElementById('loading-screen').style.visibility = 'hidden'; document.body.style.overflow = 'auto'; }, 2500); });
-        const rarityNames = { 'legendary': { name: 'ЛЕГЕНДАРНЫЙ', color: '#ff2a5f' }, 'rare': { name: 'РЕДКИЙ', color: '#ffb13b' }, 'common': { name: 'ОБЫЧНЫЙ', color: '#8b5cf6' }, 'trash': { name: 'БАЗОВЫЙ', color: '#9ca3af' } };
         
-        const casesData = {
-            epicCase: [ { icon: 'bear.png?v=8', name: 'Мишка', value: 15, prob: 0.35, rarity: 'trash' }, { icon: 'rose.png?v=8', name: 'Роза', value: 25, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '25 Stars', value: 25, prob: 0.169, rarity: 'trash' }, { icon: 'cake.png?v=8', name: 'Торт', value: 50, prob: 0.08, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '50 Stars', value: 50, prob: 0.10, rarity: 'common' }, { icon: 'diamond.png?v=8', name: 'Алмаз', value: 100, prob: 0.07, rarity: 'common' }, { icon: 'stars150.png?v=8', name: '150 Stars', value: 150, prob: 0.04, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '300 Stars', value: 300, prob: 0.02, rarity: 'common' }, { icon: 'tie.png?v=8', name: 'Бабочка', value: 600, prob: 0.01, rarity: 'rare' }, { icon: 'button.png?v=8', name: 'Кнопка', value: 700, prob: 0.008, rarity: 'rare' }, { icon: 'sphere.png?v=8', name: 'Сфера', value: 1305, prob: 0.002, rarity: 'legendary' }, { icon: 'eagle.png?v=8', name: 'Орёл', value: 2655, prob: 0.001, rarity: 'legendary' } ],
-            shadowCase: [ { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.0349, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '10 Stars', value: 10, prob: 0.05, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '25 Stars', value: 25, prob: 0.10, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '50 Stars', value: 50, prob: 0.15, rarity: 'trash' }, { icon: 'stars150.png?v=8', name: '100 Stars', value: 100, prob: 0.15, rarity: 'trash' }, { icon: 'stars150.png?v=8', name: '250 Stars', value: 250, prob: 0.20, rarity: 'rare' }, { icon: 'stars300.png?v=8', name: '500 Stars', value: 500, prob: 0.15, rarity: 'rare' }, { icon: 'stars300.png?v=8', name: '1000 Stars', value: 1000, prob: 0.10, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '2500 Stars', value: 2500, prob: 0.04, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '5000 Stars', value: 5000, prob: 0.02, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '10000 Stars', value: 10000, prob: 0.005, rarity: 'legendary' }, { icon: 'pepe.png?v=8', name: 'Пепе', value: 677097, prob: 0.0001, rarity: 'legendary' } ],
-            goldCase: [ { icon: 'stars50.png?v=8', name: '5 Stars', value: 5, prob: 0.25, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '10 Stars', value: 10, prob: 0.25, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '15 Stars', value: 15, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '25 Stars', value: 25, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '50 Stars', value: 50, prob: 0.10, rarity: 'common' }, { icon: 'stars150.png?v=8', name: '75 Stars', value: 75, prob: 0.045, rarity: 'rare' }, { icon: 'stars150.png?v=8', name: '100 Stars', value: 100, prob: 0.03, rarity: 'rare' }, { icon: 'stars150.png?v=8', name: '150 Stars', value: 150, prob: 0.012, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '300 Stars', value: 300, prob: 0.007, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '500 Stars', value: 500, prob: 0.003, rarity: 'rare' }, { icon: 'stars300.png?v=8', name: '1000 Stars', value: 1000, prob: 0.002, rarity: 'legendary' }, { icon: 'stars300.png?v=8', name: '2500 Stars', value: 2500, prob: 0.001, rarity: 'legendary' } ],
-            vintageCase: [ { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.174, rarity: 'trash' }, { icon: 'book.png?v=8', name: 'Книга', value: 580, prob: 0.027, rarity: 'common' }, { icon: 'basket.png?v=8', name: 'Корзинка', value: 620, prob: 0.02, rarity: 'common' }, { icon: 'cake.png?v=8', name: 'Торт', value: 646, prob: 0.015, rarity: 'rare' }, { icon: 'saber.png?v=8', name: 'Меч', value: 711, prob: 0.008, rarity: 'rare' }, { icon: 'cigar.png?v=8', name: 'Сигара', value: 1500, prob: 0.005, rarity: 'legendary' }, { icon: 'glasses.png?v=8', name: 'Очки', value: 10564, prob: 0.001, rarity: 'legendary' } ],
-            neonCase: [ { icon: 'stars50.png?v=8', name: '5 Stars', value: 5, prob: 0.45, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '10 Stars', value: 10, prob: 0.25, rarity: 'trash' }, { icon: 'heart.png?v=8', name: 'Сердце', value: 15, prob: 0.12, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '25 Stars', value: 25, prob: 0.06, rarity: 'common' }, { icon: 'rose.png?v=8', name: 'Роза', value: 25, prob: 0.06, rarity: 'common' }, { icon: 'rocket.png?v=8', name: 'Ракета', value: 50, prob: 0.03, rarity: 'common' }, { icon: 'trophy.png?v=8', name: 'Кубок', value: 100, prob: 0.015, rarity: 'rare' }, { icon: 'sock.png?v=8', name: 'Носок', value: 375, prob: 0.002, rarity: 'rare' }, { icon: 'tamagotchi.png?v=8', name: 'Тамагочи', value: 495, prob: 0.001, rarity: 'legendary' }, { icon: 'gluhwein.png?v=8', name: 'Глинтвейн', value: 519, prob: 0.001, rarity: 'legendary' }, { icon: 'surfboard.png?v=8', name: 'Серф', value: 711, prob: 0.0006, rarity: 'legendary' }, { icon: 'candle.png?v=8', name: 'Свеча', value: 951, prob: 0.0004, rarity: 'legendary' } ],
-            summerCase: [ { icon: 'stars50.png?v=8', name: '1 Star', value: 1, prob: 0.3605, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '2 Stars', value: 2, prob: 0.25, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '3 Stars', value: 3, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '5 Stars', value: 5, prob: 0.10, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '10 Stars', value: 10, prob: 0.05, rarity: 'common' }, { icon: 'heart.png?v=8', name: 'Сердце', value: 15, prob: 0.05, rarity: 'common' }, { icon: 'rose.png?v=8', name: 'Роза', value: 25, prob: 0.02, rarity: 'common' }, { icon: 'tulips.png?v=8', name: 'Тюльпаны', value: 50, prob: 0.01, rarity: 'common' }, { icon: 'diamond.png?v=8', name: 'Алмаз', value: 100, prob: 0.005, rarity: 'rare' }, { icon: 'flamingo.png?v=8', name: 'Фламинго', value: 370, prob: 0.0025, rarity: 'rare' }, { icon: 'lollipop.png?v=8', name: 'Леденец', value: 450, prob: 0.0015, rarity: 'legendary' }, { icon: 'bouquet.png?v=8', name: 'Букет', value: 600, prob: 0.0005, rarity: 'legendary' } ],
-            farm1: [ { icon: 'empty.png?v=8', name: 'Пустышка', value: 0, prob: 0.89995, rarity: 'trash' }, { icon: 'star.png?v=8', name: '1 Star', value: 1, prob: 0.10, rarity: 'common' }, { icon: 'glasses.png?v=8', name: 'Очки', value: 10564, prob: 0.00005, rarity: 'legendary' } ],
-            farm2: [ { icon: 'empty.png?v=8', name: 'Пустышка', value: 0, prob: 0.89995, rarity: 'trash' }, { icon: 'star.png?v=8', name: '2 Stars', value: 2, prob: 0.10, rarity: 'common' }, { icon: 'helmet.png?v=8', name: 'Шлем', value: 19297, prob: 0.00005, rarity: 'legendary' } ],
-            farm3: [ { icon: 'empty.png?v=8', name: 'Пустышка', value: 0, prob: 0.89995, rarity: 'trash' }, { icon: 'star.png?v=8', name: '5 Stars', value: 5, prob: 0.10, rarity: 'common' }, { icon: 'tg_cap.png?v=8', name: 'Кепка', value: 43169, prob: 0.00005, rarity: 'legendary' } ],
-            fifty1: [ { icon: 'star.png?v=8', name: 'Пак 1 Star', value: 1, prob: 0.80, rarity: 'common' }, { icon: 'diamond.png?v=8', name: 'Алмаз', value: 100, prob: 0.20, rarity: 'legendary' } ],
-            fifty2: [ { icon: 'stars50.png?v=8', name: 'Пак 4 Stars', value: 4, prob: 0.80, rarity: 'common' }, { icon: 'cupcake.png?v=8', name: 'Кекс', value: 400, prob: 0.20, rarity: 'legendary' } ],
-            fifty3: [ { icon: 'stars50.png?v=8', name: 'Пак 20 Stars', value: 20, prob: 0.80, rarity: 'common' }, { icon: 'fairy_shoes.png?v=8', name: 'Туфельки', value: 2031, prob: 0.20, rarity: 'legendary' } ]
-        };
-
         function getRandomItem(caseId) { spinsCount++; localStorage.setItem('lootgift_spins', spinsCount); let rand = Math.random(); let items = casesData[caseId]; if (spinsCount <= 2 && rand > 0.4 && !caseId.startsWith('farm') && !caseId.startsWith('fifty')) { return items[7]; } let cumulative = 0; for (let i = 0; i < items.length; i++) { cumulative += items[i].prob; if (rand <= cumulative) { let selected = items[i]; if (selected.name === 'Пепе' && totalWon < 1500000) { return items.find(i => i.name === '10000 Stars') || items[0]; } return selected; } } return items[0]; }
         function renderLootGrid(caseId) { const grid = document.getElementById('loot-grid'); grid.innerHTML = ''; const uniqueItems = []; const seenNames = new Set(); [...casesData[caseId]].reverse().forEach(item => { if (!seenNames.has(item.name)) { seenNames.add(item.name); uniqueItems.push(item); } }); uniqueItems.forEach(item => { const rInfo = rarityNames[item.rarity]; grid.innerHTML += ` <div class="loot-box rarity-${item.rarity}"> <img src="${item.icon}" alt="${item.name}"> <div class="loot-name">${item.name}</div> <div class="rarity-text" style="color: ${rInfo.color}">${rInfo.name}</div> </div> `; }); }
         function renderRouletteRows() { const wrapper = document.getElementById('roulette-wrapper'); wrapper.innerHTML = ''; let itemSize = 100; if (currentQty === 2) itemSize = 85; if (currentQty === 3) itemSize = 75; if (currentQty === 4) itemSize = 65; if (currentQty === 5) itemSize = 55; if (currentQty === 10) itemSize = 35; currentItemSize = itemSize; wrapper.style.setProperty('--item-size', itemSize + 'px'); wrapper.style.setProperty('--row-height', (itemSize + 12) + 'px'); for(let i = 0; i < currentQty; i++) { wrapper.innerHTML += ` <div class="roulette-row"> <div class="center-line"></div> <div class="roulette-strip" id="strip-${i}"></div> </div> `; } document.getElementById('spin-cost').innerText = (activeCasePrice * currentQty); }
