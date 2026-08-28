@@ -22,7 +22,6 @@
             --item-size: 100px;
         }
         
-        /* Ограничение ширины для ПК-версии Telegram, чтобы ничего не растягивалось */
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
             background-color: var(--bg-color); 
@@ -66,7 +65,7 @@
         h2 { font-size: 16px; margin-top: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; color: #d4bfff; }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 16px; width: 100%; }
         
-        /* Стили карточек кейсов (Идеальные, без растягивания) */
+        /* Стили карточек кейсов */
         .case-card-special { background-color: var(--bg-color); border: 2px solid var(--purple); border-radius: 16px; padding: 0; text-align: center; transition: transform 0.1s; overflow: hidden; box-shadow: 0 0 20px var(--purple-glow); display: flex; flex-direction: column; }
         .case-card-special:active { transform: scale(0.95); }
         .premium-case-img { width: 100%; display: block; -webkit-mask-image: linear-gradient(to bottom, black 95%, transparent 100%); mask-image: linear-gradient(to bottom, black 95%, transparent 100%); }
@@ -143,6 +142,7 @@
         .spin-btn { display: flex; justify-content: center; align-items: center; gap: 8px; background: #71e654; color: #000; font-size: 20px; font-weight: 900; padding: 15px 20px; border-radius: 12px; border: none; box-shadow: 0 6px 0 #4db335; cursor: pointer; text-transform: uppercase; width: 100%; max-width: 350px; margin-bottom: 15px; transition: 0.2s; }
         .spin-btn:active { transform: translateY(6px); box-shadow: 0 0 0 #4db335; }
         .spin-btn:disabled { background: #555; box-shadow: 0 6px 0 #333; color: #888; cursor: not-allowed; transform: translateY(6px); }
+        
         .roulette-wrapper { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
         .roulette-row { width: 100%; height: var(--row-height); background: #1a1b26; border: 2px solid var(--purple); border-radius: 12px; position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); transition: height 0.3s ease; }
         .roulette-strip { display: flex; height: 100%; position: absolute; left: 0; top: 0; }
@@ -150,6 +150,7 @@
         .roulette-item img { width: 50%; height: 50%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); margin-bottom: 2px; }
         .roulette-name { font-size: 10px; font-weight: bold; color: white; text-align: center; padding: 0 2px;}
         .center-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #71e654; transform: translateX(-50%); z-index: 10; box-shadow: 0 0 10px #71e654; }
+        
         .loot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 350px; margin-bottom: 20px; }
         .loot-box { background: #1a1b26; border: 1px solid #3e4257; border-radius: 8px; height: 85px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: pointer; }
         .loot-box img { width: 45%; height: 45%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); transition: 0.3s; margin-top: 4px; }
@@ -176,7 +177,17 @@
         /* --- КНОПКА АПГРЕЙДЕРА В МЕНЮ ИГР (Используем твою картинку) --- */
         .upg-btn-card { position: relative; height: 160px; display: flex; justify-content: center; align-items: center; cursor: pointer; border: 2px solid var(--accent-green); overflow: hidden; border-radius: 16px; margin-top: 15px; box-shadow: 0 0 15px var(--green-glow);}
         .upg-btn-card:active { transform: scale(0.98); }
-        .upg-btn-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('Gemini_Generated_Image_gh8xc8gh8xc8gh8x.jfif') no-repeat center center; background-size: cover; transform: rotate(90deg) scale(1.5); z-index: 0; filter: brightness(0.6); transition: 0.3s;}
+        .upg-btn-bg { 
+            position: absolute; 
+            /* Секрет идеального вращения: увеличиваем холст, чтобы края не обрезались */
+            top: -50%; left: -50%; width: 200%; height: 200%; 
+            background: url('Gemini_Generated_Image_gh8xc8gh8xc8gh8x.jfif') no-repeat center center; 
+            background-size: cover; 
+            transform: rotate(90deg); 
+            z-index: 0; 
+            filter: brightness(0.6); 
+            transition: 0.3s;
+        }
         .upg-btn-card:hover .upg-btn-bg { filter: brightness(0.8); }
         .upg-btn-content { position: relative; z-index: 1; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.9); }
 
@@ -197,13 +208,16 @@
         .upg-center { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 60px; position: relative; }
         .upg-chance { font-size: 14px; font-weight: 900; color: #fff; margin-bottom: 10px; text-shadow: 0 0 10px rgba(255,255,255,0.3); z-index: 10; }
         
+        /* Обертка для стрелочки и полоски */
         .upg-bar-wrapper { position: relative; width: 24px; height: 200px; margin-bottom: 20px; }
+        
+        /* Сама полоска с overflow: hidden */
         .upg-bar-container { width: 100%; height: 100%; background: #222533; border: 2px solid #3e4257; border-radius: 12px; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); position: relative; }
         .upg-bar-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--red); opacity: 0.8; }
         .upg-bar-green { position: absolute; bottom: 0; left: 0; right: 0; background: var(--accent-green); height: 0%; transition: height 0.4s ease; box-shadow: 0 0 15px var(--green-glow); }
         
-        /* Прыгающая стрелочка */
-        .upg-arrow { position: absolute; left: -18px; bottom: 0%; color: #fff; font-size: 22px; line-height: 1; transform: translateY(50%); text-shadow: 0 0 5px rgba(0,0,0,0.8); z-index: 10; transition: bottom 0.4s ease-in-out; }
+        /* Стрелка ВНЕ overflow:hidden, чтобы ее не резало */
+        .upg-arrow { position: absolute; left: -25px; bottom: 0%; color: #fff; font-size: 24px; line-height: 1; transform: translateY(50%); text-shadow: 0 0 5px rgba(0,0,0,0.8); z-index: 10; transition: bottom 0.4s ease-in-out; }
 
         .btn-upgrade { background: linear-gradient(135deg, var(--purple), #8e44ad); color: white; width: 100%; max-width: 400px; padding: 15px; border-radius: 12px; font-weight: 900; font-size: 16px; text-transform: uppercase; border: none; cursor: pointer; box-shadow: 0 4px 15px var(--purple-glow); transition: 0.2s; margin-top: 10px; margin-bottom: 20px;}
         .btn-upgrade:active { transform: scale(0.95); }
@@ -212,7 +226,7 @@
         /* --- НИЖНЯЯ ПАНЕЛЬ МЕНЮ АПГРЕЙДЕРА --- */
         .upg-bottom-panel { width: 100%; max-width: 400px; background: rgba(26, 27, 38, 0.95); border: 1px solid var(--border-color); border-radius: 16px; padding: 15px; box-sizing: border-box; }
         
-        /* 2 Вкладки внутри апгрейдера */
+        /* 2 Вкладки внутри апгрейдера: Инвентарь и Цели */
         .upg-tabs-ctrl { display: flex; margin-bottom: 15px; border-bottom: 2px solid #3e4257; }
         .u-tab { flex: 1; background: transparent; color: #888; border: none; padding: 10px 0; font-weight: 900; font-size: 14px; text-transform: uppercase; cursor: pointer; border-bottom: 3px solid transparent; transition: 0.2s;}
         .u-tab.active { color: var(--accent-green); border-bottom-color: var(--accent-green); }
@@ -220,7 +234,7 @@
         .u-content { display: none; animation: fadeIn 0.3s ease; max-height: 280px; overflow-y: auto; }
         .u-content.active { display: block; }
         
-        /* Поле ввода звезд внутри вкладки Инвентаря */
+        /* Блок ввода звезд прямо внутри инвентаря */
         .stars-input-box { display: flex; gap: 8px; margin-bottom: 15px; }
         .stars-input-box input { flex: 1; background: #0b0c10; border: 2px solid #3e4257; color: var(--accent-green); font-size: 16px; font-weight: 900; text-align: center; padding: 10px; border-radius: 10px; outline: none; }
         .stars-input-box input:focus { border-color: var(--accent-green); }
@@ -289,16 +303,16 @@
             <div class="empty-inv" style="padding-top: 50px;"><h3 style="color: var(--accent-green);">📰 Новости</h3><p>Раздел находится в разработке</p></div>
         </div>
         
-        <!-- РАЗДЕЛ КЕЙСОВ -->
+        <!-- РАЗДЕЛ КЕЙСОВ (ПОЛНОСТЬЮ РАБОЧИЙ) -->
         <div id="section-cases" class="app-section active">
             <div id="app-cases-grid"></div>
         </div>
 
-        <!-- РАЗДЕЛ МЕНЮ ИГР (С АПГРЕЙДЕРОМ) -->
+        <!-- РАЗДЕЛ МЕНЮ ИГР (С КНОПКОЙ АПГРЕЙДЕРА) -->
         <div id="section-games-menu" class="app-section">
             <h2 style="color: var(--accent-green); text-shadow: 0 0 10px rgba(113, 230, 84, 0.4);">РЕЖИМЫ ИГРЫ</h2>
             
-            <div class="case-card-special upg-btn-card" onclick="openUpgrader()">
+            <div class="upg-btn-card" onclick="openUpgrader()">
                 <div class="upg-btn-bg"></div>
                 <div class="upg-btn-content">
                     <div style="font-size: 40px; margin-bottom: 5px;">⬆️</div>
@@ -330,6 +344,7 @@
                         <div class="upg-bar-bg"></div>
                         <div class="upg-bar-green" id="upg-bar-green"></div>
                     </div>
+                    <!-- Исправленная стрелка, не обрезается -->
                     <div class="upg-arrow" id="upg-arrow">▶</div>
                 </div>
             </div>
@@ -352,7 +367,7 @@
             </div>
             
             <div id="ucnt-inv" class="u-content active">
-                <!-- Блок ставки звездами -->
+                <!-- Блок ставки звездами прямо внутри инвентаря -->
                 <div class="stars-input-box">
                     <input type="number" id="upg-stars-input" placeholder="Сумма звёзд..." min="10">
                     <button class="btn btn-sell" style="width: auto; padding: 0 15px;" onclick="confirmUpgStars()">ПОСТАВИТЬ</button>
@@ -442,13 +457,14 @@
             
             document.querySelectorAll('.app-section').forEach(sec => sec.classList.remove('active'));
             document.getElementById('upgrader-screen').style.display = 'none';
+            document.querySelector('.bottom-nav').style.display = 'flex'; 
             document.getElementById(`section-${sectionId}`).classList.add('active');
         }
         document.getElementById('nav-indicator').style.transform = `translateX(200%)`; 
 
         const rarityNames = { 'legendary': { name: 'ЛЕГЕНДАРНЫЙ', color: '#ff2a5f' }, 'rare': { name: 'РЕДКИЙ', color: '#ffb13b' }, 'common': { name: 'ОБЫЧНЫЙ', color: '#8b5cf6' }, 'trash': { name: 'БАЗОВЫЙ', color: '#9ca3af' } };
         
-        // --- БАЗА КЕЙСОВ И ПРЕДМЕТОВ ---
+        // --- БАЗА КЕЙСОВ И ПРЕДМЕТОВ (РАЗВЕРНУТО ДЛЯ 100% РАБОТОСПОСОБНОСТИ) ---
         const casesData = {
             epicCase: [
                 { icon: 'bear.png?v=8', name: 'Мишка', value: 15, prob: 0.35, rarity: 'trash' },
@@ -580,12 +596,14 @@
         function openUpgrader() {
             tg.HapticFeedback.impactOccurred('light');
             document.getElementById('section-games-menu').classList.remove('active');
+            document.querySelector('.bottom-nav').style.display = 'none'; 
             document.getElementById('upgrader-screen').style.display = 'flex';
             resetUpgrader();
         }
 
         function backToGamesMenu() {
             document.getElementById('upgrader-screen').style.display = 'none';
+            document.querySelector('.bottom-nav').style.display = 'flex';
             document.getElementById('section-games-menu').classList.add('active');
         }
 
@@ -629,7 +647,7 @@
                 return;
             }
 
-            // ПРАВИЛО 75% MAX CHANCE: Убираем из списка все предметы, где шанс выше 75%
+            // ПРАВИЛО 75% MAX CHANCE: Убираем из списка все дешевые предметы
             let minTargetValue = Math.ceil(upgState.betValue / 0.75);
             let validTargets = allGameItems.filter(item => item.value >= minTargetValue);
 
@@ -679,7 +697,7 @@
             box.innerHTML = `<img src="${item.icon}"><div class="upg-val">${item.value} <img src="star.png?v=8" style="width:10px;height:10px;margin:0;"></div>`;
             
             updateUpgraderUI();
-            switchUpgTab('targets');
+            switchUpgTab('targets'); 
         }
 
         function confirmUpgStars() {
@@ -728,14 +746,12 @@
             if (upgState.betValue > 0 && upgState.targetItem) {
                 let chance = (upgState.betValue / upgState.targetItem.value) * 100;
                 
-                // Дополнительная защита на Пепе
                 if (upgState.targetItem.name === 'Пепе' && upgState.betValue < 400000) {
-                    chance = 1; // 1% визуально
+                    chance = 1; 
                 } else if (chance > 75) {
-                    chance = 75; // Защита
+                    chance = 75; 
                 }
 
-                // Визуальный пиксель для шансов < 1%
                 if (chance > 0 && chance < 1) chance = 1;
 
                 chanceText.innerText = chance.toFixed(1) + '%';
@@ -748,7 +764,7 @@
             }
         }
 
-        // АНИМАЦИЯ И ЛОГИКА
+        // --- АНИМАЦИЯ И ЛОГИКА АПГРЕЙДА ---
         function startUpgrade() {
             if(upgState.betType === 'stars' && userBalance < upgState.betValue) { tg.showAlert('Недостаточно звёзд на балансе!'); return; }
             if(upgState.betType === 'item') {
@@ -760,7 +776,6 @@
             btn.disabled = true;
             btn.innerText = "UPGRADING...";
 
-            // Списываем
             if(upgState.betType === 'stars') {
                 userBalance -= upgState.betValue;
                 updateBalanceDisplay(userBalance, true);
@@ -771,11 +786,9 @@
                 saveInventory();
             }
 
-            // Математика 
             let visualChance = (upgState.betValue / upgState.targetItem.value) * 100;
             let realChance = visualChance * 0.85; 
 
-            // Блок Пепе (Реальный шанс 0%)
             if (upgState.targetItem.name === 'Пепе' && upgState.betValue < 400000) {
                 realChance = 0; 
                 visualChance = 1;
@@ -783,7 +796,6 @@
 
             let isWin = (Math.random() * 100) < realChance;
 
-            // Расчет позиции стрелочки
             let finalPos = 0;
             if (isWin) {
                 finalPos = Math.random() * visualChance;
@@ -840,7 +852,7 @@
             }, 3500);
         }
 
-        // --- БАЗОВЫЕ ФУНКЦИИ ---
+        // --- БАЗОВЫЕ ФУНКЦИИ ПРОФИЛЯ/ИНВЕНТАРЯ ---
         function saveInventory() { localStorage.setItem('lootgift_inventory', JSON.stringify(inventory)); renderInventory(); }
         function openProfileModal() { tg.HapticFeedback.impactOccurred('light'); document.getElementById('profile-modal').classList.add('active'); document.getElementById('stat-reg-date').innerText = regDate; document.getElementById('stat-cases-opened').innerText = spinsCount; document.getElementById('stat-total-won').innerHTML = `${totalWon} <img src="star.png?v=8" alt="star">`; renderInventory(); }
         function closeProfileModal() { document.getElementById('profile-modal').classList.remove('active'); }
@@ -856,17 +868,219 @@
         function updateBalanceDisplay(targetBalance, animate = false) { const display = document.getElementById('balance-display'); const startBalance = parseInt(display.innerText) || userBalance; localStorage.setItem('lootgift_balance', targetBalance); if (!animate || startBalance === targetBalance) { display.innerText = targetBalance; return; } const duration = 500; const startTime = performance.now(); function animateScroll(currentTime) { const elapsed = currentTime - startTime; const progress = Math.min(elapsed / duration, 1); const currentVal = Math.floor(startBalance + (targetBalance - startBalance) * progress); display.innerText = currentVal; if (progress < 1) { requestAnimationFrame(animateScroll); } else { display.innerText = targetBalance; } } requestAnimationFrame(animateScroll); const box = document.getElementById('balance-box'); box.style.transform = 'scale(1.1)'; setTimeout(() => box.style.transform = 'scale(1)', 200); }
         function showBalanceAnimation(amount) { const box = document.getElementById('balance-box'); const floatText = document.createElement('div'); floatText.className = 'floating-text'; if (amount < 0) { floatText.innerText = amount; floatText.style.color = '#ff2a5f'; } else { floatText.innerText = `+${amount}`; floatText.style.color = '#71e654'; } box.appendChild(floatText); setTimeout(() => { floatText.style.transform = 'translateY(-20px)'; floatText.style.opacity = '0'; }, 50); setTimeout(() => { floatText.remove(); }, 850); }
 
-        let currentQty = 1; let currentItemSize = 100; let activeCaseId = null; let activeCasePrice = 0; let isFarmCase = false; let isFiftyCase = false;
+        // --- ЛОГИКА РУЛЕТКИ И КЕЙСОВ (ВОССТАНОВЛЕНА И РАСШИРЕНА) ---
+        let currentQty = 1; 
+        let currentItemSize = 100; 
+        let activeCaseId = null; 
+        let activeCasePrice = 0; 
+        let isFarmCase = false; 
+        let isFiftyCase = false;
+
         window.addEventListener('load', () => { setTimeout(() => { document.getElementById('loading-screen').style.opacity = '0'; document.getElementById('loading-screen').style.visibility = 'hidden'; }, 2500); });
         
-        function renderLootGrid(caseId) { const grid = document.getElementById('loot-grid'); grid.innerHTML = ''; const uniqueItems = []; const seenNames = new Set(); [...casesData[caseId]].reverse().forEach(item => { if (!seenNames.has(item.name)) { seenNames.add(item.name); uniqueItems.push(item); } }); uniqueItems.forEach(item => { const rInfo = rarityNames[item.rarity]; grid.innerHTML += ` <div class="loot-box rarity-${item.rarity}"> <img src="${item.icon}" alt="${item.name}"> <div class="loot-name">${item.name}</div> <div class="rarity-text" style="color: ${rInfo.color}">${rInfo.name}</div> </div> `; }); }
-        function renderRouletteRows() { const wrapper = document.getElementById('roulette-wrapper'); wrapper.innerHTML = ''; let itemSize = 100; if (currentQty === 2) itemSize = 85; if (currentQty === 3) itemSize = 75; if (currentQty === 4) itemSize = 65; if (currentQty === 5) itemSize = 55; if (currentQty === 10) itemSize = 35; currentItemSize = itemSize; wrapper.style.setProperty('--item-size', itemSize + 'px'); wrapper.style.setProperty('--row-height', (itemSize + 12) + 'px'); for(let i = 0; i < currentQty; i++) { wrapper.innerHTML += ` <div class="roulette-row"> <div class="center-line"></div> <div class="roulette-strip" id="strip-${i}"></div> </div> `; } document.getElementById('spin-cost').innerText = (activeCasePrice * currentQty); }
-        function buildQtyButtons(isFarm) { const container = document.getElementById('qty-row-container'); if (isFarm) { container.innerHTML = ` <button class="qty-btn active" onclick="selectQty(this, 5)">5</button> <button class="qty-btn" onclick="selectQty(this, 10)">10</button> `; currentQty = 5; } else { container.innerHTML = ` <button class="qty-btn active" onclick="selectQty(this, 1)">1</button> <button class="qty-btn" onclick="selectQty(this, 2)">2</button> <button class="qty-btn" onclick="selectQty(this, 3)">3</button> <button class="qty-btn" onclick="selectQty(this, 4)">4</button> <button class="qty-btn" onclick="selectQty(this, 5)">5</button> `; currentQty = 1; } }
-        function openCaseScreen(caseId, price) { if (!casesData[caseId]) { tg.showAlert('Этот модуль находится в разработке!'); return; } activeCaseId = caseId; activeCasePrice = price; isFarmCase = caseId.startsWith('farm'); isFiftyCase = caseId.startsWith('fifty'); buildQtyButtons(isFarmCase); document.getElementById('app-content').style.display = 'none'; document.querySelector('.bottom-nav').style.display = 'none'; const rScreen = document.getElementById('roulette-screen'); rScreen.style.display = 'flex'; setTimeout(() => rScreen.style.opacity = '1', 50); renderRouletteRows(); renderLootGrid(caseId); }
-        function closeRoulette() { const rScreen = document.getElementById('roulette-screen'); rScreen.style.opacity = '0'; setTimeout(() => { rScreen.style.display = 'none'; document.getElementById('app-content').style.display = 'block'; document.querySelector('.bottom-nav').style.display = 'flex'; activeCaseId = null; }, 500); }
-        function selectQty(btn, qty) { document.querySelectorAll('.qty-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentQty = qty; renderRouletteRows(); }
-        function spinRoulette() { const totalCost = activeCasePrice * currentQty; if (userBalance < totalCost) { tg.HapticFeedback.notificationOccurred('error'); tg.showAlert('Недостаточно звёзд на балансе!'); return; } userBalance -= totalCost; updateBalanceDisplay(userBalance, true); showBalanceAnimation(-totalCost); const btn = document.getElementById('spin-btn'); btn.disabled = true; tg.HapticFeedback.impactOccurred('medium'); let drops = []; let starsWonThisSpin = 0; const newItems = []; const totalItems = 50; const winnerIndex = 40; const wrapper = document.getElementById('roulette-wrapper'); const itemTotalWidth = currentItemSize + 12; const currentItems = casesData[activeCaseId]; for(let rowIdx = 0; rowIdx < currentQty; rowIdx++) { let actualItem = getRandomItem(activeCaseId); drops.push(actualItem); if (actualItem.name.includes('Star') || actualItem.name.includes('Stars')) { starsWonThisSpin += actualItem.value; } else if (actualItem.value > 0) { const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2); newItems.push({ uid: uniqueId, name: actualItem.name, icon: actualItem.icon, value: actualItem.value, rarity: actualItem.rarity, isFavorite: false }); } let strip = document.getElementById(`strip-${rowIdx}`); strip.style.transition = 'none'; strip.style.transform = 'translateX(0)'; strip.innerHTML = ''; for (let i = 0; i < totalItems; i++) { let div = document.createElement('div'); div.className = 'roulette-item'; if (i === winnerIndex) { div.innerHTML = `<img src="${actualItem.icon}"><div class="roulette-name">${actualItem.name}</div>`; } else { let r = Math.random(); let visualItem; if (isFarmCase) { if (r < 0.85) visualItem = currentItems[0]; else if (r < 0.98) visualItem = currentItems[1]; else visualItem = currentItems[2]; } else if (isFiftyCase) { if (r < 0.5) visualItem = currentItems[0]; else visualItem = currentItems[1]; } else { if (r < 0.10) visualItem = currentItems[0]; else if (r < 0.30) visualItem = currentItems[5]; else if (r < 0.60) visualItem = currentItems[7]; else if (r < 0.82) visualItem = currentItems[8]; else if (r < 0.97) visualItem = currentItems[9]; else visualItem = currentItems[11]; } div.innerHTML = `<img src="${visualItem.icon}"><div class="roulette-name">${visualItem.name}</div>`; } strip.appendChild(div); } let duration = 5 + (rowIdx * 0.15); setTimeout(() => { strip.style.transition = `transform ${duration}s cubic-bezier(0.15, 0.85, 0.1, 1)`; const containerWidth = wrapper.offsetWidth; const randomOffset = Math.floor(Math.random() * (currentItemSize * 0.8)) - (currentItemSize * 0.4); const stopPosition = (containerWidth / 2) - (winnerIndex * itemTotalWidth + (itemTotalWidth / 2)) + randomOffset; strip.style.transform = `translateX(${stopPosition}px)`; }, 50); } let maxDelay = 5200 + ((currentQty - 1) * 150); setTimeout(() => { btn.disabled = false; if (starsWonThisSpin > 0) { userBalance += starsWonThisSpin; updateBalanceDisplay(userBalance, true); showBalanceAnimation(starsWonThisSpin); } if (newItems.length > 0) { inventory.push(...newItems); saveInventory(); } let totalValueWon = drops.reduce((sum, item) => sum + item.value, 0); totalWon += totalValueWon; localStorage.setItem('lootgift_total_won', totalWon); tg.HapticFeedback.notificationOccurred('success'); let dropCounts = {}; drops.forEach(d => { dropCounts[d.name] = (dropCounts[d.name] || 0) + 1; }); let dropStr = Object.keys(dropCounts).map(name => `${name} (x${dropCounts[name]})`).join(', '); let msg = `Добыча:\n${dropStr}`; if (starsWonThisSpin > 0) msg += `\n\nВы получили: +${starsWonThisSpin} ⭐`; if (newItems.length > 0) msg += `\nПредметы добавлены в инвентарь! 🎒`; tg.showAlert(msg); }, maxDelay); }
-        
+        function renderLootGrid(caseId) { 
+            const grid = document.getElementById('loot-grid'); 
+            grid.innerHTML = ''; 
+            const uniqueItems = []; 
+            const seenNames = new Set(); 
+            [...casesData[caseId]].reverse().forEach(item => { 
+                if (!seenNames.has(item.name)) { 
+                    seenNames.add(item.name); 
+                    uniqueItems.push(item); 
+                } 
+            }); 
+            uniqueItems.forEach(item => { 
+                const rInfo = rarityNames[item.rarity]; 
+                grid.innerHTML += ` <div class="loot-box rarity-${item.rarity}"> <img src="${item.icon}" alt="${item.name}"> <div class="loot-name">${item.name}</div> <div class="rarity-text" style="color: ${rInfo.color}">${rInfo.name}</div> </div> `; 
+            }); 
+        }
+
+        function renderRouletteRows() { 
+            const wrapper = document.getElementById('roulette-wrapper'); 
+            wrapper.innerHTML = ''; 
+            let itemSize = 100; 
+            if (currentQty === 2) itemSize = 85; 
+            if (currentQty === 3) itemSize = 75; 
+            if (currentQty === 4) itemSize = 65; 
+            if (currentQty === 5) itemSize = 55; 
+            if (currentQty === 10) itemSize = 35; 
+            currentItemSize = itemSize; 
+            wrapper.style.setProperty('--item-size', itemSize + 'px'); 
+            wrapper.style.setProperty('--row-height', (itemSize + 12) + 'px'); 
+            for(let i = 0; i < currentQty; i++) { 
+                wrapper.innerHTML += ` <div class="roulette-row"> <div class="center-line"></div> <div class="roulette-strip" id="strip-${i}"></div> </div> `; 
+            } 
+            document.getElementById('spin-cost').innerText = (activeCasePrice * currentQty); 
+        }
+
+        function buildQtyButtons(isFarm) { 
+            const container = document.getElementById('qty-row-container'); 
+            if (isFarm) { 
+                container.innerHTML = ` <button class="qty-btn active" onclick="selectQty(this, 5)">5</button> <button class="qty-btn" onclick="selectQty(this, 10)">10</button> `; 
+                currentQty = 5; 
+            } else { 
+                container.innerHTML = ` <button class="qty-btn active" onclick="selectQty(this, 1)">1</button> <button class="qty-btn" onclick="selectQty(this, 2)">2</button> <button class="qty-btn" onclick="selectQty(this, 3)">3</button> <button class="qty-btn" onclick="selectQty(this, 4)">4</button> <button class="qty-btn" onclick="selectQty(this, 5)">5</button> `; 
+                currentQty = 1; 
+            } 
+        }
+
+        function openCaseScreen(caseId, price) { 
+            if (!casesData[caseId]) { tg.showAlert('Этот модуль находится в разработке!'); return; } 
+            activeCaseId = caseId; 
+            activeCasePrice = price; 
+            isFarmCase = caseId.startsWith('farm'); 
+            isFiftyCase = caseId.startsWith('fifty'); 
+            buildQtyButtons(isFarmCase); 
+            document.getElementById('app-content').style.display = 'none'; 
+            document.querySelector('.bottom-nav').style.display = 'none'; 
+            const rScreen = document.getElementById('roulette-screen'); 
+            rScreen.style.display = 'flex'; 
+            setTimeout(() => rScreen.style.opacity = '1', 50); 
+            renderRouletteRows(); 
+            renderLootGrid(caseId); 
+        }
+
+        function closeRoulette() { 
+            const rScreen = document.getElementById('roulette-screen'); 
+            rScreen.style.opacity = '0'; 
+            setTimeout(() => { 
+                rScreen.style.display = 'none'; 
+                document.getElementById('app-content').style.display = 'block'; 
+                document.querySelector('.bottom-nav').style.display = 'flex'; 
+                activeCaseId = null; 
+            }, 500); 
+        }
+
+        function selectQty(btn, qty) { 
+            document.querySelectorAll('.qty-btn').forEach(b => b.classList.remove('active')); 
+            btn.classList.add('active'); 
+            currentQty = qty; 
+            renderRouletteRows(); 
+        }
+
+        function spinRoulette() {
+            const totalCost = activeCasePrice * currentQty;
+            if (userBalance < totalCost) {
+                tg.HapticFeedback.notificationOccurred('error');
+                tg.showAlert('Недостаточно звёзд на балансе!');
+                return;
+            }
+
+            userBalance -= totalCost;
+            updateBalanceDisplay(userBalance, true);
+            showBalanceAnimation(-totalCost);
+
+            const btn = document.getElementById('spin-btn');
+            btn.disabled = true;
+            tg.HapticFeedback.impactOccurred('medium');
+
+            let drops = [];
+            let starsWonThisSpin = 0;
+            const newItems = [];
+            const totalItems = 50;
+            const winnerIndex = 40;
+            const wrapper = document.getElementById('roulette-wrapper');
+            const itemTotalWidth = currentItemSize + 12;
+            const currentItems = casesData[activeCaseId];
+
+            for (let rowIdx = 0; rowIdx < currentQty; rowIdx++) {
+                let actualItem = getRandomItem(activeCaseId);
+                drops.push(actualItem);
+
+                if (actualItem.name.includes('Star') || actualItem.name.includes('Stars')) {
+                    starsWonThisSpin += actualItem.value;
+                } else if (actualItem.value > 0) {
+                    const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+                    newItems.push({
+                        uid: uniqueId,
+                        name: actualItem.name,
+                        icon: actualItem.icon,
+                        value: actualItem.value,
+                        rarity: actualItem.rarity,
+                        isFavorite: false
+                    });
+                }
+
+                let strip = document.getElementById(`strip-${rowIdx}`);
+                strip.style.transition = 'none';
+                strip.style.transform = 'translateX(0)';
+                strip.innerHTML = '';
+
+                for (let i = 0; i < totalItems; i++) {
+                    let div = document.createElement('div');
+                    div.className = 'roulette-item';
+
+                    if (i === winnerIndex) {
+                        div.innerHTML = `<img src="${actualItem.icon}"><div class="roulette-name">${actualItem.name}</div>`;
+                    } else {
+                        let r = Math.random();
+                        let visualItem;
+
+                        if (isFarmCase) {
+                            if (r < 0.85) visualItem = currentItems[0];
+                            else if (r < 0.98) visualItem = currentItems[1];
+                            else visualItem = currentItems[2];
+                        } else if (isFiftyCase) {
+                            if (r < 0.5) visualItem = currentItems[0];
+                            else visualItem = currentItems[1];
+                        } else {
+                            if (r < 0.10) visualItem = currentItems[0];
+                            else if (r < 0.30) visualItem = currentItems[5];
+                            else if (r < 0.60) visualItem = currentItems[7];
+                            else if (r < 0.82) visualItem = currentItems[8];
+                            else if (r < 0.97) visualItem = currentItems[9];
+                            else visualItem = currentItems[11];
+                        }
+                        div.innerHTML = `<img src="${visualItem.icon}"><div class="roulette-name">${visualItem.name}</div>`;
+                    }
+                    strip.appendChild(div);
+                }
+
+                let duration = 5 + (rowIdx * 0.15);
+                setTimeout(() => {
+                    strip.style.transition = `transform ${duration}s cubic-bezier(0.15, 0.85, 0.1, 1)`;
+                    const containerWidth = wrapper.offsetWidth;
+                    const randomOffset = Math.floor(Math.random() * (currentItemSize * 0.8)) - (currentItemSize * 0.4);
+                    const stopPosition = (containerWidth / 2) - (winnerIndex * itemTotalWidth + (itemTotalWidth / 2)) + randomOffset;
+                    strip.style.transform = `translateX(${stopPosition}px)`;
+                }, 50);
+            }
+
+            let maxDelay = 5200 + ((currentQty - 1) * 150);
+            setTimeout(() => {
+                btn.disabled = false;
+                
+                if (starsWonThisSpin > 0) {
+                    userBalance += starsWonThisSpin;
+                    updateBalanceDisplay(userBalance, true);
+                    showBalanceAnimation(starsWonThisSpin);
+                }
+
+                if (newItems.length > 0) {
+                    inventory.push(...newItems);
+                    saveInventory();
+                }
+
+                let totalValueWon = drops.reduce((sum, item) => sum + item.value, 0);
+                totalWon += totalValueWon;
+                localStorage.setItem('lootgift_total_won', totalWon);
+                
+                tg.HapticFeedback.notificationOccurred('success');
+
+                let dropCounts = {};
+                drops.forEach(d => {
+                    dropCounts[d.name] = (dropCounts[d.name] || 0) + 1;
+                });
+                let dropStr = Object.keys(dropCounts).map(name => `${name} (x${dropCounts[name]})`).join(', ');
+
+                let msg = `Добыча:\n${dropStr}`;
+                if (starsWonThisSpin > 0) msg += `\n\nВы получили: +${starsWonThisSpin} ⭐`;
+                if (newItems.length > 0) msg += `\nПредметы добавлены в инвентарь! 🎒`;
+
+                tg.showAlert(msg);
+            }, maxDelay);
+        }
+
         const appCasesGrid = document.getElementById('app-cases-grid');
         
         const categoriesDataList = [
