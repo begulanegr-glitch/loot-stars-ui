@@ -93,7 +93,6 @@
         .inv-count { font-weight: bold; color: #a1a1aa; font-size: 14px; }
         .sell-all-btn { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 12px; cursor: pointer; text-transform: uppercase; box-shadow: 0 2px 5px rgba(155, 89, 182, 0.3); transition: 0.2s; }
         .sell-all-btn:active { transform: scale(0.95); }
-        
         .inventory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .inv-item { background: #1a1b26; border: 1px solid #3e4257; border-radius: 8px; height: 90px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; cursor: pointer; transition: 0.2s; }
         .inv-item:active { transform: scale(0.95); border-color: var(--accent-green); }
@@ -133,19 +132,6 @@
         .roulette-item img { width: 50%; height: 50%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); margin-bottom: 2px; }
         .roulette-name { font-size: 10px; font-weight: bold; color: white; text-align: center; padding: 0 2px;}
         .center-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #71e654; transform: translateX(-50%); z-index: 10; box-shadow: 0 0 10px #71e654; }
-        .loot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 350px; margin-bottom: 20px; }
-        .loot-box { background: #1a1b26; border: 1px solid #3e4257; border-radius: 8px; height: 85px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; cursor: pointer; }
-        .loot-box img { width: 45%; height: 45%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); transition: 0.3s; margin-top: 4px; }
-        .loot-name { font-size: 10px; font-weight: 800; color: #fff; margin-top: 4px; text-align: center; transition: 0.3s; z-index: 1; text-shadow: 0 1px 2px #000; }
-        .loot-box::after { content: ''; position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; border-radius: 2px; transition: 0.3s; z-index: 2; }
-        .rarity-trash::after { background: #9ca3af; }
-        .rarity-common::after { background: #8b5cf6; } 
-        .rarity-rare::after { background: #ffb13b; } 
-        .rarity-legendary::after { background: #ff2a5f; box-shadow: 0 0 5px #ff2a5f; } 
-        .rarity-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; transition: 0.3s; font-weight: 900; font-size: 11px; letter-spacing: 0.5px; text-shadow: 0 1px 3px rgba(0,0,0,0.9); z-index: 10; pointer-events: none; text-align: center; width: 100%; }
-        .loot-box:hover img, .loot-box:hover .loot-name { filter: blur(4px); opacity: 0.2; }
-        .loot-box:hover .rarity-text { opacity: 1; }
-        .loot-box:hover::after { opacity: 0; }
 
         /* --- ЭКРАН ЗАГРУЗКИ --- */
         #loading-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #050508; transition: opacity 0.6s ease, visibility 0.6s ease; }
@@ -156,38 +142,59 @@
         @keyframes pulseLogo { 0% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(113, 230, 84, 0.2)); } 100% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(113, 230, 84, 0.8)); } }
         @keyframes pulseText { 0% { opacity: 0.6; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1.05); } }
 
-        /* --- АПГРЕЙДЕР (НОВЫЙ РЕЖИМ) --- */
-        #upgrader-screen { display: none; flex-direction: column; align-items: center; padding-top: 10px; padding-bottom: 100px; }
-        .upg-layout { display: flex; width: 100%; max-width: 400px; justify-content: space-between; align-items: stretch; margin-top: 20px; gap: 10px; }
+        /* --- АПГРЕЙДЕР (НОВЫЙ ДИЗАЙН С ФОНОМ И ПАНЕЛЬЮ) --- */
+        #upgrader-screen { 
+            display: none; flex-direction: column; align-items: center; 
+            background: url('Gemini_Generated_Image_gh8xc8gh8xc8gh8x.jfif') no-repeat center center; 
+            background-size: cover; 
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 50; 
+            padding-top: 75px; overflow-y: auto; padding-bottom: 100px;
+        }
+        /* Затемнение поверх фона */
+        #upgrader-screen::before { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11, 12, 16, 0.85); z-index: 0; pointer-events: none; }
         
-        /* Блоки выбора */
+        .upg-content-wrapper { position: relative; z-index: 1; width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0 16px; }
+
+        .upg-layout { display: flex; width: 100%; max-width: 400px; justify-content: space-between; align-items: stretch; margin-top: 10px; gap: 10px; }
+        
+        /* Блоки выбора (Верх) */
         .upg-item-col { flex: 1; display: flex; flex-direction: column; gap: 10px; }
-        .upg-box { background: #1a1b26; border: 2px dashed #3e4257; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; height: 140px; position: relative; }
-        .upg-box:active { transform: scale(0.95); }
-        .upg-box.filled { border-style: solid; border-color: var(--purple); box-shadow: inset 0 0 20px rgba(90, 62, 140, 0.2); }
+        .upg-box { background: rgba(26, 27, 38, 0.9); border: 2px dashed #3e4257; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 140px; position: relative; backdrop-filter: blur(5px); transition: 0.2s;}
+        .upg-box.filled { border-style: solid; border-color: var(--purple); box-shadow: inset 0 0 20px rgba(90, 62, 140, 0.4); }
         .upg-box img { width: 60%; height: 60%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); margin-top: 10px; }
         .upg-box-text { color: #a1a1aa; font-weight: bold; font-size: 12px; text-transform: uppercase; text-align: center; padding: 0 10px; }
-        .upg-val { position: absolute; bottom: 8px; font-size: 12px; font-weight: 900; color: var(--accent-green); background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 6px; display: flex; align-items: center; gap: 4px;}
+        .upg-val { position: absolute; bottom: 8px; font-size: 12px; font-weight: 900; color: var(--accent-green); background: rgba(0,0,0,0.7); padding: 4px 8px; border-radius: 8px; display: flex; align-items: center; gap: 4px;}
         
-        /* Центральная шкала */
+        /* Центральная шкала с исправленной стрелочкой */
         .upg-center { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 60px; position: relative; }
         .upg-chance { font-size: 14px; font-weight: 900; color: #fff; margin-bottom: 10px; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
         
-        .upg-bar-container { width: 24px; height: 200px; background: #222533; border: 2px solid #3e4257; border-radius: 12px; position: relative; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
-        /* Красный фон (провал) */
+        /* Враппер для полоски и стрелки */
+        .upg-bar-wrapper { position: relative; width: 24px; height: 200px; margin-bottom: 20px; }
+        .upg-bar-container { width: 100%; height: 100%; background: #222533; border: 2px solid #3e4257; border-radius: 12px; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); position: relative; }
         .upg-bar-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--red); opacity: 0.8; }
-        /* Зеленая зона (успех) растет снизу */
         .upg-bar-green { position: absolute; bottom: 0; left: 0; right: 0; background: var(--accent-green); height: 0%; transition: height 0.4s ease; box-shadow: 0 0 15px var(--green-glow); }
         
-        /* Прыгающая стрелочка */
-        .upg-arrow { position: absolute; left: -14px; bottom: 0%; color: #fff; font-size: 18px; line-height: 1; transform: translateY(50%); text-shadow: 0 0 5px rgba(0,0,0,0.8); z-index: 10; }
+        /* Стрелка теперь ВНЕ overflow: hidden */
+        .upg-arrow { position: absolute; left: -18px; bottom: 0%; color: #fff; font-size: 22px; line-height: 1; transform: translateY(50%); text-shadow: 0 0 5px rgba(0,0,0,0.8); z-index: 10; transition: bottom 0.4s ease-in-out; }
 
-        .btn-upgrade { background: linear-gradient(135deg, var(--purple), #8e44ad); color: white; width: 100%; max-width: 400px; padding: 15px; border-radius: 12px; font-weight: 900; font-size: 16px; text-transform: uppercase; border: none; cursor: pointer; box-shadow: 0 4px 15px var(--purple-glow); transition: 0.2s; margin-top: 30px;}
+        .btn-upgrade { background: linear-gradient(135deg, var(--purple), #8e44ad); color: white; width: 100%; max-width: 400px; padding: 15px; border-radius: 12px; font-weight: 900; font-size: 16px; text-transform: uppercase; border: none; cursor: pointer; box-shadow: 0 4px 15px var(--purple-glow); transition: 0.2s; margin-top: 10px; margin-bottom: 20px;}
         .btn-upgrade:active { transform: scale(0.95); }
         .btn-upgrade:disabled { background: #333; color: #666; box-shadow: none; cursor: not-allowed; transform: none; }
 
-        /* Input звезд */
-        .stars-input { width: 100%; background: #0b0c10; border: 2px solid #3e4257; color: var(--accent-green); font-size: 20px; font-weight: 900; text-align: center; padding: 12px; border-radius: 12px; outline: none; margin-bottom: 20px; box-sizing: border-box;}
+        /* --- НИЖНЯЯ ПАНЕЛЬ МЕНЮ АПГРЕЙДЕРА --- */
+        .upg-bottom-panel { width: 100%; max-width: 400px; background: rgba(26, 27, 38, 0.95); border: 1px solid var(--border-color); border-radius: 16px; padding: 15px; backdrop-filter: blur(10px); }
+        
+        /* Вкладки внутри апгрейдера */
+        .upg-tabs-ctrl { display: flex; margin-bottom: 15px; border-bottom: 2px solid #3e4257; }
+        .u-tab { flex: 1; background: transparent; color: #888; border: none; padding: 10px 0; font-weight: 900; font-size: 12px; text-transform: uppercase; cursor: pointer; border-bottom: 3px solid transparent; transition: 0.2s;}
+        .u-tab.active { color: var(--accent-green); border-bottom-color: var(--accent-green); }
+        
+        .u-content { display: none; animation: fadeIn 0.3s ease; max-height: 250px; overflow-y: auto; }
+        .u-content.active { display: block; }
+        
+        .stars-input-box { display: flex; flex-direction: column; gap: 10px; align-items: center; margin-top: 10px;}
+        .stars-input { width: 100%; background: #0b0c10; border: 2px solid #3e4257; color: var(--accent-green); font-size: 20px; font-weight: 900; text-align: center; padding: 12px; border-radius: 12px; outline: none; box-sizing: border-box;}
         .stars-input:focus { border-color: var(--accent-green); }
 
     </style>
@@ -204,7 +211,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНЫЕ ОКНА ПРОФИЛЯ / ДЕЙСТВИЙ (Оставлены стандартными) -->
+    <!-- МОДАЛЬНЫЕ ОКНА ПРОФИЛЯ / ДЕЙСТВИЙ -->
     <div id="profile-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -244,53 +251,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНЫЕ ОКНА АПГРЕЙДЕРА -->
-    <!-- 1. Выбор типа ставки (Звезды или Предмет) -->
-    <div id="modal-upg-type" class="modal-overlay">
-        <div class="modal-content" style="max-width: 320px; padding: 20px; text-align: center;">
-            <h3 style="color: #fff; margin-top: 0;">ЧТО СТАВИМ?</h3>
-            <button class="btn btn-sell" style="margin-bottom: 10px; padding: 15px;" onclick="openUpgStars()">Свои Звёзды ⭐</button>
-            <button class="btn" style="background: #3e4257; color: #fff; padding: 15px;" onclick="openUpgInventory()">Предмет из инвентаря 🎒</button>
-            <button class="btn-cancel" style="margin-top: 15px; background: transparent; color: #ff2a5f; border: 1px solid #ff2a5f; padding: 10px; border-radius: 10px;" onclick="document.getElementById('modal-upg-type').classList.remove('active');">Отмена</button>
-        </div>
-    </div>
-
-    <!-- 2. Ввод звезд -->
-    <div id="modal-upg-stars" class="modal-overlay">
-        <div class="modal-content" style="max-width: 320px; padding: 20px; text-align: center;">
-            <h3 style="color: #fff; margin-top: 0;">СУММА ЗВЁЗД</h3>
-            <input type="number" id="upg-stars-input" class="stars-input" placeholder="Введите сумму..." min="1">
-            <button class="btn btn-sell" style="padding: 15px;" onclick="confirmUpgStars()">ПРИМЕНИТЬ</button>
-            <button class="btn-cancel" style="margin-top: 15px; background: transparent; color: #ff2a5f; border: 1px solid #ff2a5f; padding: 10px; border-radius: 10px;" onclick="document.getElementById('modal-upg-stars').classList.remove('active');">Отмена</button>
-        </div>
-    </div>
-
-    <!-- 3. Выбор предмета из инвентаря -->
-    <div id="modal-upg-inv" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header" style="padding: 15px; background: #1a1b26;">
-                <h3 style="color:#fff; margin:0;">ИНВЕНТАРЬ</h3>
-                <button class="close-btn" onclick="document.getElementById('modal-upg-inv').classList.remove('active');">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="inventory-grid" id="upg-inv-grid"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 4. Выбор цели (Все предметы игры) -->
-    <div id="modal-upg-target" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header" style="padding: 15px; background: #1a1b26;">
-                <h3 style="color:#fff; margin:0;">ВЫБЕРИТЕ ЦЕЛЬ</h3>
-                <button class="close-btn" onclick="document.getElementById('modal-upg-target').classList.remove('active');">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="inventory-grid" id="upg-target-grid"></div>
-            </div>
-        </div>
-    </div>
-
 
     <!-- ГЛАВНЫЙ ЭКРАН С РАЗДЕЛАМИ -->
     <div id="app-content">
@@ -323,38 +283,65 @@
 
     <!-- ЭКРАН АПГРЕЙДЕРА -->
     <div id="upgrader-screen">
-        <button class="back-btn" onclick="backToGamesMenu()" style="align-self: flex-start; margin-left: 20px;">← Назад</button>
+        <button class="back-btn" onclick="backToGamesMenu()" style="align-self: flex-start; margin-left: 20px; z-index: 10;">← Назад</button>
         
-        <h2 style="color: #fff; margin-top: 0;">UPGRADER</h2>
+        <div class="upg-content-wrapper">
+            <div class="upg-layout">
+                <!-- Левый блок (Ставка) -->
+                <div class="upg-item-col">
+                    <div class="upg-box" id="upg-box-bet">
+                        <span class="upg-box-text" id="upg-txt-bet">ВЫБЕРИТЕ СТАВКУ НИЖЕ</span>
+                    </div>
+                </div>
 
-        <div class="upg-layout">
-            <!-- Левый блок (Ставка) -->
-            <div class="upg-item-col">
-                <div class="upg-box" id="upg-box-bet" onclick="document.getElementById('modal-upg-type').classList.add('active');">
-                    <span class="upg-box-text" id="upg-txt-bet">ВЫБЕРИТЕ СТАВКУ</span>
+                <!-- Центр (Шкала) -->
+                <div class="upg-center">
+                    <div class="upg-chance" id="upg-chance-txt">0%</div>
+                    <div class="upg-bar-wrapper">
+                        <div class="upg-bar-container">
+                            <div class="upg-bar-bg"></div>
+                            <div class="upg-bar-green" id="upg-bar-green"></div>
+                        </div>
+                        <div class="upg-arrow" id="upg-arrow">▶</div>
+                    </div>
+                </div>
+
+                <!-- Правый блок (Цель) -->
+                <div class="upg-item-col">
+                    <div class="upg-box" id="upg-box-target">
+                        <span class="upg-box-text" id="upg-txt-target">ЖДЕМ ВАШУ СТАВКУ</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Центр (Шкала) -->
-            <div class="upg-center">
-                <div class="upg-chance" id="upg-chance-txt">0%</div>
-                <div class="upg-bar-container">
-                    <div class="upg-bar-bg"></div>
-                    <div class="upg-bar-green" id="upg-bar-green"></div>
-                    <!-- Прыгающая стрелка -->
-                    <div class="upg-arrow" id="upg-arrow">▶</div>
-                </div>
-            </div>
+            <button class="btn-upgrade" id="btn-do-upgrade" onclick="startUpgrade()" disabled>UPGRADE!</button>
 
-            <!-- Правый блок (Цель) -->
-            <div class="upg-item-col">
-                <div class="upg-box" id="upg-box-target" onclick="openTargetModal()">
-                    <span class="upg-box-text" id="upg-txt-target">ВЫБЕРИТЕ ЦЕЛЬ</span>
+            <!-- НИЖНЯЯ ПАНЕЛЬ АПГРЕЙДЕРА (Вместо модалок) -->
+            <div class="upg-bottom-panel">
+                <div class="upg-tabs-ctrl">
+                    <button class="u-tab active" id="utb-inv" onclick="switchUpgTab('inv')">ИНВЕНТАРЬ 🎒</button>
+                    <button class="u-tab" id="utb-stars" onclick="switchUpgTab('stars')">ЗВЁЗДЫ ⭐</button>
+                    <button class="u-tab" id="utb-targets" onclick="switchUpgTab('targets')">ЦЕЛИ 🎯</button>
+                </div>
+                
+                <div id="ucnt-inv" class="u-content active">
+                    <div class="inventory-grid" id="upg-inv-grid"></div>
+                </div>
+                
+                <div id="ucnt-stars" class="u-content">
+                    <div class="stars-input-box">
+                        <input type="number" id="upg-stars-input" class="stars-input" placeholder="Введите сумму..." min="10">
+                        <button class="btn btn-sell" style="padding: 15px;" onclick="confirmUpgStars()">ПОСТАВИТЬ</button>
+                    </div>
+                </div>
+                
+                <div id="ucnt-targets" class="u-content">
+                    <div class="inventory-grid" id="upg-target-grid">
+                        <div class="empty-inv">Сначала выберите ставку (Инвентарь или Звёзды)!</div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <button class="btn-upgrade" id="btn-do-upgrade" onclick="startUpgrade()" disabled>UPGRADE!</button>
     </div>
 
     <!-- ЭКРАН РУЛЕТКИ КЕЙСОВ -->
@@ -431,11 +418,11 @@
             
             document.querySelectorAll('.app-section').forEach(sec => sec.classList.remove('active'));
             document.getElementById('upgrader-screen').style.display = 'none';
+            document.querySelector('.bottom-nav').style.display = 'flex'; // Возвращаем меню если скрыли
             document.getElementById(`section-${sectionId}`).classList.add('active');
         }
         document.getElementById('nav-indicator').style.transform = `translateX(200%)`; 
 
-        // База всех предметов игры для Апгрейдера
         const rarityNames = { 'legendary': { name: 'ЛЕГЕНДАРНЫЙ', color: '#ff2a5f' }, 'rare': { name: 'РЕДКИЙ', color: '#ffb13b' }, 'common': { name: 'ОБЫЧНЫЙ', color: '#8b5cf6' }, 'trash': { name: 'БАЗОВЫЙ', color: '#9ca3af' } };
         const casesData = {
             epicCase: [ { icon: 'bear.png?v=8', name: 'Мишка', value: 15, prob: 0.35, rarity: 'trash' }, { icon: 'rose.png?v=8', name: 'Роза', value: 25, prob: 0.15, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '25 Stars', value: 25, prob: 0.169, rarity: 'trash' }, { icon: 'cake.png?v=8', name: 'Торт', value: 50, prob: 0.08, rarity: 'trash' }, { icon: 'stars50.png?v=8', name: '50 Stars', value: 50, prob: 0.10, rarity: 'common' }, { icon: 'diamond.png?v=8', name: 'Алмаз', value: 100, prob: 0.07, rarity: 'common' }, { icon: 'stars150.png?v=8', name: '150 Stars', value: 150, prob: 0.04, rarity: 'common' }, { icon: 'stars300.png?v=8', name: '300 Stars', value: 300, prob: 0.02, rarity: 'common' }, { icon: 'tie.png?v=8', name: 'Бабочка', value: 600, prob: 0.01, rarity: 'rare' }, { icon: 'button.png?v=8', name: 'Кнопка', value: 700, prob: 0.008, rarity: 'rare' }, { icon: 'sphere.png?v=8', name: 'Сфера', value: 1305, prob: 0.002, rarity: 'legendary' }, { icon: 'eagle.png?v=8', name: 'Орёл', value: 2655, prob: 0.001, rarity: 'legendary' } ],
@@ -452,6 +439,7 @@
             fifty3: [ { icon: 'stars50.png?v=8', name: 'Пак 20 Stars', value: 20, prob: 0.80, rarity: 'common' }, { icon: 'fairy_shoes.png?v=8', name: 'Туфельки', value: 2031, prob: 0.20, rarity: 'legendary' } ]
         };
 
+        // Подготовка списка всех уникальных предметов
         let allGameItems = [];
         let seenItems = new Set();
         Object.values(casesData).flat().forEach(item => {
@@ -463,97 +451,37 @@
         allGameItems.sort((a,b) => a.value - b.value);
 
         // --- ЛОГИКА АПГРЕЙДЕРА ---
-        let upgState = {
-            betType: null, // 'stars' или 'item'
-            betValue: 0,
-            betItemUid: null,
-            targetItem: null
-        };
+        let upgState = { betType: null, betValue: 0, betItemUid: null, targetItem: null };
 
         function openUpgrader() {
             tg.HapticFeedback.impactOccurred('light');
             document.getElementById('section-games-menu').classList.remove('active');
+            document.querySelector('.bottom-nav').style.display = 'none'; // Прячем нижнюю менюшку Телеги
             document.getElementById('upgrader-screen').style.display = 'flex';
             resetUpgrader();
         }
 
         function backToGamesMenu() {
             document.getElementById('upgrader-screen').style.display = 'none';
+            document.querySelector('.bottom-nav').style.display = 'flex';
             document.getElementById('section-games-menu').classList.add('active');
         }
 
-        function resetUpgrader() {
-            upgState = { betType: null, betValue: 0, betItemUid: null, targetItem: null };
-            document.getElementById('upg-box-bet').classList.remove('filled');
-            document.getElementById('upg-box-bet').innerHTML = `<span class="upg-box-text">ВЫБЕРИТЕ СТАВКУ</span>`;
-            document.getElementById('upg-box-target').classList.remove('filled');
-            document.getElementById('upg-box-target').innerHTML = `<span class="upg-box-text">ВЫБЕРИТЕ ЦЕЛЬ</span>`;
-            updateUpgraderUI();
-            document.getElementById('upg-arrow').style.transition = 'none';
-            document.getElementById('upg-arrow').style.bottom = '0%';
-        }
-
-        function updateUpgraderUI() {
-            let btn = document.getElementById('btn-do-upgrade');
-            let chanceText = document.getElementById('upg-chance-txt');
-            let greenBar = document.getElementById('upg-bar-green');
-
-            if (upgState.betValue > 0 && upgState.targetItem) {
-                let chance = (upgState.betValue / upgState.targetItem.value) * 100;
-                
-                if (chance >= 100) {
-                    tg.showAlert('Ставка должна быть меньше стоимости цели!');
-                    upgState.targetItem = null;
-                    document.getElementById('upg-box-target').classList.remove('filled');
-                    document.getElementById('upg-box-target').innerHTML = `<span class="upg-box-text">ВЫБЕРИТЕ ЦЕЛЬ</span>`;
-                    chanceText.innerText = '0%';
-                    greenBar.style.height = '0%';
-                    btn.disabled = true;
-                    return;
-                }
-
-                // Визуальное ограничение шанса для красоты
-                if (chance > 95) chance = 95;
-
-                chanceText.innerText = chance.toFixed(1) + '%';
-                greenBar.style.height = chance + '%';
-                btn.disabled = false;
-            } else {
-                chanceText.innerText = '0%';
-                greenBar.style.height = '0%';
-                btn.disabled = true;
-            }
-        }
-
-        // Выбор ставки (Звёзды)
-        function openUpgStars() {
-            document.getElementById('modal-upg-type').classList.remove('active');
-            document.getElementById('modal-upg-stars').classList.add('active');
-            document.getElementById('upg-stars-input').value = '';
-        }
-
-        function confirmUpgStars() {
-            let val = parseInt(document.getElementById('upg-stars-input').value);
-            if(isNaN(val) || val < 1) return;
-            if(val > userBalance) { tg.showAlert('Недостаточно звёзд на балансе!'); return; }
+        function switchUpgTab(tabName) {
+            tg.HapticFeedback.impactOccurred('light');
+            document.querySelectorAll('.u-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.u-content').forEach(c => c.classList.remove('active'));
             
-            document.getElementById('modal-upg-stars').classList.remove('active');
-            upgState.betType = 'stars';
-            upgState.betValue = val;
-            upgState.betItemUid = null;
+            document.getElementById(`utb-${tabName}`).classList.add('active');
+            document.getElementById(`ucnt-${tabName}`).classList.add('active');
             
-            let box = document.getElementById('upg-box-bet');
-            box.classList.add('filled');
-            box.innerHTML = `<img src="star.png?v=8" style="width: 50%; height: 50%; filter: drop-shadow(0 0 10px rgba(113,230,84,0.5));"><div class="upg-val">${val} <img src="star.png?v=8" style="width:10px;height:10px;margin:0;"></div>`;
-            updateUpgraderUI();
+            if (tabName === 'inv') renderUpgInv();
+            if (tabName === 'targets') renderUpgTargets();
         }
 
-        // Выбор ставки (Инвентарь)
-        function openUpgInventory() {
-            document.getElementById('modal-upg-type').classList.remove('active');
+        function renderUpgInv() {
             const grid = document.getElementById('upg-inv-grid');
             grid.innerHTML = '';
-            
             let validItems = inventory.filter(i => !i.isFavorite);
             if(validItems.length === 0) {
                 grid.innerHTML = '<div class="empty-inv">Инвентарь пуст или всё в избранном</div>';
@@ -568,56 +496,142 @@
                     `;
                 });
             }
-            document.getElementById('modal-upg-inv').classList.add('active');
         }
 
-        function selectUpgItem(uid) {
-            let item = inventory.find(i => i.uid === uid);
-            if(!item) return;
-            
-            document.getElementById('modal-upg-inv').classList.remove('active');
-            upgState.betType = 'item';
-            upgState.betValue = item.value;
-            upgState.betItemUid = item.uid;
-            
-            let box = document.getElementById('upg-box-bet');
-            box.classList.add('filled');
-            box.innerHTML = `<img src="${item.icon}"><div class="upg-val">${item.value} <img src="star.png?v=8" style="width:10px;height:10px;margin:0;"></div>`;
-            updateUpgraderUI();
-        }
-
-        // Выбор цели
-        function openTargetModal() {
-            tg.HapticFeedback.impactOccurred('light');
+        function renderUpgTargets() {
             const grid = document.getElementById('upg-target-grid');
             grid.innerHTML = '';
             
-            allGameItems.forEach((item, index) => {
+            if (upgState.betValue === 0) {
+                grid.innerHTML = '<div class="empty-inv">Сначала выберите ставку (Инвентарь или Звёзды)!</div>';
+                return;
+            }
+
+            // ПРАВИЛО 75% MAX CHANCE: Убираем из списка все предметы, где шанс выше 75%
+            // Chance = (Bet / Target) * 100 <= 75  ==>  Target >= Bet / 0.75
+            let minTargetValue = Math.ceil(upgState.betValue / 0.75);
+            let validTargets = allGameItems.filter(item => item.value >= minTargetValue);
+
+            if (validTargets.length === 0) {
+                grid.innerHTML = '<div class="empty-inv">Нет доступных целей для такой ставки!</div>';
+                return;
+            }
+
+            validTargets.forEach((item, originalIndex) => {
+                // Нам нужен оригинальный индекс из allGameItems
+                let realIndex = allGameItems.findIndex(i => i.name === item.name);
                 grid.innerHTML += `
-                    <div class="inv-item rarity-${item.rarity}" onclick="selectUpgTarget(${index})">
+                    <div class="inv-item rarity-${item.rarity}" onclick="selectUpgTarget(${realIndex})">
                         <img src="${item.icon}">
                         <div class="inv-item-name">${item.name}</div>
                         <div class="inv-item-price">${item.value} <img src="star.png?v=8"></div>
                     </div>
                 `;
             });
-            document.getElementById('modal-upg-target').classList.add('active');
+        }
+
+        function resetUpgrader() {
+            upgState = { betType: null, betValue: 0, betItemUid: null, targetItem: null };
+            document.getElementById('upg-box-bet').classList.remove('filled');
+            document.getElementById('upg-box-bet').innerHTML = `<span class="upg-box-text">ВЫБЕРИТЕ СТАВКУ НИЖЕ</span>`;
+            document.getElementById('upg-box-target').classList.remove('filled');
+            document.getElementById('upg-box-target').innerHTML = `<span class="upg-box-text">ЖДЕМ ВАШУ СТАВКУ</span>`;
+            updateUpgraderUI();
+            switchUpgTab('inv');
+        }
+
+        function selectUpgItem(uid) {
+            let item = inventory.find(i => i.uid === uid);
+            if(!item) return;
+            
+            upgState.betType = 'item';
+            upgState.betValue = item.value;
+            upgState.betItemUid = item.uid;
+            
+            // Если была выбрана цель и она стала дешевле разрешенного (шанс > 75%) - сбрасываем цель
+            if (upgState.targetItem && (upgState.betValue / upgState.targetItem.value) * 100 > 75) {
+                upgState.targetItem = null;
+                document.getElementById('upg-box-target').classList.remove('filled');
+                document.getElementById('upg-box-target').innerHTML = `<span class="upg-box-text">ЖДЕМ ВАШУ СТАВКУ</span>`;
+            }
+
+            let box = document.getElementById('upg-box-bet');
+            box.classList.add('filled');
+            box.innerHTML = `<img src="${item.icon}"><div class="upg-val">${item.value} <img src="star.png?v=8" style="width:10px;height:10px;margin:0;"></div>`;
+            
+            updateUpgraderUI();
+            switchUpgTab('targets'); // Автоматически перекидываем на выбор цели
+        }
+
+        function confirmUpgStars() {
+            let val = parseInt(document.getElementById('upg-stars-input').value);
+            if(isNaN(val) || val < 1) return;
+            if(val > userBalance) { tg.showAlert('Недостаточно звёзд на балансе!'); return; }
+            
+            upgState.betType = 'stars';
+            upgState.betValue = val;
+            upgState.betItemUid = null;
+            
+            // Проверка сброса цели при изменении ставки
+            if (upgState.targetItem && (upgState.betValue / upgState.targetItem.value) * 100 > 75) {
+                upgState.targetItem = null;
+                document.getElementById('upg-box-target').classList.remove('filled');
+                document.getElementById('upg-box-target').innerHTML = `<span class="upg-box-text">ЖДЕМ ВАШУ СТАВКУ</span>`;
+            }
+
+            let box = document.getElementById('upg-box-bet');
+            box.classList.add('filled');
+            box.innerHTML = `<img src="star.png?v=8" style="width: 50%; height: 50%; filter: drop-shadow(0 0 10px rgba(113,230,84,0.5));"><div class="upg-val">${val} <img src="star.png?v=8" style="width:10px;height:10px;margin:0;"></div>`;
+            
+            updateUpgraderUI();
+            switchUpgTab('targets');
         }
 
         function selectUpgTarget(index) {
             let item = allGameItems[index];
-            document.getElementById('modal-upg-target').classList.remove('active');
             upgState.targetItem = item;
             
             let box = document.getElementById('upg-box-target');
             box.classList.add('filled');
             box.innerHTML = `<img src="${item.icon}"><div class="upg-val">${item.value} <img src="star.png?v=8" style="width:10px;height:10px;margin:0;"></div>`;
+            
             updateUpgraderUI();
         }
 
-        // СТАРТ АПГРЕЙДА (Анимация и Расчет)
+        function updateUpgraderUI() {
+            let btn = document.getElementById('btn-do-upgrade');
+            let chanceText = document.getElementById('upg-chance-txt');
+            let greenBar = document.getElementById('upg-bar-green');
+            let arrow = document.getElementById('upg-arrow');
+
+            arrow.style.transition = 'none';
+            arrow.style.bottom = '0%';
+
+            if (upgState.betValue > 0 && upgState.targetItem) {
+                let chance = (upgState.betValue / upgState.targetItem.value) * 100;
+                
+                // Дополнительная защита на Пепе
+                if (upgState.targetItem.name === 'Пепе' && upgState.betValue < 400000) {
+                    chance = 1; // 1% чисто для пикселя визуализации
+                } else if (chance > 75) {
+                    chance = 75; // Защита
+                }
+
+                // Шанс меньше 1% отображается как 1% (чтобы была видна полоска), но логика будет реальной
+                if (chance > 0 && chance < 1) chance = 1;
+
+                chanceText.innerText = chance.toFixed(1) + '%';
+                greenBar.style.height = chance + '%';
+                btn.disabled = false;
+            } else {
+                chanceText.innerText = '0%';
+                greenBar.style.height = '0%';
+                btn.disabled = true;
+            }
+        }
+
+        // АНИМАЦИЯ И ЛОГИКА
         function startUpgrade() {
-            // Проверки
             if(upgState.betType === 'stars' && userBalance < upgState.betValue) { tg.showAlert('Недостаточно звёзд на балансе!'); return; }
             if(upgState.betType === 'item') {
                 let checkIdx = inventory.findIndex(i => i.uid === upgState.betItemUid);
@@ -628,7 +642,7 @@
             btn.disabled = true;
             btn.innerText = "UPGRADING...";
 
-            // Списываем ставку
+            // Списываем
             if(upgState.betType === 'stars') {
                 userBalance -= upgState.betValue;
                 updateBalanceDisplay(userBalance, true);
@@ -639,35 +653,43 @@
                 saveInventory();
             }
 
-            // Математика казино (реальный шанс урезан)
+            // Математика 
             let visualChance = (upgState.betValue / upgState.targetItem.value) * 100;
-            let realChance = visualChance * 0.85; // Казино забирает 15% вероятности
+            let realChance = visualChance * 0.85; 
+
+            // Блок Пепе
+            if (upgState.targetItem.name === 'Пепе' && upgState.betValue < 400000) {
+                realChance = 0; // Строго 0 шансов
+                visualChance = 1; // 1% визуально
+            }
+
             let isWin = (Math.random() * 100) < realChance;
 
-            // Считаем где остановится стрелка (снизу 0, сверху 100)
+            // Расчет позиции стрелочки (от 0% до 100%)
             let finalPos = 0;
             if (isWin) {
-                // Остановится в зеленой зоне (от 0 до visualChance)
+                // Зеленая зона: от 0 до visualChance
                 finalPos = Math.random() * visualChance;
-                if(finalPos < 2) finalPos = 2; // чтоб не пряталась в пол
+                if(finalPos < 2) finalPos = 2; 
             } else {
-                // Остановится в красной зоне (от visualChance до 100)
+                // Красная зона: от visualChance до 100
                 finalPos = visualChance + (Math.random() * (100 - visualChance));
                 if(finalPos > 95) finalPos = 95;
             }
 
             let arrow = document.getElementById('upg-arrow');
+            
+            // Анимация (5 отскоков)
             arrow.style.transition = 'bottom 0.4s ease-in-out';
-            arrow.style.bottom = '95%';
+            arrow.style.bottom = '90%';
             tg.HapticFeedback.impactOccurred('medium');
 
-            // Имитация 5 отскоков
-            setTimeout(() => { arrow.style.bottom = '5%'; tg.HapticFeedback.impactOccurred('light'); }, 400);
+            setTimeout(() => { arrow.style.bottom = '10%'; tg.HapticFeedback.impactOccurred('light'); }, 400);
             setTimeout(() => { arrow.style.bottom = '85%'; tg.HapticFeedback.impactOccurred('light'); }, 800);
             setTimeout(() => { arrow.style.bottom = '15%'; tg.HapticFeedback.impactOccurred('light'); }, 1200);
             setTimeout(() => { arrow.style.bottom = '70%'; tg.HapticFeedback.impactOccurred('light'); }, 1600);
             
-            // Финальное замедление
+            // Финал
             setTimeout(() => {
                 arrow.style.transition = 'bottom 1.5s cubic-bezier(0.1, 0.9, 0.2, 1)';
                 arrow.style.bottom = finalPos + '%';
@@ -696,7 +718,7 @@
                     tg.HapticFeedback.notificationOccurred('error');
                 }
 
-                // Сброс через 1.5 секунды
+                // Сброс 
                 setTimeout(() => {
                     btn.style.background = '';
                     btn.innerText = "UPGRADE!";
@@ -706,9 +728,9 @@
             }, 3500);
         }
 
-        // --- ЛОГИКА ПРОФИЛЯ, ИНВЕНТАРЯ И КЕЙСОВ ---
+        // --- БАЗОВЫЕ ФУНКЦИИ ПРОФИЛЯ/ИНВЕНТАРЯ И РУЛЕТКИ ---
         function saveInventory() { localStorage.setItem('lootgift_inventory', JSON.stringify(inventory)); renderInventory(); }
-        function openProfileModal() { tg.HapticFeedback.impactOccurred('light'); document.getElementById('profile-modal').classList.add('active'); document.getElementById('stat-reg-date').innerText = regDate; document.getElementById('stat-cases-opened').innerText = spinsCount; document.getElementById('stat-total-won').innerHTML = `${totalWon} <img src="star.png?v=8" alt="star">`; document.getElementById('stat-tg-stars').innerHTML = `1000 <img src="star.png?v=8" alt="star">`; renderInventory(); }
+        function openProfileModal() { tg.HapticFeedback.impactOccurred('light'); document.getElementById('profile-modal').classList.add('active'); document.getElementById('stat-reg-date').innerText = regDate; document.getElementById('stat-cases-opened').innerText = spinsCount; document.getElementById('stat-total-won').innerHTML = `${totalWon} <img src="star.png?v=8" alt="star">`; renderInventory(); }
         function closeProfileModal() { document.getElementById('profile-modal').classList.remove('active'); }
         function switchModalTab(tabName) { tg.HapticFeedback.impactOccurred('light'); document.getElementById('tab-btn-profile').classList.remove('active'); document.getElementById('tab-btn-inventory').classList.remove('active'); document.getElementById('modal-tab-profile').classList.remove('active'); document.getElementById('modal-tab-inventory').classList.remove('active'); if(tabName === 'profile') { document.getElementById('tab-btn-profile').classList.add('active'); document.getElementById('modal-tab-profile').classList.add('active'); } else { document.getElementById('tab-btn-inventory').classList.add('active'); document.getElementById('modal-tab-inventory').classList.add('active'); renderInventory(); } }
         function renderInventory() { const grid = document.getElementById('inventory-grid'); grid.innerHTML = ''; document.getElementById('inv-count-display').innerText = `${inventory.length} предметов`; if (inventory.length === 0) { grid.innerHTML = '<div class="empty-inv">Инвентарь пуст</div>'; return; } [...inventory].reverse().forEach(item => { const favBadge = item.isFavorite ? '<div class="fav-badge">❤️</div>' : ''; grid.innerHTML += ` <div class="inv-item" onclick="openItemAction('${item.uid}')"> ${favBadge} <img src="${item.icon}" alt="${item.name}"> <div class="inv-item-name">${item.name}</div> <div class="inv-item-price">${item.value} <img src="star.png?v=8"></div> </div> `; }); }
@@ -732,48 +754,8 @@
         function openCaseScreen(caseId, price) { if (!casesData[caseId]) { tg.showAlert('Этот модуль находится в разработке!'); return; } activeCaseId = caseId; activeCasePrice = price; isFarmCase = caseId.startsWith('farm'); isFiftyCase = caseId.startsWith('fifty'); buildQtyButtons(isFarmCase); document.getElementById('app-content').style.display = 'none'; document.querySelector('.bottom-nav').style.display = 'none'; const rScreen = document.getElementById('roulette-screen'); rScreen.style.display = 'flex'; setTimeout(() => rScreen.style.opacity = '1', 50); renderRouletteRows(); renderLootGrid(caseId); }
         function closeRoulette() { const rScreen = document.getElementById('roulette-screen'); rScreen.style.opacity = '0'; setTimeout(() => { rScreen.style.display = 'none'; document.getElementById('app-content').style.display = 'block'; document.querySelector('.bottom-nav').style.display = 'flex'; activeCaseId = null; }, 500); }
         function selectQty(btn, qty) { document.querySelectorAll('.qty-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentQty = qty; renderRouletteRows(); }
+        function spinRoulette() { const totalCost = activeCasePrice * currentQty; if (userBalance < totalCost) { tg.HapticFeedback.notificationOccurred('error'); tg.showAlert('Недостаточно звёзд на балансе!'); return; } userBalance -= totalCost; updateBalanceDisplay(userBalance, true); showBalanceAnimation(-totalCost); const btn = document.getElementById('spin-btn'); btn.disabled = true; tg.HapticFeedback.impactOccurred('medium'); let drops = []; let starsWonThisSpin = 0; const newItems = []; const totalItems = 50; const winnerIndex = 40; const wrapper = document.getElementById('roulette-wrapper'); const itemTotalWidth = currentItemSize + 12; const currentItems = casesData[activeCaseId]; for(let rowIdx = 0; rowIdx < currentQty; rowIdx++) { let actualItem = getRandomItem(activeCaseId); drops.push(actualItem); if (actualItem.name.includes('Star') || actualItem.name.includes('Stars')) { starsWonThisSpin += actualItem.value; } else if (actualItem.value > 0) { const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2); newItems.push({ uid: uniqueId, name: actualItem.name, icon: actualItem.icon, value: actualItem.value, rarity: actualItem.rarity, isFavorite: false }); } let strip = document.getElementById(`strip-${rowIdx}`); strip.style.transition = 'none'; strip.style.transform = 'translateX(0)'; strip.innerHTML = ''; for (let i = 0; i < totalItems; i++) { let div = document.createElement('div'); div.className = 'roulette-item'; if (i === winnerIndex) { div.innerHTML = `<img src="${actualItem.icon}"><div class="roulette-name">${actualItem.name}</div>`; } else { let r = Math.random(); let visualItem; if (isFarmCase) { if (r < 0.85) visualItem = currentItems[0]; else if (r < 0.98) visualItem = currentItems[1]; else visualItem = currentItems[2]; } else if (isFiftyCase) { if (r < 0.5) visualItem = currentItems[0]; else visualItem = currentItems[1]; } else { if (r < 0.10) visualItem = currentItems[0]; else if (r < 0.30) visualItem = currentItems[5]; else if (r < 0.60) visualItem = currentItems[7]; else if (r < 0.82) visualItem = currentItems[8]; else if (r < 0.97) visualItem = currentItems[9]; else visualItem = currentItems[11]; } div.innerHTML = `<img src="${visualItem.icon}"><div class="roulette-name">${visualItem.name}</div>`; } strip.appendChild(div); } let duration = 5 + (rowIdx * 0.15); setTimeout(() => { strip.style.transition = `transform ${duration}s cubic-bezier(0.15, 0.85, 0.1, 1)`; const containerWidth = wrapper.offsetWidth; const randomOffset = Math.floor(Math.random() * (currentItemSize * 0.8)) - (currentItemSize * 0.4); const stopPosition = (containerWidth / 2) - (winnerIndex * itemTotalWidth + (itemTotalWidth / 2)) + randomOffset; strip.style.transform = `translateX(${stopPosition}px)`; }, 50); } let maxDelay = 5200 + ((currentQty - 1) * 150); setTimeout(() => { btn.disabled = false; if (starsWonThisSpin > 0) { userBalance += starsWonThisSpin; updateBalanceDisplay(userBalance, true); showBalanceAnimation(starsWonThisSpin); } if (newItems.length > 0) { inventory.push(...newItems); saveInventory(); } let totalValueWon = drops.reduce((sum, item) => sum + item.value, 0); totalWon += totalValueWon; localStorage.setItem('lootgift_total_won', totalWon); tg.HapticFeedback.notificationOccurred('success'); let dropCounts = {}; drops.forEach(d => { dropCounts[d.name] = (dropCounts[d.name] || 0) + 1; }); let dropStr = Object.keys(dropCounts).map(name => `${name} (x${dropCounts[name]})`).join(', '); let msg = `Добыча:\n${dropStr}`; if (starsWonThisSpin > 0) msg += `\n\nВы получили: +${starsWonThisSpin} ⭐`; if (newItems.length > 0) msg += `\nПредметы добавлены в инвентарь! 🎒`; tg.showAlert(msg); }, maxDelay); }
         
-        function spinRoulette() { 
-            const totalCost = activeCasePrice * currentQty; 
-            if (userBalance < totalCost) { tg.HapticFeedback.notificationOccurred('error'); tg.showAlert('Недостаточно звёзд на балансе!'); return; } 
-            userBalance -= totalCost; updateBalanceDisplay(userBalance, true); showBalanceAnimation(-totalCost); 
-            const btn = document.getElementById('spin-btn'); btn.disabled = true; tg.HapticFeedback.impactOccurred('medium'); 
-            let drops = []; let starsWonThisSpin = 0; const newItems = []; const totalItems = 50; const winnerIndex = 40; const wrapper = document.getElementById('roulette-wrapper'); const itemTotalWidth = currentItemSize + 12; const currentItems = casesData[activeCaseId]; 
-            
-            for(let rowIdx = 0; rowIdx < currentQty; rowIdx++) { 
-                let actualItem = getRandomItem(activeCaseId); drops.push(actualItem); 
-                if (actualItem.name.includes('Star') || actualItem.name.includes('Stars')) { starsWonThisSpin += actualItem.value; } 
-                else if (actualItem.value > 0) { const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2); newItems.push({ uid: uniqueId, name: actualItem.name, icon: actualItem.icon, value: actualItem.value, rarity: actualItem.rarity, isFavorite: false }); } 
-                
-                let strip = document.getElementById(`strip-${rowIdx}`); strip.style.transition = 'none'; strip.style.transform = 'translateX(0)'; strip.innerHTML = ''; 
-                for (let i = 0; i < totalItems; i++) { 
-                    let div = document.createElement('div'); div.className = 'roulette-item'; 
-                    if (i === winnerIndex) { div.innerHTML = `<img src="${actualItem.icon}"><div class="roulette-name">${actualItem.name}</div>`; } 
-                    else { 
-                        let r = Math.random(); let visualItem; 
-                        if (isFarmCase) { if (r < 0.85) visualItem = currentItems[0]; else if (r < 0.98) visualItem = currentItems[1]; else visualItem = currentItems[2]; } 
-                        else if (isFiftyCase) { if (r < 0.5) visualItem = currentItems[0]; else visualItem = currentItems[1]; } 
-                        else { if (r < 0.10) visualItem = currentItems[0]; else if (r < 0.30) visualItem = currentItems[5]; else if (r < 0.60) visualItem = currentItems[7]; else if (r < 0.82) visualItem = currentItems[8]; else if (r < 0.97) visualItem = currentItems[9]; else visualItem = currentItems[11]; } 
-                        div.innerHTML = `<img src="${visualItem.icon}"><div class="roulette-name">${visualItem.name}</div>`; 
-                    } 
-                    strip.appendChild(div); 
-                } 
-                let duration = 5 + (rowIdx * 0.15); 
-                setTimeout(() => { strip.style.transition = `transform ${duration}s cubic-bezier(0.15, 0.85, 0.1, 1)`; const containerWidth = wrapper.offsetWidth; const randomOffset = Math.floor(Math.random() * (currentItemSize * 0.8)) - (currentItemSize * 0.4); const stopPosition = (containerWidth / 2) - (winnerIndex * itemTotalWidth + (itemTotalWidth / 2)) + randomOffset; strip.style.transform = `translateX(${stopPosition}px)`; }, 50); 
-            } 
-            
-            let maxDelay = 5200 + ((currentQty - 1) * 150); 
-            setTimeout(() => { 
-                btn.disabled = false; 
-                if (starsWonThisSpin > 0) { userBalance += starsWonThisSpin; updateBalanceDisplay(userBalance, true); showBalanceAnimation(starsWonThisSpin); } 
-                if (newItems.length > 0) { inventory.push(...newItems); saveInventory(); } 
-                let totalValueWon = drops.reduce((sum, item) => sum + item.value, 0); totalWon += totalValueWon; localStorage.setItem('lootgift_total_won', totalWon); tg.HapticFeedback.notificationOccurred('success'); 
-                let dropCounts = {}; drops.forEach(d => { dropCounts[d.name] = (dropCounts[d.name] || 0) + 1; }); let dropStr = Object.keys(dropCounts).map(name => `${name} (x${dropCounts[name]})`).join(', '); let msg = `Добыча:\n${dropStr}`; 
-                if (starsWonThisSpin > 0) msg += `\n\nВы получили: +${starsWonThisSpin} ⭐`; if (newItems.length > 0) msg += `\nПредметы добавлены в инвентарь! 🎒`; tg.showAlert(msg); 
-            }, maxDelay); 
-        }
-
-        const categoriesDataList = [ { title: "Премиум Модули", cases: [ { id: 'epicCase', name: "Эпический Дар", price: 100, image: "case1.jpg.jfif?v=8", special: true } ] }, { title: "Стандартные Модули", cases: [ { id: 'summerCase', name: "Пляжный Вайб", price: 10, image: "case2.png?v=8", special: false }, { id: 'neonCase', name: "Неоновый Тайник", price: 25, image: "case3.png?v=8", special: false }, { id: 'goldCase', name: "Золотая Казна", price: 50, image: "case4.png?v=8", special: false }, { id: 'vintageCase', name: "Винтажный Бокс", price: 100, image: "case5.png?v=8", special: false }, { id: 'shadowCase', name: "Теневой Синдикат", price: 1000, image: "case6.png?v=8", special: false } ] }, { title: "Фарм модули", cases: [ { id: 'farm1', name: "Фарм Очков", price: 1, image: "farm1.png?v=8", special: false }, { id: 'farm2', name: "Фарм Шлема", price: 2, image: "farm2.png?v=8", special: false }, { id: 'farm3', name: "Фарм Кепки", price: 5, image: "farm3.png?v=8", special: false } ] }, { title: "50 / 50", cases: [ { id: 'fifty1', name: "Алмазный Риск", price: 50, image: "scale1.png?v=8", special: false }, { id: 'fifty2', name: "Сладкий Куш", price: 200, image: "scale2.png?v=8", special: false }, { id: 'fifty3', name: "Шаг Феи", price: 1000, image: "scale3.png?v=8", special: false } ] } ];
         const appCasesGrid = document.getElementById('app-cases-grid'); categoriesDataList.forEach(category => { const title = document.createElement('h2'); title.innerText = category.title; appCasesGrid.appendChild(title); const grid = document.createElement('div'); grid.className = 'grid-container'; category.cases.forEach(c => { const card = document.createElement('div'); if (c.special) { card.className = 'case-card-special'; card.innerHTML = ` <img src="${c.image}" class="premium-case-img" alt="${c.name}"> <div class="case-info-box"> <div class="case-name">${c.name}</div> <div class="case-price">${c.price} <img src="star.png?v=8" alt="star"></div> <button class="btn btn-premium" onclick="openCaseScreen('${c.id}', ${c.price})">ОТКРЫТЬ</button> </div> `; } else { card.className = 'case-card'; let iconHtml = c.image ? `<img src="${c.image}" style="width:75px; height:75px; object-fit:contain; margin-bottom:8px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));">` : `<div class="case-icon">${c.icon}</div>`; card.innerHTML = ` ${iconHtml} <div class="case-name-std">${c.name}</div> <div class="case-price-std">${c.price} <img src="star.png?v=8" alt="star" style="width:12px; height:12px; vertical-align:middle;"></div> <button class="btn" onclick="openCaseScreen('${c.id}', ${c.price})">ОТКРЫТЬ</button> `; } grid.appendChild(card); }); appCasesGrid.appendChild(grid); });
     </script>
 </body>
