@@ -174,7 +174,7 @@
         @keyframes pulseLogo { 0% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(113, 230, 84, 0.2)); } 100% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(113, 230, 84, 0.8)); } }
         @keyframes pulseText { 0% { opacity: 0.6; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1.05); } }
 
-        /* --- КАРТОЧКА АПГРЕЙДЕРА: ПРЕМИУМ ДИЗАЙН БЕЗ ИИ-ШУМА --- */
+        /* --- КАРТОЧКА АПГРЕЙДЕРА: ИСПОЛЬЗУЕТ СГЕНЕРИРОВАННУЮ ИИ КАРТИНКУ С ТЕКСТОМ --- */
         .upg-btn-card { 
             position: relative; 
             height: 160px; 
@@ -187,48 +187,18 @@
             border-radius: 16px; 
             margin-top: 15px; 
             box-shadow: 0 0 20px var(--green-glow);
-            background: linear-gradient(135deg, #12141c 0%, #1e1b2e 50%, #12141c 100%);
         }
         .upg-btn-card:active { transform: scale(0.98); }
         
-        /* Стильный геометрический узор без лишних мелких деталей */
         .upg-btn-bg { 
             position: absolute; 
             top: 0; left: 0; right: 0; bottom: 0; 
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(113, 230, 84, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(90, 62, 140, 0.2) 0%, transparent 40%),
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 20px 20px, 20px 20px;
+            background: url('Gemini_Generated_Image_2uylua2uylua2uyl.jfif') no-repeat center center; 
+            background-size: cover; 
             z-index: 0; 
             transition: 0.3s;
         }
-        .upg-btn-card:hover .upg-btn-bg { opacity: 0.8; }
-        
-        .upg-btn-content { 
-            position: relative; 
-            z-index: 1; 
-            text-align: center; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* Кастомный премиальный текст UPGRADER */
-        .upg-title-styled {
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            color: #ffffff;
-            text-transform: uppercase;
-            text-shadow: 0 2px 10px rgba(113, 230, 84, 0.6), 0 0 30px rgba(90, 62, 140, 0.8);
-            background: linear-gradient(180deg, #ffffff 0%, #b892ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 0;
-        }
+        .upg-btn-card:hover .upg-btn-bg { opacity: 0.9; transform: scale(1.05); }
 
         /* --- ЭКРАН САМОГО АПГРЕЙДЕРА --- */
         #upgrader-screen { display: none; flex-direction: column; align-items: center; width: 100%; }
@@ -353,11 +323,6 @@
             
             <div class="upg-btn-card" onclick="openUpgrader()">
                 <div class="upg-btn-bg"></div>
-                <div class="upg-btn-content">
-                    <div style="font-size: 32px; margin-bottom: 2px;">⚡</div>
-                    <h3 class="upg-title-styled">UPGRADER</h3>
-                    <div style="font-size: 11px; color: #a1a1aa; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Рискни ради легендарки!</div>
-                </div>
             </div>
         </div>
     </div>
